@@ -8,6 +8,34 @@
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/VertexBasic.shader"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/FragmentBasic.shader"
 
+#ifdef _PR_DEBUG
+	#define ASSERT_AND_BREAK(x) if(!(x)) __debugbreak();
+
+	#define GLCheckErrorCall(glFun) GLClearError();\
+		glFun;\
+		ASSERT_AND_BREAK(GLLogCall(#glFun, __FILE__, __LINE__))
+
+	static void GLClearError()
+	{
+		while (glGetError() != GL_NO_ERROR) {
+			/* Just clearing the flags */
+		}
+	}
+
+	static bool GLLogCall(const char* function, const char* file, int line)
+	{
+		GLenum error;
+		while ((error = glGetError()) != GL_NO_ERROR) {
+			std::cout << "[OpenGL Error] (" << error << "):" << function << " in " << file << ":" << line << std::endl;
+			return false;
+		}
+		return true;
+	}
+
+#else
+	#define GLCheckErrorCall(glFun) glFun
+#endif
+
 static std::string ParseShader(const std::string& filepath) {
 	std::ifstream fstreamin(filepath);
 
@@ -175,28 +203,28 @@ int main() {
 	GLuint buffer;
 
 	/* 1.1 Retrieve an Id for the buffer */
-	glGenBuffers(1, &buffer);
+	GLCheckErrorCall(glGenBuffers(1, &buffer));
 
 	/* 1.2 Binds GL_ARRAY_BUFFER to buffer */
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
 
 	/* 1.3 Specify that the actual data is contained in positions array and that it must be drawn */
-	glBufferData(GL_ARRAY_BUFFER, POSITIONS_SIZE * sizeof(float), positions, GL_STATIC_DRAW);
+	GLCheckErrorCall(glBufferData(GL_ARRAY_BUFFER, POSITIONS_SIZE * sizeof(float), positions, GL_STATIC_DRAW));
 
 	/* 1.4 Set the index of the coordinates attribute in the positions array */
 	GLuint coord_attrib_index = 0;
 
 	/* 1.5 Define an attribute for the position array, in our case the points coordinates */
-	glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0);
+	GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
 
 	/* 1.6 Enable the coordinates attribute */
-	glEnableVertexAttribArray(coord_attrib_index);
+	GLCheckErrorCall(glEnableVertexAttribArray(coord_attrib_index));
 
 	/* 2. Generate Index Buffer object (similar to above step) */
 	GLuint index_buffer;
-	glGenBuffers(1, &index_buffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDICES_SIZE * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	GLCheckErrorCall(glGenBuffers(1, &index_buffer));
+	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer));
+	GLCheckErrorCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDICES_SIZE * sizeof(unsigned int), indices, GL_STATIC_DRAW));
 
 	/* Parse vertex shader source code */
 	std::string vertexShader = ParseShader(VERTEX_BASIC_SHADER_PATH);
@@ -208,7 +236,7 @@ int main() {
 	GLuint shader = CreateShader(vertexShader, fragmentShader);
 
 	/* 3. Install the shader as part of the current rendering state */
-	glUseProgram(shader);
+	GLCheckErrorCall(glUseProgram(shader));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -217,7 +245,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		/* From the buffers setup above, OpenGL will know what to do */
-		glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr);
+		GLCheckErrorCall(glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr));
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -227,7 +255,7 @@ int main() {
 	}
 
 	/* Delete the shader program */
-	glDeleteProgram(shader);
+	GLCheckErrorCall(glDeleteProgram(shader));
 
 	glfwTerminate();
 
