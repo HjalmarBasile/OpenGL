@@ -1,6 +1,27 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#define VERTEX_BASIC_SHADER_PATH "res/shaders/VertexBasic.shader"
+#define FRAGMENT_BASIC_SHADER_PATH "res/shaders/FragmentBasic.shader"
+
+static std::string ParseShader(const std::string& filepath) {
+	std::ifstream fstreamin(filepath);
+
+	std::stringstream ssout;
+	if(fstreamin.is_open()) {
+		std::string line;
+		while (getline(fstreamin, line)) {
+			ssout << line << '\n';
+		}
+		fstreamin.close();
+	}
+
+	return ssout.str();
+}
 
 /* Custom utility function */
 static const char* getShaderName(GLenum shaderType) {
@@ -163,27 +184,11 @@ int main() {
 	/* 6. Enable the coordinates attribute */
 	glEnableVertexAttribArray(coord_attrib_index);
 
-	/* Write vertex shader source code */
-	std::string vertexShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) in vec4 position;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	gl_Position = position;\n"
-		"}\n";
+	/* Parse vertex shader source code */
+	std::string vertexShader = ParseShader(VERTEX_BASIC_SHADER_PATH);
 
-	/* Write fragment shader source code */
-	std::string fragmentShader =
-		"#version 330 core\n"
-		"\n"
-		"out vec4 color;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	color = vec4(1.0, 0.0, 0.0, 1.0);\n"
-		"}\n";
+	/* Parse fragment shader source code */
+	std::string fragmentShader = ParseShader(FRAGMENT_BASIC_SHADER_PATH);
 
 	/* Create and compile the shader */
 	GLuint shader = CreateShader(vertexShader, fragmentShader);
