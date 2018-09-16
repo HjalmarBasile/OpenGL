@@ -203,16 +203,6 @@ int main() {
 		// Not for now: in case we are using index buffers
 		// glDrawElements(GL_TRIANGLES, POSITION_SIZE / 2, GL_UNSIGNED_BYTE, /* TODO */);
 
-		/* Legacy OpenGL
-		// Draw a triangle
-		glBegin(GL_TRIANGLES);
-		// Coordinates range from -1 to 1
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f( 0.0f,  0.5f);
-		glVertex2f( 0.5f, -0.5f);
-		glEnd();
-		*/
-
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 
