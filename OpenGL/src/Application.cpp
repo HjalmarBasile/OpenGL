@@ -154,35 +154,49 @@ int main() {
 	/* Just to know... */
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
-	const unsigned int POSITIONS_SIZE = 6;
+	const unsigned int POSITIONS_SIZE = 8;
 	const unsigned int VERTEX_SIZE = 2;
-	/* Triangle vertices */
+	/* Square vertices */
 	float positions[POSITIONS_SIZE] = {
 		-0.5f, -0.5f,
-		 0.0f,  0.5f,
-		 0.5f, -0.5f
+		 0.5f, -0.5f,
+		 0.5f,  0.5f,
+		-0.5f,  0.5f
 	};
 
-	/* Generate Vertex Buffer with modern OpenGL */
+	const unsigned int INDICES_SIZE = 6;
+	/* Index buffer */
+	unsigned int indices[INDICES_SIZE] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	/* 1. Generate Vertex Buffer with modern OpenGL */
 	GLuint buffer;
 
-	/* 1. Retrieve an Id for the buffer */
+	/* 1.1 Retrieve an Id for the buffer */
 	glGenBuffers(1, &buffer);
 
-	/* 2. Binds GL_ARRAY_BUFFER to buffer */
+	/* 1.2 Binds GL_ARRAY_BUFFER to buffer */
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
-	/* 3. Specify that the actual data is contained in positions array and that it must be drawn*/
+	/* 1.3 Specify that the actual data is contained in positions array and that it must be drawn */
 	glBufferData(GL_ARRAY_BUFFER, POSITIONS_SIZE * sizeof(float), positions, GL_STATIC_DRAW);
 
-	/* 4. Set the index of the coordinates attribute in the positions array */
+	/* 1.4 Set the index of the coordinates attribute in the positions array */
 	GLuint coord_attrib_index = 0;
 
-	/* 5. Define an attribute for the position array, in our case the points coordinates */
+	/* 1.5 Define an attribute for the position array, in our case the points coordinates */
 	glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0);
 
-	/* 6. Enable the coordinates attribute */
+	/* 1.6 Enable the coordinates attribute */
 	glEnableVertexAttribArray(coord_attrib_index);
+
+	/* 2. Generate Index Buffer object (similar to above step) */
+	GLuint index_buffer;
+	glGenBuffers(1, &index_buffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDICES_SIZE * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 	/* Parse vertex shader source code */
 	std::string vertexShader = ParseShader(VERTEX_BASIC_SHADER_PATH);
@@ -193,7 +207,7 @@ int main() {
 	/* Create and compile the shader */
 	GLuint shader = CreateShader(vertexShader, fragmentShader);
 
-	/* 7. Install the shader as part of the current rendering state */
+	/* 3. Install the shader as part of the current rendering state */
 	glUseProgram(shader);
 
 	/* Loop until the user closes the window */
@@ -202,11 +216,8 @@ int main() {
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		/* From the vertex buffer setup above, OpenGL will know what to do */
-		glDrawArrays(GL_TRIANGLES, 0, POSITIONS_SIZE / 2);
-
-		// Not for now: in case we are using index buffers
-		// glDrawElements(GL_TRIANGLES, POSITION_SIZE / 2, GL_UNSIGNED_BYTE, /* TODO */);
+		/* From the buffers setup above, OpenGL will know what to do */
+		glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
