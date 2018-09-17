@@ -171,6 +171,9 @@ int main() {
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
+	/* Enable v-sync */
+	glfwSwapInterval(1);
+
 	/* Initialize glew library */
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
@@ -238,14 +241,38 @@ int main() {
 	/* 3. Install the shader as part of the current rendering state */
 	GLCheckErrorCall(glUseProgram(shader));
 
+	/* 4. Inject values into shader program */
+	/* 4.1 Get the id of a uniform variable (can be done only after linking) */
+	GLint uniformColorLocation = glGetUniformLocation(shader, "u_Color");
+	if (-1 == uniformColorLocation) {
+		std::cout << "Error while getting u_Color location" << std::endl;
+		return -1;
+	}
+
+	float red = 0.0f;
+	float rincr = 0.01f;
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		if (red > 1.0f) {
+			red = 2.0f - red;
+			rincr = -0.01f;
+		} else if (red < 0.0f) {
+			red = -red;
+			rincr = 0.01f;
+		}
+
+		/* 4.2 Set uniform variable */
+		GLCheckErrorCall(glUniform4f(uniformColorLocation, red, 0.3f, 0.8f, 1.0f));
+
 		/* From the buffers setup above, OpenGL will know what to do */
 		GLCheckErrorCall(glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr));
+
+		red += rincr;
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
