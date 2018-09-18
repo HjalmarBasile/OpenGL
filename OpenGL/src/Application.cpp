@@ -161,6 +161,11 @@ int main() {
 		return -1;
 	}
 
+	/* Use OpenGL core profile */
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(640, 480, "Welcome to OpenGL!", NULL, NULL);
 	if (!window) {
@@ -202,28 +207,33 @@ int main() {
 		2, 3, 0
 	};
 
+	/* 0. Generate Vertex Array Object */
+	GLuint vao;
+
+	/* 0.1 Retrieve an Id for the vao */
+	GLCheckErrorCall(glGenVertexArrays(1, &vao));
+
+	/* 0.2 Bind the vertex array vao */
+	GLCheckErrorCall(glBindVertexArray(vao));
+
 	/* 1. Generate Vertex Buffer with modern OpenGL */
 	GLuint buffer;
-
-	/* 1.1 Retrieve an Id for the buffer */
 	GLCheckErrorCall(glGenBuffers(1, &buffer));
-
-	/* 1.2 Binds GL_ARRAY_BUFFER to buffer */
 	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
 
-	/* 1.3 Specify that the actual data is contained in positions array and that it must be drawn */
+	/* 1.1 Specify that the actual data is contained in positions array and that it must be drawn */
 	GLCheckErrorCall(glBufferData(GL_ARRAY_BUFFER, POSITIONS_SIZE * sizeof(float), positions, GL_STATIC_DRAW));
 
-	/* 1.4 Set the index of the coordinates attribute in the positions array */
+	/* 1.2 Set the index of the coordinates attribute in the positions array */
 	GLuint coord_attrib_index = 0;
 
-	/* 1.5 Define an attribute for the position array, in our case the points coordinates */
-	GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
-
-	/* 1.6 Enable the coordinates attribute */
+	/* 1.3 Enable the new coordinates attribute */
 	GLCheckErrorCall(glEnableVertexAttribArray(coord_attrib_index));
 
-	/* 2. Generate Index Buffer object (similar to above step) */
+	/* 1.4 Define the attribute for the position array, in our case the points coordinates */
+	GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
+
+	/* 2. Generate Index Buffer object (similar to above steps) */
 	GLuint index_buffer;
 	GLCheckErrorCall(glGenBuffers(1, &index_buffer));
 	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer));
@@ -252,6 +262,15 @@ int main() {
 	float red = 0.0f;
 	float rincr = 0.01f;
 
+	/*
+		Unbind all: this will prove we don't need to bind the array buffer
+		and specify its attributes anymore: it's all inside the vertex array object!
+	*/
+	GLCheckErrorCall(glBindVertexArray(0));
+	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	GLCheckErrorCall(glUseProgram(0));
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -265,6 +284,11 @@ int main() {
 			red = -red;
 			rincr = 0.01f;
 		}
+
+		/* Bring back what we really need */
+		GLCheckErrorCall(glBindVertexArray(vao));
+		GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer));
+		GLCheckErrorCall(glUseProgram(shader));
 
 		/* 4.2 Set uniform variable */
 		GLCheckErrorCall(glUniform4f(uniformColorLocation, red, 0.3f, 0.8f, 1.0f));
