@@ -5,36 +5,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Renderer.h"
+
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/VertexBasic.shader"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/FragmentBasic.shader"
-
-#ifdef _PR_DEBUG
-	#define ASSERT_AND_BREAK(x) if(!(x)) __debugbreak();
-
-	#define GLCheckErrorCall(glFun) GLClearError();\
-		glFun;\
-		ASSERT_AND_BREAK(GLLogCall(#glFun, __FILE__, __LINE__))
-
-	static void GLClearError()
-	{
-		while (glGetError() != GL_NO_ERROR) {
-			/* Just clearing the flags */
-		}
-	}
-
-	static bool GLLogCall(const char* function, const char* file, int line)
-	{
-		GLenum error;
-		while ((error = glGetError()) != GL_NO_ERROR) {
-			std::cout << "[OpenGL Error] (" << error << "):" << function << " in " << file << ":" << line << std::endl;
-			return false;
-		}
-		return true;
-	}
-
-#else
-	#define GLCheckErrorCall(glFun) glFun
-#endif
 
 static std::string ParseShader(const std::string& filepath) {
 	std::ifstream fstreamin(filepath);
