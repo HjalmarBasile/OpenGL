@@ -188,7 +188,8 @@ int main() {
 	}
 
 	/* Just to know... */
-	std::cout << glGetString(GL_VERSION) << std::endl;
+	std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
 	const unsigned int POSITIONS_SIZE = 8;
 	const unsigned int VERTEX_SIZE = 2;
