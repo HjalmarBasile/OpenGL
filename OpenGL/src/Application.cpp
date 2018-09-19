@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/VertexBasic.shader"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/FragmentBasic.shader"
@@ -165,124 +167,123 @@ int main() {
 	std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl;
 	std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
-	const unsigned int POSITIONS_SIZE = 8;
-	const unsigned int VERTEX_SIZE = 2;
-	/* Square vertices */
-	float positions[POSITIONS_SIZE] = {
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.5f,  0.5f,
-		-0.5f,  0.5f
-	};
-
-	const unsigned int INDICES_SIZE = 6;
-	/* Index buffer */
-	unsigned int indices[INDICES_SIZE] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	/* 0. Generate Vertex Array Object */
-	GLuint vao;
-
-	/* 0.1 Retrieve an Id for the vao */
-	GLCheckErrorCall(glGenVertexArrays(1, &vao));
-
-	/* 0.2 Bind the vertex array vao */
-	GLCheckErrorCall(glBindVertexArray(vao));
-
-	/* 1. Generate Vertex Buffer with modern OpenGL */
-	GLuint buffer;
-	GLCheckErrorCall(glGenBuffers(1, &buffer));
-	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-
-	/* 1.1 Specify that the actual data is contained in positions array and that it must be drawn */
-	GLCheckErrorCall(glBufferData(GL_ARRAY_BUFFER, POSITIONS_SIZE * sizeof(float), positions, GL_STATIC_DRAW));
-
-	/* 1.2 Set the index of the coordinates attribute in the positions array */
-	GLuint coord_attrib_index = 0;
-
-	/* 1.3 Enable the new coordinates attribute */
-	GLCheckErrorCall(glEnableVertexAttribArray(coord_attrib_index));
-
-	/* 1.4 Define the attribute for the position array, in our case the points coordinates */
-	GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
-
-	/* 2. Generate Index Buffer object (similar to above steps) */
-	GLuint index_buffer;
-	GLCheckErrorCall(glGenBuffers(1, &index_buffer));
-	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer));
-	GLCheckErrorCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, INDICES_SIZE * sizeof(unsigned int), indices, GL_STATIC_DRAW));
-
-	/* Parse vertex shader source code */
-	std::string vertexShader = ParseShader(VERTEX_BASIC_SHADER_PATH);
-
-	/* Parse fragment shader source code */
-	std::string fragmentShader = ParseShader(FRAGMENT_BASIC_SHADER_PATH);
-
-	/* Create and compile the shader */
-	GLuint shader = CreateShader(vertexShader, fragmentShader);
-
-	/* 3. Install the shader as part of the current rendering state */
-	GLCheckErrorCall(glUseProgram(shader));
-
-	/* 4. Inject values into shader program */
-	/* 4.1 Get the id of a uniform variable (can be done only after linking) */
-	GLint uniformColorLocation = glGetUniformLocation(shader, "u_Color");
-	if (-1 == uniformColorLocation) {
-		std::cout << "Error while getting u_Color location" << std::endl;
-		return -1;
-	}
-
-	float red = 0.0f;
-	float rincr = 0.01f;
-
-	/*
-		Unbind all: this will prove we don't need to bind the array buffer
-		and specify its attributes anymore: it's all inside the vertex array object!
-	*/
-	GLCheckErrorCall(glBindVertexArray(0));
-	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-	GLCheckErrorCall(glUseProgram(0));
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
 	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
+		const unsigned int POSITIONS_SIZE = 8;
+		const unsigned int VERTEX_SIZE = 2;
+		/* Square vertices */
+		float positions[POSITIONS_SIZE] = {
+			-0.5f, -0.5f,
+			 0.5f, -0.5f,
+			 0.5f,  0.5f,
+			-0.5f,  0.5f
+		};
 
-		if (red > 1.0f) {
-			red = 2.0f - red;
-			rincr = -0.01f;
-		} else if (red < 0.0f) {
-			red = -red;
-			rincr = 0.01f;
-		}
+		const unsigned int INDICES_SIZE = 6;
+		/* Index buffer */
+		unsigned int indices[INDICES_SIZE] = {
+			0, 1, 2,
+			2, 3, 0
+		};
 
-		/* Bring back what we really need */
+		/* 0. Generate Vertex Array Object */
+		GLuint vao;
+
+		/* 0.1 Retrieve an Id for the vao */
+		GLCheckErrorCall(glGenVertexArrays(1, &vao));
+
+		/* 0.2 Bind the vertex array vao */
 		GLCheckErrorCall(glBindVertexArray(vao));
-		GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer));
+
+		/* 1. Create and bind vertex buffer */
+		VertexBuffer vb(positions, POSITIONS_SIZE * sizeof(float));
+
+		/* 1.1 Set the index of the coordinates attribute in the positions array */
+		GLuint coord_attrib_index = 0;
+
+		/* 1.2 Enable the new coordinates attribute */
+		GLCheckErrorCall(glEnableVertexAttribArray(coord_attrib_index));
+
+		/* 1.3 Define the attribute for the position array, in our case the points coordinates */
+		GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
+
+		/* 2. Create and bind index buffer */
+		IndexBuffer ib(indices, INDICES_SIZE);
+
+		/* Parse vertex shader source code */
+		std::string vertexShader = ParseShader(VERTEX_BASIC_SHADER_PATH);
+
+		/* Parse fragment shader source code */
+		std::string fragmentShader = ParseShader(FRAGMENT_BASIC_SHADER_PATH);
+
+		/* Create and compile the shader */
+		GLuint shader = CreateShader(vertexShader, fragmentShader);
+
+		/* 3. Install the shader as part of the current rendering state */
 		GLCheckErrorCall(glUseProgram(shader));
 
-		/* 4.2 Set uniform variable */
-		GLCheckErrorCall(glUniform4f(uniformColorLocation, red, 0.3f, 0.8f, 1.0f));
+		/* 4. Inject values into shader program */
+		/* 4.1 Get the id of a uniform variable (can be done only after linking) */
+		GLint uniformColorLocation = glGetUniformLocation(shader, "u_Color");
+		if (-1 == uniformColorLocation) {
+			std::cout << "Error while getting u_Color location" << std::endl;
+			return -1;
+		}
 
-		/* From the buffers setup above, OpenGL will know what to do */
-		GLCheckErrorCall(glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr));
+		float red = 0.0f;
+		float rincr = 0.01f;
 
-		red += rincr;
+		/*
+			Unbind all: this will prove we don't need to bind the array buffer
+			and specify its attributes anymore: it's all inside the vertex array object!
+		*/
+		GLCheckErrorCall(glBindVertexArray(0));
+		GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+		GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		GLCheckErrorCall(glUseProgram(0));
 
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
+		/* Loop until the user closes the window */
+		while (!glfwWindowShouldClose(window))
+		{
+			/* Render here */
+			glClear(GL_COLOR_BUFFER_BIT);
 
-		/* Poll for and process events */
-		glfwPollEvents();
+			if (red > 1.0f) {
+				red = 2.0f - red;
+				rincr = -0.01f;
+			} else if (red < 0.0f) {
+				red = -red;
+				rincr = 0.01f;
+			}
+
+			/* Bring back what we really need */
+			GLCheckErrorCall(glBindVertexArray(vao));
+			ib.Bind();
+			GLCheckErrorCall(glUseProgram(shader));
+
+			/* 4.2 Set uniform variable */
+			GLCheckErrorCall(glUniform4f(uniformColorLocation, red, 0.3f, 0.8f, 1.0f));
+
+			/* From the buffers setup above, OpenGL will know what to do */
+			GLCheckErrorCall(glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr));
+
+			red += rincr;
+
+			/* Swap front and back buffers */
+			glfwSwapBuffers(window);
+
+			/* Poll for and process events */
+			glfwPollEvents();
+		}
+
+		/* Delete the shader program */
+		GLCheckErrorCall(glDeleteProgram(shader));
 	}
-
-	/* Delete the shader program */
-	GLCheckErrorCall(glDeleteProgram(shader));
-
+	/*
+		glfwTerminate destroys the OpenGL context, so after that any call
+		to glGetError would return an error. That is why we need to close
+		the scope and trigger the index and vertex buffer destructors now.
+		Otherwise we would get an infinite loop.
+	*/
 	glfwTerminate();
 
 	return 0;
