@@ -17,12 +17,12 @@ VertexBuffer::~VertexBuffer()
 	GLCheckErrorCall(glDeleteBuffers(1, &m_RendererID));
 }
 
-void VertexBuffer::Bind()
+void VertexBuffer::Bind() const
 {
 	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
 }
 
-void VertexBuffer::Unbind()
+void VertexBuffer::Unbind() const
 {
 	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
