@@ -10,4 +10,5 @@ public:
 
 	void Bind() const;
 	void Unbind() const;
+	bool IsBound() const;
 };

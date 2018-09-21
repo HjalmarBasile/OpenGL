@@ -23,3 +23,8 @@ void IndexBuffer::Unbind() const
 {
 	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
+
+bool IndexBuffer::IsBound() const
+{
+	return 0 != m_RendererID;
+}

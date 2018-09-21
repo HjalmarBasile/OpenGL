@@ -26,3 +26,8 @@ void VertexBuffer::Unbind() const
 {
 	GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
+
+bool VertexBuffer::IsBound() const
+{
+	return 0 != m_RendererID;
+}
