@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Renderer.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
@@ -169,7 +170,7 @@ int main() {
 
 	{
 		const unsigned int POSITIONS_SIZE = 8;
-		const unsigned int VERTEX_SIZE = 2;
+		const GLint VERTEX_SIZE = 2;
 		/* Square vertices */
 		float positions[POSITIONS_SIZE] = {
 			-0.5f, -0.5f,
@@ -185,28 +186,20 @@ int main() {
 			2, 3, 0
 		};
 
-		/* 0. Generate Vertex Array Object */
-		GLuint vao;
+		/* Generate vertex array object */
+		VertexArray va;
 
-		/* 0.1 Retrieve an Id for the vao */
-		GLCheckErrorCall(glGenVertexArrays(1, &vao));
-
-		/* 0.2 Bind the vertex array vao */
-		GLCheckErrorCall(glBindVertexArray(vao));
-
-		/* 1. Create and bind vertex buffer */
+		/* Create and bind vertex buffer */
 		VertexBuffer vb(positions, POSITIONS_SIZE * sizeof(float));
 
-		/* 1.1 Set the index of the coordinates attribute in the positions array */
-		GLuint coord_attrib_index = 0;
+		/* Define a vertex buffer layout */
+		VertexBufferLayout layout;
+		layout.Push<float>(VERTEX_SIZE);
 
-		/* 1.2 Enable the new coordinates attribute */
-		GLCheckErrorCall(glEnableVertexAttribArray(coord_attrib_index));
+		/* va is defined by the pair (vb, layout) */
+		va.AddBuffer(vb, layout);
 
-		/* 1.3 Define the attribute for the position array, in our case the points coordinates */
-		GLCheckErrorCall(glVertexAttribPointer(coord_attrib_index, VERTEX_SIZE, GL_FLOAT, GL_FALSE, VERTEX_SIZE * sizeof(float), 0));
-
-		/* 2. Create and bind index buffer */
+		/* Create and bind index buffer */
 		IndexBuffer ib(indices, INDICES_SIZE);
 
 		/* Parse vertex shader source code */
@@ -218,11 +211,11 @@ int main() {
 		/* Create and compile the shader */
 		GLuint shader = CreateShader(vertexShader, fragmentShader);
 
-		/* 3. Install the shader as part of the current rendering state */
+		/* Install the shader as part of the current rendering state */
 		GLCheckErrorCall(glUseProgram(shader));
 
-		/* 4. Inject values into shader program */
-		/* 4.1 Get the id of a uniform variable (can be done only after linking) */
+		/* Inject values into shader program */
+		/* Get the id of a uniform variable (can be done only after linking) */
 		GLint uniformColorLocation = glGetUniformLocation(shader, "u_Color");
 		if (-1 == uniformColorLocation) {
 			std::cout << "Error while getting u_Color location" << std::endl;
@@ -236,9 +229,9 @@ int main() {
 			Unbind all: this will prove we don't need to bind the array buffer
 			and specify its attributes anymore: it's all inside the vertex array object!
 		*/
-		GLCheckErrorCall(glBindVertexArray(0));
-		GLCheckErrorCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-		GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		va.Unbind();
+		vb.Unbind();
+		ib.Unbind();
 		GLCheckErrorCall(glUseProgram(0));
 
 		/* Loop until the user closes the window */
@@ -256,11 +249,11 @@ int main() {
 			}
 
 			/* Bring back what we really need */
-			GLCheckErrorCall(glBindVertexArray(vao));
+			va.Bind();
 			ib.Bind();
 			GLCheckErrorCall(glUseProgram(shader));
 
-			/* 4.2 Set uniform variable */
+			/* Set uniform variable */
 			GLCheckErrorCall(glUniform4f(uniformColorLocation, red, 0.3f, 0.8f, 1.0f));
 
 			/* From the buffers setup above, OpenGL will know what to do */
