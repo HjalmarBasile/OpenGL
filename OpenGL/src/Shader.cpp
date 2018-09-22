@@ -1,5 +1,11 @@
 #include "Shader.h"
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+#include "Renderer.h"
+
 Shader::Shader(const std::string& vertfilepath, const std::string& fragfilepath)
 {
 	/* Parse vertex shader source code */
@@ -36,11 +42,18 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
 
 GLint Shader::GetUniformLocation(const std::string& name)
 {
+	/* Search in the cache first */
+	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end()) {
+		return m_UniformLocationCache[name];
+	}
+
 	/* Get the id of the uniform variable (can be done only after linking) */
 	GLint uniformLocation = glGetUniformLocation(m_RendererID, name.c_str());
 	if (-1 == uniformLocation) {
 		std::cout << "Error while getting " << name << " uniform location" << std::endl;
 	}
+	m_UniformLocationCache[name] = uniformLocation;
+
 	return uniformLocation;
 }
 

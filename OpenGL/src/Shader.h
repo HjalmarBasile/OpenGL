@@ -1,12 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include <string>
-#include <sstream>
-#include <fstream>
+#include <unordered_map>
 #include <GL/glew.h>
-
-#include "Renderer.h"
 
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/basic.vert"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/basic.frag"
@@ -15,7 +11,7 @@ class Shader
 {
 private:
 	unsigned int m_RendererID;
-	// TODO hashmap
+	std::unordered_map<std::string, GLint> m_UniformLocationCache;
 public:
 	Shader(const std::string& vertfilepath, const std::string& fragfilepath);
 	~Shader();
