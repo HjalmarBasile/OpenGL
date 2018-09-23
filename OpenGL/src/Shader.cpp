@@ -152,7 +152,11 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	/* Compile the fragment shader and return its id */
 	GLuint fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
-	// TODO: check if the returned id are valid
+	/* Check if the returned ids are valid */
+#ifdef _PR_DEBUG
+	ASSERT_AND_BREAK(0 != vs)
+	ASSERT_AND_BREAK(0 != fs)
+#endif
 
 	/* Attach both shaders to a single program */
 	GLCheckErrorCall(glAttachShader(program, vs));
