@@ -48,7 +48,7 @@ GLint Shader::GetUniformLocation(const std::string& name)
 	}
 
 	/* Get the id of the uniform variable (can be done only after linking) */
-	GLint uniformLocation = glGetUniformLocation(m_RendererID, name.c_str());
+	GLCheckErrorCall(GLint uniformLocation = glGetUniformLocation(m_RendererID, name.c_str()));
 	if (-1 == uniformLocation) {
 		std::cout << "Error while getting " << name << " uniform location" << std::endl;
 	}
@@ -91,20 +91,20 @@ const char* Shader::GetShaderName(GLenum shaderType) {
 GLuint Shader::CompileShader(GLenum shaderType, const std::string& source) {
 
 	/* Create an empty shader object and return its id */
-	GLuint id = glCreateShader(shaderType);
+	GLCheckErrorCall(GLuint id = glCreateShader(shaderType));
 
 	/* OpenGL needs the source code as a c-string */
 	const char* src = source.c_str();
 
 	/* Copies the source code into the shader object */
-	glShaderSource(id, 1, &src, NULL);
+	GLCheckErrorCall(glShaderSource(id, 1, &src, NULL));
 
 	/* Compile the shader */
-	glCompileShader(id);
+	GLCheckErrorCall(glCompileShader(id));
 
 	/* Retrieve the compilation result */
 	GLint compilationResult;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &compilationResult);
+	GLCheckErrorCall(glGetShaderiv(id, GL_COMPILE_STATUS, &compilationResult));
 
 	/*
 	 * Log the error if the compilation was not successful,
@@ -112,7 +112,7 @@ GLuint Shader::CompileShader(GLenum shaderType, const std::string& source) {
 	 */
 	if (GL_TRUE != compilationResult) {
 		GLint logLength;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
+		GLCheckErrorCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength));
 
 		/*
 		 * Allocate the message on the stack, free will happen automatically
@@ -124,14 +124,14 @@ GLuint Shader::CompileShader(GLenum shaderType, const std::string& source) {
 		char* logMessage = (char*)alloca(logLength * sizeof(char));
 
 		/* Get the information log for the shader object */
-		glGetShaderInfoLog(id, logLength, &logLength, logMessage);
+		GLCheckErrorCall(glGetShaderInfoLog(id, logLength, &logLength, logMessage));
 
 		/* Log the error message */
 		std::cout << "Failed to compile " << Shader::GetShaderName(shaderType) << " shader!\n";
 		std::cout << logMessage << std::endl;
 
 		/* Delete the shader from memory and invalidate its id */
-		glDeleteShader(id);
+		GLCheckErrorCall(glDeleteShader(id));
 
 		/* Return an invalid id */
 		return 0;
@@ -144,7 +144,7 @@ GLuint Shader::CompileShader(GLenum shaderType, const std::string& source) {
 GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
 
 	/* Create an empty program object and return its id */
-	GLuint program = glCreateProgram();
+	GLCheckErrorCall(GLuint program = glCreateProgram());
 
 	/* Compile the vertex shader and return its id */
 	GLuint vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
@@ -155,22 +155,22 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	// TODO: check if the returned id are valid
 
 	/* Attach both shaders to a single program */
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
+	GLCheckErrorCall(glAttachShader(program, vs));
+	GLCheckErrorCall(glAttachShader(program, fs));
 
 	/* It's time to link! */
-	glLinkProgram(program);
+	GLCheckErrorCall(glLinkProgram(program));
 
 	/* Validate the program to check if it can be executed */
-	glValidateProgram(program);
+	GLCheckErrorCall(glValidateProgram(program));
 
 	/* Detach before delete */
-	glDetachShader(program, vs);
-	glDetachShader(program, fs);
+	GLCheckErrorCall(glDetachShader(program, vs));
+	GLCheckErrorCall(glDetachShader(program, fs));
 
 	/* We do not need intermediates binaries anymore */
-	glDeleteProgram(vs);
-	glDeleteProgram(fs);
+	GLCheckErrorCall(glDeleteProgram(vs));
+	GLCheckErrorCall(glDeleteProgram(fs));
 
 	/* Return shader id */
 	return program;

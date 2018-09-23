@@ -43,8 +43,8 @@ int main() {
 	}
 
 	/* Just to know... */
-	std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl;
-	std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+	GLCheckErrorCall(std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl);
+	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
 		const unsigned int POSITIONS_SIZE = 8;
@@ -100,7 +100,7 @@ int main() {
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
-			glClear(GL_COLOR_BUFFER_BIT);
+			GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT));
 
 			if (red > 1.0f) {
 				red = 2.0f - red;
