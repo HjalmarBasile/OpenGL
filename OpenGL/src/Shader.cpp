@@ -161,10 +161,12 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	/* It's time to link! */
 	glLinkProgram(program);
 
-	// TODO: detach shader?
-
 	/* Validate the program to check if it can be executed */
 	glValidateProgram(program);
+
+	/* Detach before delete */
+	glDetachShader(program, vs);
+	glDetachShader(program, fs);
 
 	/* We do not need intermediates binaries anymore */
 	glDeleteProgram(vs);
