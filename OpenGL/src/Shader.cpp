@@ -169,8 +169,8 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	GLCheckErrorCall(glDetachShader(program, fs));
 
 	/* We do not need intermediates binaries anymore */
-	GLCheckErrorCall(glDeleteProgram(vs));
-	GLCheckErrorCall(glDeleteProgram(fs));
+	GLCheckErrorCall(glDeleteShader(vs));
+	GLCheckErrorCall(glDeleteShader(fs));
 
 	/* Return shader id */
 	return program;
