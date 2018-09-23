@@ -96,11 +96,13 @@ int main() {
 		ib.Unbind();
 		shader.Unuse();
 
+		Renderer renderer;
+
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
-			GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT));
+			renderer.Clear();
 
 			if (red > 1.0f) {
 				red = 2.0f - red;
@@ -110,16 +112,11 @@ int main() {
 				rincr = 0.01f;
 			}
 
-			/* Bring back what we really need */
-			va.Bind();
-			ib.Bind();
 			shader.Use();
-
 			/* Set uniform variable */
 			shader.SetUniform4f("u_Color", red, 0.3f, 0.8f, 1.0f);
 
-			/* From the buffers setup above, OpenGL will know what to do */
-			GLCheckErrorCall(glDrawElements(GL_TRIANGLES, INDICES_SIZE, GL_UNSIGNED_INT, nullptr));
+			renderer.Draw(va, ib, shader);
 
 			red += rincr;
 

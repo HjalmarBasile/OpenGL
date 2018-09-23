@@ -2,6 +2,10 @@
 
 #include <GL/glew.h>
 
+#include "VertexArray.h"
+#include "IndexBuffer.h"
+#include "Shader.h"
+
 #ifdef _PR_DEBUG
 #define ASSERT_AND_BREAK(x) if(!(x)) __debugbreak();
 
@@ -15,3 +19,10 @@ bool GLLogCall(const char* function, const char* file, int line);
 #else
 #define GLCheckErrorCall(glFun) glFun
 #endif
+
+class Renderer
+{
+public:
+	void Clear() const;
+	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+};
