@@ -38,8 +38,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\basic.vert" />
-    <None Include="res\shaders\basic.frag" />
+    <None Include="res\shaders\basic.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\basic.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
