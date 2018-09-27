@@ -67,6 +67,11 @@ int main() {
 			2, 3, 0
 		};
 
+		/* Enable blending */
+		GLCheckErrorCall(glEnable(GL_BLEND));
+		/* Transparency implementation */
+		GLCheckErrorCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		/* Generate vertex array object */
 		VertexArray va;
 
