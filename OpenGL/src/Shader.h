@@ -7,6 +7,9 @@
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/basic.vert"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/basic.frag"
 
+#define VERTEX_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.vert"
+#define FRAGMENT_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.frag"
+
 class Shader
 {
 private:

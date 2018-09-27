@@ -50,6 +50,8 @@
     <None Include="res\shaders\basic.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\shaders\texture2D.frag" />
+    <None Include="res\shaders\texture2D.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
