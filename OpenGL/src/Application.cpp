@@ -7,6 +7,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include "Texture.h"
 
 int main() {
 	GLFWwindow* window;
@@ -22,7 +23,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Welcome to OpenGL!", NULL, NULL);
+	window = glfwCreateWindow(720, 540, "Welcome to OpenGL!", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -47,14 +48,16 @@ int main() {
 	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
-		const unsigned int POSITIONS_SIZE = 8;
+		const unsigned int POSITIONS_SIZE = 4 * 4;
 		const GLint VERTEX_SIZE = 2;
+		const GLint UV_SIZE = 2;
 		/* Square vertices */
 		float positions[POSITIONS_SIZE] = {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
+			/* vertices */  /* UV coordinates */
+			-0.5f, -0.5f,	0.0f, 0.0f, // 0
+			 0.5f, -0.5f,	1.0f, 0.0f, // 1
+			 0.5f,  0.5f,	1.0f, 1.0f, // 2
+			-0.5f,  0.5f,	0.0f, 1.0f  // 3
 		};
 
 		const unsigned int INDICES_SIZE = 6;
@@ -73,6 +76,7 @@ int main() {
 		/* Define a vertex buffer layout */
 		VertexBufferLayout layout;
 		layout.Push<float>(VERTEX_SIZE);
+		layout.Push<float>(UV_SIZE);
 
 		/* va is defined by the pair (vb, layout) */
 		va.AddBuffer(vb, layout);
@@ -81,11 +85,14 @@ int main() {
 		IndexBuffer ib(indices, INDICES_SIZE);
 
 		/* Create shader program */
-		Shader shader(VERTEX_BASIC_SHADER_PATH, FRAGMENT_BASIC_SHADER_PATH);
+		Shader shader(VERTEX_TEXTURE_2D_SHADER_PATH, FRAGMENT_TEXTURE_2D_SHADER_PATH);
 		shader.Use();
 
-		float red = 0.0f;
-		float rincr = 0.01f;
+		/* Load texture to memory */
+		Texture texture(DICE_TEXTURE_PATH);
+		const unsigned int slot = 0;
+		texture.Bind(slot);
+		shader.SetUniform1i("u_Texture", slot);
 
 		/*
 			Unbind all: this will prove we don't need to bind the array buffer
@@ -104,21 +111,9 @@ int main() {
 			/* Render here */
 			renderer.Clear();
 
-			if (red > 1.0f) {
-				red = 2.0f - red;
-				rincr = -0.01f;
-			} else if (red < 0.0f) {
-				red = -red;
-				rincr = 0.01f;
-			}
-
 			shader.Use();
-			/* Set uniform variable */
-			shader.SetUniform4f("u_Color", red, 0.3f, 0.8f, 1.0f);
 
 			renderer.Draw(va, ib, shader);
-
-			red += rincr;
 
 			/* Swap front and back buffers */
 			glfwSwapBuffers(window);
