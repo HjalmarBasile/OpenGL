@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-#include "thirdparty/stb/stb_image.h"
+#include "stb/stb_image.h"
 
 #define RGBA_CHANNELS 4
 
