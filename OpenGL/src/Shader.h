@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <GL/glew.h>
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #define VERTEX_BASIC_SHADER_PATH "res/shaders/basic.vert"
 #define FRAGMENT_BASIC_SHADER_PATH "res/shaders/basic.frag"
 
@@ -25,6 +27,7 @@ public:
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniform1f(const std::string& name, float value);
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
+	void SetUniformMatrix4fv(const std::string& name, const glm::mat4& matrix);
 private:
 	GLint GetUniformLocation(const std::string& name);
 

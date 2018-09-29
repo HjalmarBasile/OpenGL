@@ -50,6 +50,12 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
 	GLCheckErrorCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
+void Shader::SetUniformMatrix4fv(const std::string& name, const glm::mat4& matrix)
+{
+	/* No need to transpose: both OpenGL and glm use column-major order for matrices */
+	GLCheckErrorCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+}
+
 GLint Shader::GetUniformLocation(const std::string& name)
 {
 	/* Search in the cache first */

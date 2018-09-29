@@ -9,6 +9,11 @@
 #include "Shader.h"
 #include "Texture.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
+#define WINDOW_WIDTH 720
+#define WINDOW_HEIGHT 540
+
 int main() {
 	GLFWwindow* window;
 
@@ -23,7 +28,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(720, 540, "Welcome to OpenGL!", NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Welcome to OpenGL!", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -53,11 +58,11 @@ int main() {
 		const GLint UV_SIZE = 2;
 		/* Square vertices */
 		float positions[POSITIONS_SIZE] = {
-			/* vertices */  /* UV coordinates */
-			-0.5f, -0.5f,	0.0f, 0.0f, // 0
-			 0.5f, -0.5f,	1.0f, 0.0f, // 1
-			 0.5f,  0.5f,	1.0f, 1.0f, // 2
-			-0.5f,  0.5f,	0.0f, 1.0f  // 3
+			/* vertices */	/* UV coordinates */
+			180.0f, 135.0f,	0.0f, 0.0f, // 0
+			540.0f, 135.0f,	1.0f, 0.0f, // 1
+			540.0f, 405.0f,	1.0f, 1.0f, // 2
+			180.0f, 405.0f,	0.0f, 1.0f  // 3
 		};
 
 		const unsigned int INDICES_SIZE = 6;
@@ -98,6 +103,10 @@ int main() {
 		const unsigned int slot = 0;
 		texture.Bind(slot);
 		shader.SetUniform1i("u_Texture", slot);
+
+		/* Orthographic projection matrix (window aspect ratio) */
+		glm::mat4 proj = glm::ortho<float>(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT);
+		shader.SetUniformMatrix4fv("u_MVP", proj);
 
 		/*
 			Unbind all: this will prove we don't need to bind the array buffer
