@@ -105,6 +105,7 @@ int main() {
 		shader.SetUniform1i("u_Texture", slot);
 
 		/* Orthographic projection matrix (window aspect ratio) */
+		/* See math folder in the solution dir for explanation */
 		glm::mat4 proj = glm::ortho<float>(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT);
 		shader.SetUniformMatrix4fv("u_MVP", proj);
 
