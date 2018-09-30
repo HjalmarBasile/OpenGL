@@ -104,10 +104,22 @@ int main() {
 		texture.Bind(slot);
 		shader.SetUniform1i("u_Texture", slot);
 
+		/* Let's translate the model */
+		float modelTranslateX = 150.0f;
+		float modelTranslateY = 75.0f;
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelTranslateX, modelTranslateY, 0.0f));
+
+		/* Moving the camera to the right is equivalent to move the model to the left */
+		float cameraTranslateX = 100.0f;
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraTranslateX, 0.0f, 0.0f));
+
 		/* Orthographic projection matrix (window aspect ratio) */
 		/* See math folder in the solution dir for explanation */
 		glm::mat4 proj = glm::ortho<float>(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT);
-		shader.SetUniformMatrix4fv("u_MVP", proj);
+
+		/* Finally we build our MVP matrix */
+		glm::mat4 MVP = proj * view * model;
+		shader.SetUniformMatrix4fv("u_MVP", MVP);
 
 		/*
 			Unbind all: this will prove we don't need to bind the array buffer
