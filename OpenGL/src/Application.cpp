@@ -10,6 +10,9 @@
 #include "Texture.h"
 
 #include "glm/gtc/matrix_transform.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 #define WINDOW_WIDTH 720
 #define WINDOW_HEIGHT 540
@@ -47,6 +50,13 @@ int main() {
 		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
 		return -1;
 	}
+
+	/* Setup Dear ImGui */
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 130");
+	ImGui::StyleColorsDark();
 
 	/* Just to know... */
 	GLCheckErrorCall(std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl);
@@ -104,10 +114,9 @@ int main() {
 		texture.Bind(slot);
 		shader.SetUniform1i("u_Texture", slot);
 
-		/* Let's translate the model */
-		float modelTranslateX = 150.0f;
-		float modelTranslateY = 75.0f;
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelTranslateX, modelTranslateY, 0.0f));
+		/* Let's define the model matrix */
+		glm::vec3 modelTranslation = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), modelTranslation);
 
 		/* Moving the camera to the right is equivalent to move the model to the left */
 		float cameraTranslateX = 100.0f;
@@ -119,7 +128,6 @@ int main() {
 
 		/* Finally we build our MVP matrix */
 		glm::mat4 MVP = proj * view * model;
-		shader.SetUniformMatrix4fv("u_MVP", MVP);
 
 		/*
 			Unbind all: this will prove we don't need to bind the array buffer
@@ -132,15 +140,47 @@ int main() {
 
 		Renderer renderer;
 
+		/* Do not show ImGui demo window at startup */
+		bool show_demo_window = false;
+
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
 			renderer.Clear();
 
-			shader.Use();
+			/* Start the Dear ImGui frame */
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
 
+			/* Update MVP every frame */
+			model = glm::translate(glm::mat4(1.0f), modelTranslation);
+			MVP = proj * view * model;
+
+			shader.Use();
+			shader.SetUniformMatrix4fv("u_MVP", MVP);
 			renderer.Draw(va, ib, shader);
+
+			/* Show the ImGui big demo window */
+			if (show_demo_window) {
+				ImGui::ShowDemoWindow(&show_demo_window);
+			}
+
+			/* Show a simple ImGui window. We use a Begin/End pair to create a named window. */
+			{
+				ImGui::Begin("Hello, ImGui!");
+				ImGui::Checkbox("Demo Window", &show_demo_window);
+
+				ImGui::Text("Use the slider to move the model around.");
+				ImGui::SliderFloat3("Model Translation", (float*)&modelTranslation.x, -WINDOW_WIDTH, WINDOW_WIDTH);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::End();
+			}
+
+			/* ImGui Rendering */
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 			/* Swap front and back buffers */
 			glfwSwapBuffers(window);
@@ -149,6 +189,12 @@ int main() {
 			glfwPollEvents();
 		}
 	}
+
+	/* Cleanup */
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
 	/*
 		glfwTerminate destroys the OpenGL context, so after that any call
 		to glGetError would return an error. That is why we need to close
