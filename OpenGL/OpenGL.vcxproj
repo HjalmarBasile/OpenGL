@@ -155,6 +155,7 @@
     <ClCompile Include="src\thirdparty\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\thirdparty\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\thirdparty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\thirdparty\imgui\main.cpp" />
     <ClCompile Include="src\thirdparty\stb\stb_image.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
