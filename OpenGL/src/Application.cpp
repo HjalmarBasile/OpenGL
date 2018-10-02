@@ -187,8 +187,8 @@ int main() {
 				ImGui::Checkbox("Demo Window", &show_demo_window);
 
 				ImGui::Text("Use the slider to move the model around.");
-				ImGui::SliderFloat3("Model A Translation", (float*)&modelTranslationA.x, 0.0f, WINDOW_WIDTH);
-				ImGui::SliderFloat3("Model B Translation", (float*)&modelTranslationB.x, 0.0f, WINDOW_WIDTH);
+				ImGui::SliderFloat3("Model A Translation", reinterpret_cast<float*>(&modelTranslationA.x), 0.0f, WINDOW_WIDTH);
+				ImGui::SliderFloat3("Model B Translation", reinterpret_cast<float*>(&modelTranslationB.x), 0.0f, WINDOW_WIDTH);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 				ImGui::End();
 			}
