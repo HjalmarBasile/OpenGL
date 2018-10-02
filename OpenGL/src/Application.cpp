@@ -70,11 +70,11 @@ int main() {
 		const GLint UV_SIZE = 2;
 		/* Square vertices */
 		float positions[POSITIONS_SIZE] = {
-			/* vertices */	/* UV coordinates */
-			180.0f, 135.0f,	0.0f, 0.0f, // 0
-			540.0f, 135.0f,	1.0f, 0.0f, // 1
-			540.0f, 405.0f,	1.0f, 1.0f, // 2
-			180.0f, 405.0f,	0.0f, 1.0f  // 3
+			/* vertices */		/* UV coordinates */
+			-180.0f, -135.0f,	0.0f, 0.0f, // 0
+			 180.0f, -135.0f,	1.0f, 0.0f, // 1
+			 180.0f,  135.0f,	1.0f, 1.0f, // 2
+			-180.0f,  135.0f,	0.0f, 1.0f  // 3
 		};
 
 		const unsigned int INDICES_SIZE = 6;
@@ -117,11 +117,10 @@ int main() {
 		shader.SetUniform1i("u_Texture", slot);
 
 		/* Let's define the model matrix */
-		glm::vec3 modelTranslation = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), modelTranslation);
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 		/* Moving the camera to the right is equivalent to move the model to the left */
-		float cameraTranslateX = 100.0f;
+		float cameraTranslateX = 0.0f; /* For now let's keep it where it is anyway */
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraTranslateX, 0.0f, 0.0f));
 
 		/* Orthographic projection matrix (window aspect ratio) */
@@ -140,6 +139,10 @@ int main() {
 		ib.Unbind();
 		shader.Unuse();
 
+		/* We will update these vectors at runtime via ImGui */
+		glm::vec3 modelTranslationA = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 modelTranslationB = glm::vec3(0.0f, 0.0f, 0.0f);
+
 		Renderer renderer;
 
 		/* Do not show ImGui demo window at startup */
@@ -156,13 +159,22 @@ int main() {
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			/* Update MVP every frame */
-			model = glm::translate(glm::mat4(1.0f), modelTranslation);
-			MVP = proj * view * model;
-
 			shader.Use();
-			shader.SetUniformMatrix4fv("u_MVP", MVP);
-			renderer.Draw(va, ib, shader);
+
+			/* Update MVP every frame */
+			{
+				model = glm::translate(glm::mat4(1.0f), modelTranslationA);
+				MVP = proj * view * model;
+				shader.SetUniformMatrix4fv("u_MVP", MVP);
+				renderer.Draw(va, ib, shader);
+			}
+
+			{
+				model = glm::translate(glm::mat4(1.0f), modelTranslationB);
+				MVP = proj * view * model;
+				shader.SetUniformMatrix4fv("u_MVP", MVP);
+				renderer.Draw(va, ib, shader);
+			}
 
 			/* Show the ImGui big demo window */
 			if (show_demo_window) {
@@ -175,7 +187,8 @@ int main() {
 				ImGui::Checkbox("Demo Window", &show_demo_window);
 
 				ImGui::Text("Use the slider to move the model around.");
-				ImGui::SliderFloat3("Model Translation", (float*)&modelTranslation.x, -WINDOW_WIDTH, WINDOW_WIDTH);
+				ImGui::SliderFloat3("Model A Translation", (float*)&modelTranslationA.x, 0.0f, WINDOW_WIDTH);
+				ImGui::SliderFloat3("Model B Translation", (float*)&modelTranslationB.x, 0.0f, WINDOW_WIDTH);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 				ImGui::End();
 			}
