@@ -66,6 +66,9 @@
     <ClCompile Include="src\thirdparty\imgui\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\SceneClearColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -1225,6 +1228,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\thirdparty\imgui\imgui_impl_glfw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\AbstractScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\SceneClearColor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
