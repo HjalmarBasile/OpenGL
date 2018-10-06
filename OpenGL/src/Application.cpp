@@ -2,14 +2,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Renderer.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "scenes/SceneClearColor.h"
+#include "scenes/SceneTexture2D.h"
 
-#include "glm/gtc/matrix_transform.hpp"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -65,85 +60,8 @@ int main() {
 	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
-		const unsigned int POSITIONS_SIZE = 4 * 4;
-		const GLint VERTEX_SIZE = 2;
-		const GLint UV_SIZE = 2;
-		/* Square vertices */
-		float positions[POSITIONS_SIZE] = {
-			/* vertices */		/* UV coordinates */
-			-180.0f, -135.0f,	0.0f, 0.0f, // 0
-			 180.0f, -135.0f,	1.0f, 0.0f, // 1
-			 180.0f,  135.0f,	1.0f, 1.0f, // 2
-			-180.0f,  135.0f,	0.0f, 1.0f  // 3
-		};
-
-		const unsigned int INDICES_SIZE = 6;
-		/* Index buffer */
-		unsigned int indices[INDICES_SIZE] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		/* Enable blending */
-		GLCheckErrorCall(glEnable(GL_BLEND));
-		/* Transparency implementation */
-		GLCheckErrorCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-		/* Generate vertex array object */
-		VertexArray va;
-
-		/* Create and bind vertex buffer */
-		VertexBuffer vb(positions, POSITIONS_SIZE * sizeof(float));
-
-		/* Define a vertex buffer layout */
-		VertexBufferLayout layout;
-		layout.Push<float>(VERTEX_SIZE);
-		layout.Push<float>(UV_SIZE);
-
-		/* va is defined by the pair (vb, layout) */
-		va.AddBuffer(vb, layout);
-
-		/* Create and bind index buffer */
-		IndexBuffer ib(indices, INDICES_SIZE);
-
-		/* Create shader program */
-		Shader shader(VERTEX_TEXTURE_2D_SHADER_PATH, FRAGMENT_TEXTURE_2D_SHADER_PATH);
-		shader.Use();
-
-		/* Load texture to memory */
-		Texture texture(DICE_TEXTURE_PATH);
-		const unsigned int slot = 0;
-		texture.Bind(slot);
-		shader.SetUniform1i("u_Texture", slot);
-
-		/* Let's define the model matrix */
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-
-		/* Moving the camera to the right is equivalent to move the model to the left */
-		float cameraTranslateX = 0.0f; /* For now let's keep it where it is anyway */
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraTranslateX, 0.0f, 0.0f));
-
-		/* Orthographic projection matrix (window aspect ratio) */
-		/* See math folder in the solution dir for explanation */
-		glm::mat4 proj = glm::ortho<float>(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT);
-
-		/* Finally we build our MVP matrix */
-		glm::mat4 MVP = proj * view * model;
-
-		/*
-			Unbind all: this will prove we don't need to bind the array buffer
-			and specify its attributes anymore: it's all inside the vertex array object!
-		*/
-		va.Unbind();
-		vb.Unbind();
-		ib.Unbind();
-		shader.Unuse();
-
-		/* We will update these vectors at runtime via ImGui */
-		glm::vec3 modelTranslationA = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 modelTranslationB = glm::vec3(0.0f, 0.0f, 0.0f);
-
-		Renderer renderer;
+		// scene::SceneClearColor scene(0.2f, 0.3f, 0.8f, 1.0f);
+		scene::SceneTexture2D scene(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Do not show ImGui demo window at startup */
 		bool show_demo_window = false;
@@ -152,46 +70,21 @@ int main() {
 		while (!glfwWindowShouldClose(window))
 		{
 			/* Render here */
-			renderer.Clear();
+			scene.OnRender();
 
 			/* Start the Dear ImGui frame */
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			shader.Use();
-
-			/* Update MVP every frame */
-			{
-				model = glm::translate(glm::mat4(1.0f), modelTranslationA);
-				MVP = proj * view * model;
-				shader.SetUniformMatrix4fv("u_MVP", MVP);
-				renderer.Draw(va, ib, shader);
-			}
-
-			{
-				model = glm::translate(glm::mat4(1.0f), modelTranslationB);
-				MVP = proj * view * model;
-				shader.SetUniformMatrix4fv("u_MVP", MVP);
-				renderer.Draw(va, ib, shader);
-			}
+			scene.OnImGuiRender();
 
 			/* Show the ImGui big demo window */
 			if (show_demo_window) {
 				ImGui::ShowDemoWindow(&show_demo_window);
 			}
 
-			/* Show a simple ImGui window. We use a Begin/End pair to create a named window. */
-			{
-				ImGui::Begin("Hello, ImGui!");
-				ImGui::Checkbox("Demo Window", &show_demo_window);
-
-				ImGui::Text("Use the slider to move the model around.");
-				ImGui::SliderFloat3("Model A Translation", reinterpret_cast<float*>(&modelTranslationA.x), 0.0f, WINDOW_WIDTH);
-				ImGui::SliderFloat3("Model B Translation", reinterpret_cast<float*>(&modelTranslationB.x), 0.0f, WINDOW_WIDTH);
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-				ImGui::End();
-			}
+			// ImGui::Checkbox("Demo Window", &show_demo_window);
 
 			/* ImGui Rendering */
 			ImGui::Render();
@@ -213,7 +106,8 @@ int main() {
 	/*
 		glfwTerminate destroys the OpenGL context, so after that any call
 		to glGetError would return an error. That is why we need to close
-		the scope and trigger the index and vertex buffer destructors now.
+		the scope and trigger the index and vertex buffer destructors now,
+		in case they were created in the scene.
 		Otherwise we would get an infinite loop.
 	*/
 	glfwTerminate();

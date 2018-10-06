@@ -147,6 +147,7 @@
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
+    <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\thirdparty\glm\detail\glm.cpp" />
@@ -302,6 +303,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\scenes\AbstractScene.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
+    <ClInclude Include="src\scenes\SceneTexture2D.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\thirdparty\glm\common.hpp" />

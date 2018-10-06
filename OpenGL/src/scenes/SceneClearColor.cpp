@@ -10,7 +10,7 @@ namespace scene {
 	{
 		/* Specify clear values for the color buffers */
 		GLCheckErrorCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
-		GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT));
+		Renderer::Clear();
 	}
 
 	void SceneClearColor::OnImGuiRender()
