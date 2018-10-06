@@ -20,7 +20,10 @@ namespace scene {
 
 		ImGui::Begin("Color Picker");
 		ImGui::ColorEdit4("Clear Color", m_ClearColor);
-		m_Size = ImGui::GetWindowSize();
+
+		if (!ImGui::IsWindowCollapsed()) {
+			m_Size = ImGui::GetWindowSize();
+		}
 		ImGui::End();
 	}
 
