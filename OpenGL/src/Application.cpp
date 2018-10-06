@@ -60,11 +60,8 @@ int main() {
 	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
-		// scene::SceneClearColor scene(0.2f, 0.3f, 0.8f, 1.0f);
-		scene::SceneTexture2D scene(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-		/* Do not show ImGui demo window at startup */
-		bool show_demo_window = false;
+		scene::SceneClearColor scene(0.2f, 0.3f, 0.8f, 1.0f);
+		// scene::SceneTexture2D scene(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
@@ -78,13 +75,6 @@ int main() {
 			ImGui::NewFrame();
 
 			scene.OnImGuiRender();
-
-			/* Show the ImGui big demo window */
-			if (show_demo_window) {
-				ImGui::ShowDemoWindow(&show_demo_window);
-			}
-
-			// ImGui::Checkbox("Demo Window", &show_demo_window);
 
 			/* ImGui Rendering */
 			ImGui::Render();

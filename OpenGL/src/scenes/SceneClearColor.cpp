@@ -2,7 +2,8 @@
 
 namespace scene {
 
-	SceneClearColor::SceneClearColor(float r, float g, float b, float a) : m_ClearColor{r, g, b, a} {}
+	SceneClearColor::SceneClearColor(float r, float g, float b, float a) :
+		m_ClearColor{ r, g, b, a }, m_Size{ 350.0f, 80.0f } {}
 
 	void SceneClearColor::OnUpdate(float deltaTime) {}
 
@@ -15,7 +16,12 @@ namespace scene {
 
 	void SceneClearColor::OnImGuiRender()
 	{
+		ImGui::SetNextWindowSize(m_Size);
+
+		ImGui::Begin("Color Picker");
 		ImGui::ColorEdit4("Clear Color", m_ClearColor);
+		m_Size = ImGui::GetWindowSize();
+		ImGui::End();
 	}
 
 }

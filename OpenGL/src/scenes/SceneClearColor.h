@@ -15,6 +15,7 @@ namespace scene {
 
 	private:
 		float m_ClearColor[4];
+		ImVec2 m_Size;
 	};
 
 }
