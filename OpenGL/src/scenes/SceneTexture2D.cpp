@@ -9,7 +9,7 @@ namespace scene {
 		const unsigned int POSITIONS_SIZE = 4 * 4;
 		const GLint VERTEX_SIZE = 2;
 		const GLint UV_SIZE = 2;
-		/* Square vertices */
+		/* Texture vertices */
 		float positions[POSITIONS_SIZE] = {
 			/* vertices */		/* UV coordinates */
 			-180.0f, -135.0f,	0.0f, 0.0f, // 0

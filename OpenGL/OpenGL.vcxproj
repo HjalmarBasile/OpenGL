@@ -146,6 +146,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\scenes\SceneBasicSquare.cpp" />
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
     <ClCompile Include="src\scenes\SceneImGuiDemo.cpp" />
     <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\scenes\AbstractScene.h" />
+    <ClInclude Include="src\scenes\SceneBasicSquare.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneImGuiDemo.h" />
     <ClInclude Include="src\scenes\SceneTexture2D.h" />

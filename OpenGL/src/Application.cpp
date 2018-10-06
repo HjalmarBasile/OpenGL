@@ -4,6 +4,7 @@
 
 #include "scenes/SceneImGuiDemo.h"
 #include "scenes/SceneClearColor.h"
+#include "scenes/SceneBasicSquare.h"
 #include "scenes/SceneTexture2D.h"
 
 #include "imgui/imgui.h"
@@ -61,8 +62,9 @@ int main() {
 	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
-		scene::SceneImGuiDemo scene;
+		// scene::SceneImGuiDemo scene;
 		// scene::SceneClearColor scene(0.2f, 0.3f, 0.8f, 1.0f);
+		scene::SceneBasicSquare scene;
 		// scene::SceneTexture2D scene(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
