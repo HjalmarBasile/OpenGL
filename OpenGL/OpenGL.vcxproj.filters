@@ -72,6 +72,9 @@
     <ClCompile Include="src\scenes\SceneTexture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\SceneImGuiDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -1240,6 +1243,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\SceneTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\SceneImGuiDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
