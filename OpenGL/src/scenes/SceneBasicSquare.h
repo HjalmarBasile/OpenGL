@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AbstractScene.h"
+#include "Scene.h"
 
 namespace scene {
 

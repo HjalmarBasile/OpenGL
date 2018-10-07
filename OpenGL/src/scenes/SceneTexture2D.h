@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "AbstractScene.h"
+#include "Scene.h"
 #include "Texture.h"
 
 namespace scene {
