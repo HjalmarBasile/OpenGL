@@ -303,7 +303,7 @@
   <ItemGroup>
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\scenes\AbstractScene.h" />
+    <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\SceneBasicSquare.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneImGuiDemo.h" />
