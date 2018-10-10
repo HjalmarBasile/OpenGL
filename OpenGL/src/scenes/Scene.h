@@ -17,6 +17,8 @@ namespace scene {
 		AbstractScene() {}
 		virtual ~AbstractScene() {}
 
+		void OnUpdate() { OnUpdate(0.0f); }
+
 		virtual void OnUpdate(float deltaTime) = 0;
 		virtual void OnRender() = 0;
 		virtual void OnImGuiRender() = 0;

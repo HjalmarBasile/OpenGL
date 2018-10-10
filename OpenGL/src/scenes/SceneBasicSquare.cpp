@@ -53,12 +53,7 @@ namespace scene {
 		m_Shader->Unuse();
 	}
 
-	void SceneBasicSquare::OnUpdate(float deltaTime) {}
-
-	void SceneBasicSquare::OnRender()
-	{
-		Renderer::Clear();
-
+	void SceneBasicSquare::OnUpdate(float deltaTime) {
 		if (m_Red > 1.0f) {
 			m_Red = 2.0f - m_Red;
 			m_RedIncrease = -0.01f;
@@ -66,6 +61,11 @@ namespace scene {
 			m_Red = -m_Red;
 			m_RedIncrease = 0.01f;
 		}
+	}
+
+	void SceneBasicSquare::OnRender()
+	{
+		Renderer::Clear();
 
 		m_Shader->Use();
 		/* Set uniform variable */

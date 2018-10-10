@@ -80,7 +80,7 @@ int main() {
 			ImGui::NewFrame();
 
 			if (currentScene) {
-				// currentScene->OnUpdate(0.0f); //TODO define optional OnUpdate with no parameters
+				currentScene->OnUpdate();
 				currentScene->OnRender();
 
 				// TODO define scene name in class
