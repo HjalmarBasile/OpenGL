@@ -9,6 +9,8 @@ namespace scene {
 		m_show_another_window = false;
 	}
 
+	std::string SceneImGuiDemo::GetName() const { return name; }
+
 	void SceneImGuiDemo::OnUpdate(float deltaTime) {}
 
 	void SceneImGuiDemo::OnRender() {

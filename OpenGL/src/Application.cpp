@@ -68,10 +68,10 @@ int main() {
 		ImVec2 menuSize(120.0f, 150.0f);
 		currentScene = menu;
 
-		menu->RegisterScene<scene::SceneImGuiDemo>("ImGui Demo");
-		menu->RegisterScene<scene::SceneClearColor>("Clear Color", 0.2f, 0.3f, 0.8f, 1.0f);
-		menu->RegisterScene<scene::SceneBasicSquare>("Basic Square");
-		menu->RegisterScene<scene::SceneTexture2D>("Texture2D", WINDOW_WIDTH, WINDOW_HEIGHT);
+		menu->RegisterScene<scene::SceneImGuiDemo>(scene::SceneImGuiDemo::name);
+		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, 0.2f, 0.3f, 0.8f, 1.0f);
+		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
+		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
@@ -88,8 +88,7 @@ int main() {
 				ImGui::SetNextWindowPos(menuPosition);
 				ImGui::SetNextWindowSize(menuSize);
 
-				// TODO define scene name in class
-				ImGui::Begin("Scene");
+				ImGui::Begin(currentScene->GetName().c_str());
 				if (currentScene != menu && ImGui::Button("Return to Menu")) {
 					delete currentScene;
 					currentScene = menu;

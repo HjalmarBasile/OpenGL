@@ -17,6 +17,8 @@ namespace scene {
 		AbstractScene() {}
 		virtual ~AbstractScene() {}
 
+		virtual std::string GetName() const = 0;
+
 		void OnUpdate() { OnUpdate(0.0f); }
 
 		virtual void OnUpdate(float deltaTime) = 0;
@@ -26,7 +28,11 @@ namespace scene {
 
 	class SceneMenu : public AbstractScene {
 	public:
+		static constexpr const char* name = "Menu";
+
 		SceneMenu(AbstractScene*& currentTestPointer);
+
+		std::string GetName() const override;
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
@@ -39,7 +45,7 @@ namespace scene {
 			/* We want this method to be called only for classes derived from AbstractScene */
 			ASSERT_AND_BREAK((std::is_base_of<AbstractScene, T>::value));
 #endif
-			std::cout << "Registering test " << name << std::endl;
+			std::cout << "Registering Scene --> " << name << std::endl;
 
 			/* This should work, since the created lambdas live in the same scope of the menu object */
 			m_Scenes.push_back(std::make_pair(name, [&args...]() { return new T(std::forward<Args>(args)...); }));

@@ -7,7 +7,11 @@ namespace scene {
 	class SceneBasicSquare : public AbstractScene
 	{
 	public:
+		static constexpr const char* name = "Basic Square";
+
 		SceneBasicSquare();
+
+		std::string GetName() const override;
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;

@@ -5,6 +5,8 @@ namespace scene {
 	SceneClearColor::SceneClearColor(float r, float g, float b, float a) :
 		m_ClearColor{ r, g, b, a }, m_Size{ 350.0f, 80.0f } {}
 
+	std::string SceneClearColor::GetName() const { return name; }
+
 	void SceneClearColor::OnUpdate(float deltaTime) {}
 
 	void SceneClearColor::OnRender()

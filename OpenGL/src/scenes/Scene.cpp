@@ -4,6 +4,8 @@ namespace scene {
 
 	SceneMenu::SceneMenu(AbstractScene*& currentScenePointer) : m_CurrentScene(currentScenePointer) {}
 
+	std::string SceneMenu::GetName() const { return name; }
+
 	void SceneMenu::OnUpdate(float deltaTime) {}
 
 	void SceneMenu::OnRender() {

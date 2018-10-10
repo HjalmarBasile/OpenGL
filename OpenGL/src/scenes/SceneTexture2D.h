@@ -9,7 +9,11 @@ namespace scene {
 	class SceneTexture2D : public AbstractScene
 	{
 	public:
+		static constexpr const char* name = "Texture2D";
+
 		SceneTexture2D(int windowWidth, int windowHeight);
+
+		std::string GetName() const override;
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;

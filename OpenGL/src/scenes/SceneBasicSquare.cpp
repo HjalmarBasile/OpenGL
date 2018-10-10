@@ -53,6 +53,8 @@ namespace scene {
 		m_Shader->Unuse();
 	}
 
+	std::string SceneBasicSquare::GetName() const { return name; }
+
 	void SceneBasicSquare::OnUpdate(float deltaTime) {
 		if (m_Red > 1.0f) {
 			m_Red = 2.0f - m_Red;

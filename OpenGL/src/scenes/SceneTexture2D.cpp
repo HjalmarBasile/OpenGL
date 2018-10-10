@@ -81,6 +81,8 @@ namespace scene {
 		m_Shader->Unuse();
 	}
 
+	std::string SceneTexture2D::GetName() const { return name; }
+
 	void SceneTexture2D::OnUpdate(float deltaTime) {}
 
 	void SceneTexture2D::OnRender()
