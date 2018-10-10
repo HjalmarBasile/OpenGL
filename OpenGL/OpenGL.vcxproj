@@ -153,7 +153,7 @@
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\SceneBasicSquare.cpp" />
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
-    <ClCompile Include="src\scenes\SceneImGuiDemo.cpp" />
+    <ClCompile Include="src\scenes\SceneHelloImGui.cpp" />
     <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -311,7 +311,7 @@
     <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\SceneBasicSquare.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
-    <ClInclude Include="src\scenes\SceneImGuiDemo.h" />
+    <ClInclude Include="src\scenes\SceneHelloImGui.h" />
     <ClInclude Include="src\scenes\SceneTexture2D.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />

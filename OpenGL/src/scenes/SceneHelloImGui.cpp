@@ -1,23 +1,23 @@
-#include "SceneImGuiDemo.h"
+#include "SceneHelloImGui.h"
 
 namespace scene {
 
-	SceneImGuiDemo::SceneImGuiDemo()
+	SceneHelloImGui::SceneHelloImGui()
 	{
 		/* Do not show ImGui demo windows at startup */
 		m_show_demo_window = false;
 		m_show_another_window = false;
 	}
 
-	std::string SceneImGuiDemo::GetName() const { return name; }
+	std::string SceneHelloImGui::GetName() const { return name; }
 
-	void SceneImGuiDemo::OnUpdate(float deltaTime) {}
+	void SceneHelloImGui::OnUpdate(float deltaTime) {}
 
-	void SceneImGuiDemo::OnRender() {
+	void SceneHelloImGui::OnRender() {
 		Renderer::Clear();
 	}
 
-	void SceneImGuiDemo::OnImGuiRender()
+	void SceneHelloImGui::OnImGuiRender()
 	{
 		/* 1. Show the ImGui big demo window */
 		if (m_show_demo_window) {

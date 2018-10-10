@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "scenes/SceneImGuiDemo.h"
+#include "scenes/SceneHelloImGui.h"
 #include "scenes/SceneClearColor.h"
 #include "scenes/SceneBasicSquare.h"
 #include "scenes/SceneTexture2D.h"
@@ -68,7 +68,7 @@ int main() {
 		ImVec2 menuSize(120.0f, 150.0f);
 		currentScene = menu;
 
-		menu->RegisterScene<scene::SceneImGuiDemo>(scene::SceneImGuiDemo::name);
+		menu->RegisterScene<scene::SceneHelloImGui>(scene::SceneHelloImGui::name);
 		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, 0.2f, 0.3f, 0.8f, 1.0f);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);

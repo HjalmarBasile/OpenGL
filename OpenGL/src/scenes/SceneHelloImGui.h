@@ -4,12 +4,12 @@
 
 namespace scene {
 
-	class SceneImGuiDemo : public AbstractScene
+	class SceneHelloImGui : public AbstractScene
 	{
 	public:
-		static constexpr const char* name = "ImGui Demo";
+		static constexpr const char* name = "Hello ImGui";
 
-		SceneImGuiDemo();
+		SceneHelloImGui();
 
 		std::string GetName() const override;
 
