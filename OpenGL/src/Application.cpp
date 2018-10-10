@@ -64,6 +64,8 @@ int main() {
 	{
 		scene::AbstractScene* currentScene = nullptr;
 		scene::SceneMenu* menu = new scene::SceneMenu(currentScene);
+		ImVec2 menuPosition(0.0f, 0.0f);
+		ImVec2 menuSize(120.0f, 150.0f);
 		currentScene = menu;
 
 		menu->RegisterScene<scene::SceneImGuiDemo>("ImGui Demo");
@@ -82,6 +84,9 @@ int main() {
 			if (currentScene) {
 				currentScene->OnUpdate();
 				currentScene->OnRender();
+
+				ImGui::SetNextWindowPos(menuPosition);
+				ImGui::SetNextWindowSize(menuSize);
 
 				// TODO define scene name in class
 				ImGui::Begin("Scene");
