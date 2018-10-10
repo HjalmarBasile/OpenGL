@@ -62,23 +62,37 @@ int main() {
 	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
 
 	{
-		// scene::SceneImGuiDemo scene;
-		// scene::SceneClearColor scene(0.2f, 0.3f, 0.8f, 1.0f);
-		scene::SceneBasicSquare scene;
-		// scene::SceneTexture2D scene(WINDOW_WIDTH, WINDOW_HEIGHT);
+		scene::AbstractScene* currentScene = nullptr;
+		scene::SceneMenu* menu = new scene::SceneMenu(currentScene);
+		currentScene = menu;
+
+		menu->RegisterScene<scene::SceneImGuiDemo>("ImGui Demo");
+		menu->RegisterScene<scene::SceneClearColor>("Clear Color", 0.2f, 0.3f, 0.8f, 1.0f);
+		menu->RegisterScene<scene::SceneBasicSquare>("Basic Square");
+		menu->RegisterScene<scene::SceneTexture2D>("Texture2D", WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
-			/* Render here */
-			scene.OnRender();
-
 			/* Start the Dear ImGui frame */
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 
-			scene.OnImGuiRender();
+			if (currentScene) {
+				// currentScene->OnUpdate(0.0f); //TODO define optional OnUpdate with no parameters
+				currentScene->OnRender();
+
+				// TODO define scene name in class
+				ImGui::Begin("Scene");
+				if (currentScene != menu && ImGui::Button("Return to Menu")) {
+					delete currentScene;
+					currentScene = menu;
+				} else {
+					currentScene->OnImGuiRender();
+				}
+				ImGui::End();
+			}
 
 			/* ImGui Rendering */
 			ImGui::Render();
@@ -90,6 +104,11 @@ int main() {
 			/* Poll for and process events */
 			glfwPollEvents();
 		}
+
+		if (menu != currentScene) {
+			delete menu;
+		}
+		delete currentScene;
 	}
 
 	/* Cleanup */

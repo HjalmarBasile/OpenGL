@@ -23,6 +23,11 @@ bool GLLogCall(const char* function, const char* file, int line)
 
 #endif
 
+void Renderer::ClearColorSetBlack()
+{
+	GLCheckErrorCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
 void Renderer::Clear()
 {
 	GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT));
