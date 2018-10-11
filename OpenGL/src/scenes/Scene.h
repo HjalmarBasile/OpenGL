@@ -28,7 +28,7 @@ namespace scene {
 
 	class SceneMenu : public AbstractScene {
 	public:
-		static constexpr const char* name = "Menu";
+		static constexpr const char* name = "Scene Menu";
 
 		SceneMenu(AbstractScene*& currentTestPointer);
 
