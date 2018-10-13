@@ -43,7 +43,7 @@ namespace scene {
 		void RegisterScene(const std::string& name, Args&&... args) {
 #ifdef _PR_DEBUG
 			/* We want this method to be called only for classes derived from AbstractScene */
-			ASSERT_AND_BREAK((std::is_base_of<AbstractScene, T>::value));
+			ASSERT_AND_BREAK((std::is_base_of<AbstractScene, T>::value))
 #endif
 			std::cout << "Registering Scene --> " << name << std::endl;
 
