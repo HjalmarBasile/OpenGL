@@ -11,8 +11,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#define WINDOW_WIDTH 720
-#define WINDOW_HEIGHT 540
+static constexpr int WINDOW_WIDTH = 720;
+static constexpr int WINDOW_HEIGHT = 540;
 
 int main() {
 	GLFWwindow* window;
