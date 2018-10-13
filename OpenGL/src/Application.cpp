@@ -1,5 +1,5 @@
 #include <iostream>
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "scenes/SceneHelloImGui.h"
@@ -40,11 +40,9 @@ int main() {
 	/* Enable v-sync */
 	glfwSwapInterval(1);
 
-	/* Initialize glew library */
-	GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		/* Problem: glewInit failed, something is seriously wrong */
-		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
+	/* Initialize GLAD library */
+	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+		std::cout << "Failed to initialize OpenGL context" << std::endl;
 		return -1;
 	}
 
