@@ -39,6 +39,11 @@ namespace scene {
 		void OnImGuiRender() override;
 
 		/* Similar pattern used by std::make_shared to pass varargs to constructor */
+		/*
+			N.B. Make sure to call this method only with const lvalue args
+			which always remain in scope during the menu lifetime,
+			otherwise you will get undefined behaviour!
+		*/
 		template <typename T, typename... Args>
 		void RegisterScene(const std::string& name, Args&&... args) {
 #ifdef _PR_DEBUG
@@ -46,8 +51,6 @@ namespace scene {
 			ASSERT_AND_BREAK((std::is_base_of<AbstractScene, T>::value))
 #endif
 			std::cout << "Registering Scene --> " << name << std::endl;
-
-			/* This should work, since the created lambdas live in the same scope of the menu object */
 			m_Scenes.push_back(std::make_pair(name, [&args...]() { return new T(std::forward<Args>(args)...); }));
 		}
 

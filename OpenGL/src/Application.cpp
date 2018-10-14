@@ -66,7 +66,7 @@ int main() {
 		ImVec2 menuSize(120.0f, 150.0f);
 		currentScene = menu;
 
-		float r = 0.2f, g = 0.3f, b = 0.8f, a = 1.0f;
+		const float r = 0.2f, g = 0.3f, b = 0.8f, a = 1.0f;
 		menu->RegisterScene<scene::SceneHelloImGui>(scene::SceneHelloImGui::name);
 		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, r, g, b, a);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
