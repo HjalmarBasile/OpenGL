@@ -11,6 +11,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+void processUserInput(GLFWwindow* window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 static constexpr int WINDOW_WIDTH = 720;
@@ -82,6 +83,9 @@ int main() {
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
+			/* React to user input */
+			processUserInput(window);
+
 			/* Start the Dear ImGui frame */
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
@@ -136,6 +140,12 @@ int main() {
 	glfwTerminate();
 
 	return 0;
+}
+
+void processUserInput(GLFWwindow* window) {
+	if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+		glfwSetWindowShouldClose(window, true);
+	}
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
