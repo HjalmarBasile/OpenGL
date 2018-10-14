@@ -11,6 +11,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 static constexpr int WINDOW_WIDTH = 720;
 static constexpr int WINDOW_HEIGHT = 540;
 
@@ -37,6 +39,9 @@ int main() {
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
+
+	/* Set the callback to be invoked when the framebuffer of the specified window is resized */
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	/* Enable v-sync */
 	glfwSwapInterval(1);
@@ -131,4 +136,8 @@ int main() {
 	glfwTerminate();
 
 	return 0;
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	GLCheckErrorCall(glViewport(0, 0, width, height));
 }
