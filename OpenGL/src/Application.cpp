@@ -30,6 +30,7 @@ int main() {
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Welcome to OpenGL!", NULL, NULL);
 	if (!window) {
+		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -43,6 +44,7 @@ int main() {
 	/* Initialize GLAD library */
 	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
 		std::cout << "Failed to initialize OpenGL context" << std::endl;
+		glfwTerminate();
 		return -1;
 	}
 
