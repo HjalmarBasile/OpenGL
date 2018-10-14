@@ -29,7 +29,7 @@ public:
 	template<>
 	void Push<unsigned char>(GLint count)
 	{
-		size_t size = count * sizeof(GLubyte);
+		unsigned int size = count * sizeof(GLubyte);
 		m_Elements.push_back({ count, GL_UNSIGNED_BYTE, GL_TRUE, size });
 		m_Stride += size;
 	}
@@ -37,7 +37,7 @@ public:
 	template<>
 	void Push<unsigned int>(GLint count)
 	{
-		size_t size = count * sizeof(GLuint);
+		unsigned int size = count * sizeof(GLuint);
 		m_Elements.push_back({ count, GL_UNSIGNED_INT, GL_FALSE, size });
 		m_Stride += size;
 	}
@@ -45,7 +45,7 @@ public:
 	template<>
 	void Push<float>(GLint count)
 	{
-		size_t size = count * sizeof(GLfloat);
+		unsigned int size = count * sizeof(GLfloat);
 		m_Elements.push_back({ count, GL_FLOAT, GL_FALSE, size });
 		m_Stride += size;
 	}

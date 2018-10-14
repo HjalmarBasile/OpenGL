@@ -34,7 +34,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		vb.Bind();
 	}
 
-	unsigned int offset = 0;
+	size_t offset = 0;
 	const std::vector<VertexBufferElement>& elements = layout.GetElements();
 	for (unsigned int index = 0; index < elements.size(); ++index) {
 		const VertexBufferElement& element = elements[index];
@@ -44,7 +44,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
 		/* Define the attribute for the position array */
 		GLCheckErrorCall(glVertexAttribPointer(index, element.count, element.type, element.normalized,
-			layout.GetStride(), (const GLvoid*) offset));
+			layout.GetStride(), reinterpret_cast<const GLvoid*>(offset)));
 
 		offset += element.size;
 	}
