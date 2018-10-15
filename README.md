@@ -6,7 +6,13 @@ Credits
 
 Developed by Hjalmar Basile.
 
-TODO credits: LearnOpenGL, Cherno, glad, glm, imgui, glfw
+TODO credits: LearnOpenGL, Cherno, glfw
+
+Embeds [glad](https://github.com/Dav1dde/glad) library by David Herberth (MIT License).
+
+Embeds [GLM](https://github.com/g-truc/glm) library by G-Truc Creation (MIT License).
+
+Embeds [Dear ImGui](https://github.com/ocornut/imgui) library by Omar Cornut (MIT License).
 
 Embeds [stb_image.h](https://github.com/nothings/stb/) by Sean Barrett (public domain).
 
