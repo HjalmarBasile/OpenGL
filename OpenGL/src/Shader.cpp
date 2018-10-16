@@ -93,7 +93,7 @@ const char* Shader::GetShaderName(GLenum shaderType)
 	}
 }
 
-const char* Shader::GetErrorMessage(GLenum GL_STATUS, GLenum shaderType)
+const std::string Shader::GetErrorMessage(GLenum GL_STATUS, GLenum shaderType)
 {
 	switch (GL_STATUS) {
 		case GL_LINK_STATUS:
@@ -103,7 +103,7 @@ const char* Shader::GetErrorMessage(GLenum GL_STATUS, GLenum shaderType)
 		case GL_COMPILE_STATUS: {
 			std::stringstream sserr;
 			sserr << "Failed to compile " << GetShaderName(shaderType) << " shader!";
-			return sserr.str().c_str();
+			return sserr.str();
 		}
 		default:
 			return "Unknown error occurred!";
@@ -127,7 +127,6 @@ GLboolean Shader::GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum
 
 		/* Get the information log for the object */
 		GLCheckErrorCall(GLGetObjectInfoLog(object, LOG_MAX_LENGTH, NULL, logMessage));
-		logMessage[LOG_MAX_LENGTH - 1] = '\0';
 
 		/* Log the error message */
 		std::cout << GetErrorMessage(GL_STATUS, shaderType) << "\n";

@@ -36,7 +36,7 @@ private:
 	GLint GetUniformLocation(const std::string& name);
 
 	static const char* GetShaderName(GLenum shaderType);
-	static const char* GetErrorMessage(GLenum GL_STATUS, GLenum shaderType);
+	static const std::string GetErrorMessage(GLenum GL_STATUS, GLenum shaderType);
 
 	static GLboolean GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum shaderType,
 		GLGetObjectivHandler GLGetObjectiv, GLGetObjectInfoLogHandler GLGetObjectInfoLog, GLDeleteObjectHandler GLDeleteObject);
