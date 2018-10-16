@@ -12,6 +12,10 @@
 #define VERTEX_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.vert"
 #define FRAGMENT_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.frag"
 
+typedef void (APIENTRYP GLGetObjectivHandler)(GLuint object, GLenum pname, GLint* params);
+typedef void (APIENTRYP GLGetObjectInfoLogHandler)(GLuint object, GLsizei maxLength, GLsizei* length, GLchar* infoLog);
+typedef void (APIENTRYP GLDeleteObjectHandler)(GLuint object);
+
 class Shader
 {
 private:
@@ -31,8 +35,13 @@ public:
 private:
 	GLint GetUniformLocation(const std::string& name);
 
-	static std::string ParseShader(const std::string& filepath);
 	static const char* GetShaderName(GLenum shaderType);
+	static const char* GetErrorMessage(GLenum GL_STATUS, GLenum shaderType);
+
+	static GLboolean GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum shaderType,
+		GLGetObjectivHandler GLGetObjectiv, GLGetObjectInfoLogHandler GLGetObjectInfoLog, GLDeleteObjectHandler GLDeleteObject);
+
+	static std::string ParseShader(const std::string& filepath);
 	static GLuint CompileShader(GLenum shaderType, const std::string& source);
 	static GLuint CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 };

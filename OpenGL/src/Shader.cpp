@@ -16,6 +16,11 @@ Shader::Shader(const std::string& vertfilepath, const std::string& fragfilepath)
 
 	/* Create and compile the shader */
 	m_RendererID = Shader::CreateShader(vertexShader, fragmentShader);
+
+	/* Check if the returned id is valid */
+#ifdef _PR_DEBUG
+	ASSERT_AND_BREAK(0 != m_RendererID)
+#endif
 }
 
 Shader::~Shader()
@@ -73,6 +78,67 @@ GLint Shader::GetUniformLocation(const std::string& name)
 	return uniformLocation;
 }
 
+/* Custom utility function */
+const char* Shader::GetShaderName(GLenum shaderType)
+{
+	switch (shaderType) {
+	case GL_VERTEX_SHADER:
+		return "vertex";
+	case GL_GEOMETRY_SHADER:
+		return "geometry";
+	case GL_FRAGMENT_SHADER:
+		return "fragment";
+	default:
+		return "unknown";
+	}
+}
+
+const char* Shader::GetErrorMessage(GLenum GL_STATUS, GLenum shaderType)
+{
+	switch (GL_STATUS) {
+		case GL_LINK_STATUS:
+			return "Failed to link shader program!";
+		case GL_VALIDATE_STATUS:
+			return "Program validation failed!";
+		case GL_COMPILE_STATUS: {
+			std::stringstream sserr;
+			sserr << "Failed to compile " << GetShaderName(shaderType) << " shader!";
+			return sserr.str().c_str();
+		}
+		default:
+			return "Unknown error occurred!";
+	}
+}
+
+GLboolean Shader::GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum shaderType,
+	GLGetObjectivHandler GLGetObjectiv, GLGetObjectInfoLogHandler GLGetObjectInfoLog, GLDeleteObjectHandler GLDeleteObject)
+{
+	/* Retrieve the object status */
+	GLint objectStatus;
+	GLCheckErrorCall(GLGetObjectiv(object, GL_STATUS, &objectStatus));
+
+	/*
+	 * Log the error if the status is not success,
+	 * also delete the object
+	 */
+	if (GL_TRUE != objectStatus) {
+		const GLsizei LOG_MAX_LENGTH = 512;
+		char logMessage[LOG_MAX_LENGTH];
+
+		/* Get the information log for the object */
+		GLCheckErrorCall(GLGetObjectInfoLog(object, LOG_MAX_LENGTH, NULL, logMessage));
+
+		/* Log the error message */
+		std::cout << GetErrorMessage(GL_STATUS, shaderType) << "\n";
+		std::cout << logMessage << std::endl;
+
+		/* Delete the object from memory and invalidate its id */
+		GLCheckErrorCall(GLDeleteObject(object));
+	}
+
+	return objectStatus;
+}
+
 std::string Shader::ParseShader(const std::string& filepath) {
 	std::ifstream fstreamin(filepath);
 
@@ -86,21 +152,6 @@ std::string Shader::ParseShader(const std::string& filepath) {
 	}
 
 	return ssout.str();
-}
-
-/* Custom utility function */
-const char* Shader::GetShaderName(GLenum shaderType) {
-
-	switch (shaderType) {
-	case GL_VERTEX_SHADER:
-		return "vertex";
-	case GL_GEOMETRY_SHADER:
-		return "geometry";
-	case GL_FRAGMENT_SHADER:
-		return "fragment";
-	default:
-		return "unknown";
-	}
 }
 
 /* Take the source code of the shader and compile it */
@@ -119,36 +170,10 @@ GLuint Shader::CompileShader(GLenum shaderType, const std::string& source) {
 	GLCheckErrorCall(glCompileShader(id));
 
 	/* Retrieve the compilation result */
-	GLint compilationResult;
-	GLCheckErrorCall(glGetShaderiv(id, GL_COMPILE_STATUS, &compilationResult));
+	GLboolean compilationResult = GLValidateObjectStatus(id, GL_COMPILE_STATUS, shaderType,
+		glGetShaderiv, glGetShaderInfoLog, glDeleteShader);
 
-	/*
-	 * Log the error if the compilation was not successful,
-	 * also delete the shader
-	 */
 	if (GL_TRUE != compilationResult) {
-		GLint logLength;
-		GLCheckErrorCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength));
-
-		/*
-		 * Allocate the message on the stack, free will happen automatically
-		 * when the control returns to the caller.
-		 *
-		 * Note: there is no full consensus on the usage of this function:
-		 * it will create undefined behaviour in case of stack overflow!
-		 */
-		char* logMessage = (char*)alloca(logLength * sizeof(char));
-
-		/* Get the information log for the shader object */
-		GLCheckErrorCall(glGetShaderInfoLog(id, logLength, &logLength, logMessage));
-
-		/* Log the error message */
-		std::cout << "Failed to compile " << Shader::GetShaderName(shaderType) << " shader!\n";
-		std::cout << logMessage << std::endl;
-
-		/* Delete the shader from memory and invalidate its id */
-		GLCheckErrorCall(glDeleteShader(id));
-
 		/* Return an invalid id */
 		return 0;
 	}
@@ -170,6 +195,7 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 
 	/* Check if the returned ids are valid */
 #ifdef _PR_DEBUG
+	ASSERT_AND_BREAK(0 != program)
 	ASSERT_AND_BREAK(0 != vs)
 	ASSERT_AND_BREAK(0 != fs)
 #endif
@@ -181,9 +207,6 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	/* It's time to link! */
 	GLCheckErrorCall(glLinkProgram(program));
 
-	/* Validate the program to check if it can be executed */
-	GLCheckErrorCall(glValidateProgram(program));
-
 	/* Detach before delete */
 	GLCheckErrorCall(glDetachShader(program, vs));
 	GLCheckErrorCall(glDetachShader(program, fs));
@@ -191,6 +214,27 @@ GLuint Shader::CreateShader(const std::string& vertexShader, const std::string& 
 	/* We do not need intermediates binaries anymore */
 	GLCheckErrorCall(glDeleteShader(vs));
 	GLCheckErrorCall(glDeleteShader(fs));
+
+	/* Retrieve the linking result */
+	GLboolean linkingResult = GLValidateObjectStatus(program, GL_LINK_STATUS, 0,
+		glGetProgramiv, glGetProgramInfoLog, glDeleteProgram);
+
+	if (GL_TRUE != linkingResult) {
+		/* Return an invalid id */
+		return 0;
+	}
+
+	/* Validate the program to check if it can be executed */
+	GLCheckErrorCall(glValidateProgram(program));
+
+	/* Retrieve the validation result */
+	GLboolean validationResult = GLValidateObjectStatus(program, GL_VALIDATE_STATUS, 0,
+		glGetProgramiv, glGetProgramInfoLog, glDeleteProgram);
+
+	if (GL_TRUE != validationResult) {
+		/* Return an invalid id */
+		return 0;
+	}
 
 	/* Return shader id */
 	return program;
