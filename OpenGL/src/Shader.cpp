@@ -127,6 +127,7 @@ GLboolean Shader::GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum
 
 		/* Get the information log for the object */
 		GLCheckErrorCall(GLGetObjectInfoLog(object, LOG_MAX_LENGTH, NULL, logMessage));
+		logMessage[LOG_MAX_LENGTH - 1] = '\0';
 
 		/* Log the error message */
 		std::cout << GetErrorMessage(GL_STATUS, shaderType) << "\n";
