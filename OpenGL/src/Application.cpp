@@ -4,6 +4,7 @@
 
 #include "scenes/SceneHelloImGui.h"
 #include "scenes/SceneClearColor.h"
+#include "scenes/SceneHelloTriangle.h"
 #include "scenes/SceneBasicSquare.h"
 #include "scenes/SceneTexture2D.h"
 
@@ -71,12 +72,13 @@ int main() {
 		scene::AbstractScene* currentScene = nullptr;
 		scene::SceneMenu* menu = new scene::SceneMenu(currentScene);
 		ImVec2 menuPosition(0.0f, 0.0f);
-		ImVec2 menuSize(120.0f, 150.0f);
+		ImVec2 menuSize(125.0f, 150.0f);
 		currentScene = menu;
 
 		const float r = 0.2f, g = 0.3f, b = 0.8f, a = 1.0f;
 		menu->RegisterScene<scene::SceneHelloImGui>(scene::SceneHelloImGui::name);
 		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, r, g, b, a);
+		menu->RegisterScene<scene::SceneHelloTriangle>(scene::SceneHelloTriangle::name);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 

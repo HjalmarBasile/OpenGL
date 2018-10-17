@@ -160,6 +160,7 @@
     <ClCompile Include="src\scenes\SceneBasicSquare.cpp" />
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
     <ClCompile Include="src\scenes\SceneHelloImGui.cpp" />
+    <ClCompile Include="src\scenes\SceneHelloTriangle.cpp" />
     <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -182,6 +183,8 @@
     <None Include="res\shaders\basic.vert" />
     <None Include="res\shaders\texture2D.frag" />
     <None Include="res\shaders\texture2D.vert" />
+    <None Include="res\shaders\triangle.frag" />
+    <None Include="res\shaders\triangle.vert" />
     <None Include="src\thirdparty\glm\detail\func_common.inl" />
     <None Include="src\thirdparty\glm\detail\func_common_simd.inl" />
     <None Include="src\thirdparty\glm\detail\func_exponential.inl" />
@@ -319,6 +322,7 @@
     <ClInclude Include="src\scenes\SceneBasicSquare.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneHelloImGui.h" />
+    <ClInclude Include="src\scenes\SceneHelloTriangle.h" />
     <ClInclude Include="src\scenes\SceneTexture2D.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
