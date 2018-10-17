@@ -42,6 +42,11 @@ namespace scene {
 		GLCheckErrorCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	}
 
+	SceneHelloTriangle::~SceneHelloTriangle()
+	{
+		GLCheckErrorCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+	}
+
 	std::string SceneHelloTriangle::GetName() const { return name; }
 
 	void SceneHelloTriangle::OnUpdate(float deltaTime) {}

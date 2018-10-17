@@ -12,6 +12,7 @@ namespace scene {
 		static constexpr const char* name = "Hello Triangle";
 
 		SceneHelloTriangle();
+		~SceneHelloTriangle();
 
 		std::string GetName() const override;
 
