@@ -77,7 +77,7 @@ int main() {
 		scene::AbstractScene* currentScene = nullptr;
 		scene::SceneMenu* menu = new scene::SceneMenu(currentScene);
 		ImVec2 menuPosition(0.0f, 0.0f);
-		ImVec2 menuSize(125.0f, 150.0f);
+		ImVec2 menuSize(125.0f, 200.0f);
 		currentScene = menu;
 
 		const float r = 0.2f, g = 0.3f, b = 0.8f, a = 1.0f;
