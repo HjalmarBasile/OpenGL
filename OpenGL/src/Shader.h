@@ -15,6 +15,8 @@
 #define VERTEX_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.vert"
 #define FRAGMENT_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.frag"
 
+#define FRAGMENT_YELLOW_SHADER_PATH "res/shaders/yellow.frag"
+
 typedef void (APIENTRYP GLGetObjectivHandler)(GLuint object, GLenum pname, GLint* params);
 typedef void (APIENTRYP GLGetObjectInfoLogHandler)(GLuint object, GLsizei maxLength, GLsizei* length, GLchar* infoLog);
 typedef void (APIENTRYP GLDeleteObjectHandler)(GLuint object);

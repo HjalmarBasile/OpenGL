@@ -489,6 +489,7 @@
     </None>
     <None Include="res\shaders\triangle.vert" />
     <None Include="res\shaders\triangle.frag" />
+    <None Include="res\shaders\yellow.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">

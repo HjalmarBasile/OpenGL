@@ -28,11 +28,12 @@ namespace scene {
 		m_VertexBuffer2 = std::make_unique<VertexBuffer>(triangle2, POSITIONS_SIZE * sizeof(float));
 		m_VAO2->AddBuffer(*m_VertexBuffer2, layout);
 
-		m_Shader = std::make_unique<Shader>(VERTEX_TRIANGLE_SHADER_PATH, FRAGMENT_TRIANGLE_SHADER_PATH);
-		m_Shader->Use();
+		m_Shader1 = std::make_unique<Shader>(VERTEX_TRIANGLE_SHADER_PATH, FRAGMENT_TRIANGLE_SHADER_PATH);
+		m_Shader2 = std::make_unique<Shader>(VERTEX_TRIANGLE_SHADER_PATH, FRAGMENT_YELLOW_SHADER_PATH);
 
 		VertexArray::Unbind();
 		VertexBuffer::Unbind();
+		Shader::Unuse();
 
 		GLCheckErrorCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	}
@@ -57,9 +58,11 @@ namespace scene {
 		}
 
 		m_VAO1->Bind();
+		m_Shader1->Use();
 		GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, TRIANGLE_VERTICES));
 
 		m_VAO2->Bind();
+		m_Shader2->Use();
 		GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, TRIANGLE_VERTICES));
 	}
 

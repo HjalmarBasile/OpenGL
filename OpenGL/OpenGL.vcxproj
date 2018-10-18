@@ -186,6 +186,7 @@
     <None Include="res\shaders\texture2D.vert" />
     <None Include="res\shaders\triangle.frag" />
     <None Include="res\shaders\triangle.vert" />
+    <None Include="res\shaders\yellow.frag" />
     <None Include="src\thirdparty\glm\detail\func_common.inl" />
     <None Include="src\thirdparty\glm\detail\func_common_simd.inl" />
     <None Include="src\thirdparty\glm\detail\func_exponential.inl" />
