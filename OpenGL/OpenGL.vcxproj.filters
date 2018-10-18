@@ -87,6 +87,9 @@
     <ClCompile Include="src\scenes\SceneHelloTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\exercises\SceneTwoTriangles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -1266,6 +1269,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\SceneHelloTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\exercises\SceneTwoTriangles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

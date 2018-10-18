@@ -2,11 +2,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "scenes/SceneHelloImGui.h"
-#include "scenes/SceneClearColor.h"
-#include "scenes/SceneHelloTriangle.h"
-#include "scenes/SceneBasicSquare.h"
-#include "scenes/SceneTexture2D.h"
+#include "SceneHelloImGui.h"
+#include "SceneClearColor.h"
+#include "SceneHelloTriangle.h"
+#include "SceneBasicSquare.h"
+#include "SceneTexture2D.h"
+#include "exercises/SceneTwoTriangles.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
@@ -83,6 +84,7 @@ int main() {
 		menu->RegisterScene<scene::SceneHelloImGui>(scene::SceneHelloImGui::name);
 		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, r, g, b, a);
 		menu->RegisterScene<scene::SceneHelloTriangle>(scene::SceneHelloTriangle::name);
+		menu->RegisterScene<scene::SceneTwoTriangles>(scene::SceneTwoTriangles::name);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 
