@@ -4,7 +4,7 @@
 
 #include "Renderer.h"
 
-#define DICE_TEXTURE_PATH "res/textures/dice.png"
+static constexpr const char* DICE_TEXTURE_PATH = "res/textures/dice.png";
 
 class Texture
 {

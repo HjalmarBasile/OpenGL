@@ -2,7 +2,7 @@
 
 #include "stb/stb_image.h"
 
-#define RGBA_CHANNELS 4
+static constexpr int RGBA_CHANNELS = 4;
 
 Texture::Texture(const std::string& path)
 {

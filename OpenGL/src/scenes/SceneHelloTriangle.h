@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 
-#define TRIANGLE_VERTICES 3
+static constexpr int TRIANGLE_VERTICES = 3;
 
 namespace scene {
 

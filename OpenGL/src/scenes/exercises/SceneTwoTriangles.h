@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Scene.h"
-
-#define TRIANGLE_VERTICES 3
+#include "SceneHelloTriangle.h"
 
 namespace scene {
 

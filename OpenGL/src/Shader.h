@@ -6,16 +6,16 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
-#define VERTEX_BASIC_SHADER_PATH "res/shaders/basic.vert"
-#define FRAGMENT_BASIC_SHADER_PATH "res/shaders/basic.frag"
+static constexpr const char* VERTEX_BASIC_SHADER_PATH = "res/shaders/basic.vert";
+static constexpr const char* FRAGMENT_BASIC_SHADER_PATH = "res/shaders/basic.frag";
 
-#define VERTEX_TRIANGLE_SHADER_PATH "res/shaders/triangle.vert"
-#define FRAGMENT_TRIANGLE_SHADER_PATH "res/shaders/triangle.frag"
+static constexpr const char* VERTEX_TRIANGLE_SHADER_PATH = "res/shaders/triangle.vert";
+static constexpr const char* FRAGMENT_TRIANGLE_SHADER_PATH = "res/shaders/triangle.frag";
 
-#define VERTEX_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.vert"
-#define FRAGMENT_TEXTURE_2D_SHADER_PATH "res/shaders/texture2D.frag"
+static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
+static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";
 
-#define FRAGMENT_YELLOW_SHADER_PATH "res/shaders/yellow.frag"
+static constexpr const char* FRAGMENT_YELLOW_SHADER_PATH = "res/shaders/yellow.frag";
 
 typedef void (APIENTRYP GLGetObjectivHandler)(GLuint object, GLenum pname, GLint* params);
 typedef void (APIENTRYP GLGetObjectInfoLogHandler)(GLuint object, GLsizei maxLength, GLsizei* length, GLchar* infoLog);
