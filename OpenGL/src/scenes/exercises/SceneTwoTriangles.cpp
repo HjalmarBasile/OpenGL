@@ -31,8 +31,8 @@ namespace scene {
 		m_Shader = std::make_unique<Shader>(VERTEX_TRIANGLE_SHADER_PATH, FRAGMENT_TRIANGLE_SHADER_PATH);
 		m_Shader->Use();
 
-		m_VAO1->Unbind();
-		m_VertexBuffer1->Unbind();
+		VertexArray::Unbind();
+		VertexBuffer::Unbind();
 
 		GLCheckErrorCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	}

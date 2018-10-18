@@ -29,7 +29,7 @@ public:
 	~Shader();
 
 	void Use() const;
-	void Unuse() const;
+	static void Unuse();
 
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniform1f(const std::string& name, float value);

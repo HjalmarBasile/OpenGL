@@ -21,7 +21,7 @@ void VertexArray::Bind() const
 	GLCheckErrorCall(glBindVertexArray(m_RendererID));
 }
 
-void VertexArray::Unbind() const
+void VertexArray::Unbind()
 {
 	GLCheckErrorCall(glBindVertexArray(0));
 }

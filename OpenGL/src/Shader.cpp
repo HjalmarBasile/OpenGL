@@ -34,7 +34,7 @@ void Shader::Use() const
 	GLCheckErrorCall(glUseProgram(m_RendererID));
 }
 
-void Shader::Unuse() const
+void Shader::Unuse()
 {
 	GLCheckErrorCall(glUseProgram(0));
 }

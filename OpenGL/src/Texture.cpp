@@ -50,7 +50,7 @@ void Texture::Bind(unsigned int slot /* = 0 */) const
 	GLCheckErrorCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
-void Texture::Unbind() const
+void Texture::Unbind()
 {
 	GLCheckErrorCall(glBindTexture(GL_TEXTURE_2D, 0));
 }

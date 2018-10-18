@@ -19,7 +19,7 @@ void IndexBuffer::Bind() const
 	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
 }
 
-void IndexBuffer::Unbind() const
+void IndexBuffer::Unbind()
 {
 	GLCheckErrorCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
