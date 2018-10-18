@@ -65,8 +65,12 @@ int main() {
 	ImGui::StyleColorsDark();
 
 	/* Just to know... */
-	GLCheckErrorCall(std::cout << "OpenGl version: " << glGetString(GL_VERSION) << std::endl);
-	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl);
+	GLint maxVertexAttribs;
+	GLCheckErrorCall(glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxVertexAttribs));
+	GLCheckErrorCall(std::cout << "OpenGl version: " << glGetString(GL_VERSION) << '\n');
+	GLCheckErrorCall(std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n');
+	std::cout << "Max vertex attributes supported: " << maxVertexAttribs << '\n';
+	std::cout << std::endl;
 
 	{
 		scene::AbstractScene* currentScene = nullptr;
