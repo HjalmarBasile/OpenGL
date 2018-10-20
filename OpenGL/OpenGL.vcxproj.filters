@@ -487,9 +487,6 @@
     <None Include="src\thirdparty\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\triangle.vert" />
-    <None Include="res\shaders\triangle.frag" />
-    <None Include="res\shaders\yellow.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">

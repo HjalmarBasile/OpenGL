@@ -2,6 +2,9 @@
 
 #include "Scene.h"
 
+#include <math.h>
+#include <GLFW/glfw3.h>
+
 static constexpr int TRIANGLE_VERTICES = 3;
 
 namespace scene {
@@ -21,7 +24,7 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
-		bool m_show_wireframe;
+		bool m_fixed_color, m_show_wireframe;
 		std::unique_ptr<VertexArray> m_VAO;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<Shader> m_Shader;

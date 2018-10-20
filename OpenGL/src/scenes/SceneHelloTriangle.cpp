@@ -2,7 +2,8 @@
 
 namespace scene {
 
-	SceneHelloTriangle::SceneHelloTriangle() : m_show_wireframe(false)
+	SceneHelloTriangle::SceneHelloTriangle() :
+		m_fixed_color(true), m_show_wireframe(false)
 	{
 		const GLint VERTEX_SIZE = 3;
 		const unsigned int POSITIONS_SIZE = TRIANGLE_VERTICES * VERTEX_SIZE;
@@ -27,7 +28,7 @@ namespace scene {
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 
 		/* Create shader program */
-		m_Shader = std::make_unique<Shader>(VERTEX_TRIANGLE_SHADER_PATH, FRAGMENT_TRIANGLE_SHADER_PATH);
+		m_Shader = std::make_unique<Shader>(VERTEX_BASIC_SHADER_PATH, FRAGMENT_BASIC_SHADER_PATH);
 		m_Shader->Use();
 
 		/*
@@ -58,6 +59,14 @@ namespace scene {
 		m_VAO->Bind();
 		m_Shader->Use();
 
+		if (m_fixed_color) {
+			m_Shader->SetUniform4f("u_Color", 1.0f, 0.5f, 0.2f, 1.0f);
+		} else {
+			float currentTime = (float)glfwGetTime();
+			float green = 0.5f * sin(currentTime) + 0.5f;
+			m_Shader->SetUniform4f("u_Color", 1.0f, green, 0.2f, 1.0f);
+		}
+
 		if (m_show_wireframe) {
 			GLCheckErrorCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 		} else {
@@ -70,6 +79,7 @@ namespace scene {
 	void SceneHelloTriangle::OnImGuiRender()
 	{
 		ImGui::Begin("Scene Hello Triangle");
+		ImGui::Checkbox("Fixed color", &m_fixed_color);
 		ImGui::Checkbox("Show Wireframe", &m_show_wireframe);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
