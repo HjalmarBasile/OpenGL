@@ -140,15 +140,22 @@ GLboolean Shader::GLValidateObjectStatus(GLuint object, GLenum GL_STATUS, GLenum
 }
 
 std::string Shader::ParseShader(const std::string& filepath) {
-	std::ifstream fstreamin(filepath);
+	std::ifstream fstreamin;
+	fstreamin.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
 	std::stringstream ssout;
-	if (fstreamin.is_open()) {
-		std::string line;
-		while (getline(fstreamin, line)) {
-			ssout << line << '\n';
+	try {
+		fstreamin.open(filepath);
+		if (fstreamin.is_open()) {
+			std::string line;
+			while (getline(fstreamin, line)) {
+				ssout << line << '\n';
+			}
+			fstreamin.close();
 		}
-		fstreamin.close();
+	} catch (const std::ifstream::failure& e) {
+		std::cout << "Error while opening/reading/closing shader file " << filepath << " --> ";
+		std::cout << e.what() << std::endl;
 	}
 
 	return ssout.str();
