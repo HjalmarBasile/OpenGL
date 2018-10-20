@@ -147,10 +147,7 @@ std::string Shader::ParseShader(const std::string& filepath) {
 	try {
 		fstreamin.open(filepath);
 		if (fstreamin.is_open()) {
-			std::string line;
-			while (getline(fstreamin, line)) {
-				ssout << line << '\n';
-			}
+			ssout << fstreamin.rdbuf();
 			fstreamin.close();
 		}
 	} catch (const std::ifstream::failure& e) {
