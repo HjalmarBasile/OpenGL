@@ -9,6 +9,9 @@
 static constexpr const char* VERTEX_BASIC_SHADER_PATH = "res/shaders/basic.vert";
 static constexpr const char* FRAGMENT_BASIC_SHADER_PATH = "res/shaders/basic.frag";
 
+static constexpr const char* VERTEX_POS_COL_SHADER_PATH = "res/shaders/pos_col.vert";
+static constexpr const char* FRAGMENT_COL_IN_SHADER_PATH = "res/shaders/col_in.frag";
+
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
 static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";
 

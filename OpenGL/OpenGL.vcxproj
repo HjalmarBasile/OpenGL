@@ -182,6 +182,8 @@
   <ItemGroup>
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\col_in.frag" />
+    <None Include="res\shaders\pos_col.vert" />
     <None Include="res\shaders\texture2D.frag" />
     <None Include="res\shaders\texture2D.vert" />
     <None Include="src\thirdparty\glm\detail\func_common.inl" />
