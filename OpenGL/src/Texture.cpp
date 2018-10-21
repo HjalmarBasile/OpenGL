@@ -1,5 +1,6 @@
 #include "Texture.h"
 
+#include <iostream>
 #include "stb/stb_image.h"
 
 static constexpr int RGBA_CHANNELS = 4;
@@ -14,24 +15,27 @@ Texture::Texture(const std::string& path)
 
 	/* Load texture into memory */
 	unsigned char* localBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_Channels, RGBA_CHANNELS);
+	if (!localBuffer) {
+		std::cout << "Failed to load texture " << path << std::endl;
+		m_RendererID = 0;
+		return;
+	}
 
 	GLCheckErrorCall(glGenTextures(1, &m_RendererID));
 	GLCheckErrorCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 
 	/* Set mandatory parameters */
-	GLCheckErrorCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCheckErrorCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
 	GLCheckErrorCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 	GLCheckErrorCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCheckErrorCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 	/* Specify a two-dimensional texture image */
 	GLCheckErrorCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
+	GLCheckErrorCall(glGenerateMipmap(GL_TEXTURE_2D));
 
 	this->Unbind();
-
-	if (localBuffer) {
-		stbi_image_free(localBuffer);
-	}
+	stbi_image_free(localBuffer);
 }
 
 Texture::~Texture()
