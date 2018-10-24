@@ -156,6 +156,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\scenes\exercises\SceneMixedTexture.cpp" />
     <ClCompile Include="src\scenes\exercises\SceneTwoTriangles.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\SceneBasicSquare.cpp" />
@@ -184,6 +185,8 @@
     <None Include="res\shaders\basic.vert" />
     <None Include="res\shaders\col_in.frag" />
     <None Include="res\shaders\pos_col.vert" />
+    <None Include="res\shaders\pos_col_uv.frag" />
+    <None Include="res\shaders\pos_col_uv.vert" />
     <None Include="res\shaders\texture2D.frag" />
     <None Include="res\shaders\texture2D.vert" />
     <None Include="src\thirdparty\glm\detail\func_common.inl" />
@@ -319,6 +322,7 @@
   <ItemGroup>
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\scenes\exercises\SceneMixedTexture.h" />
     <ClInclude Include="src\scenes\exercises\SceneTwoTriangles.h" />
     <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\SceneBasicSquare.h" />
@@ -580,6 +584,7 @@
     <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\textures\awesome-face.png" />
     <Image Include="res\textures\dice.png" />
   </ItemGroup>
   <ItemGroup>

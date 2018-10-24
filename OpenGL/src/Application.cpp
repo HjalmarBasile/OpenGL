@@ -8,6 +8,7 @@
 #include "SceneBasicSquare.h"
 #include "SceneTexture2D.h"
 #include "exercises/SceneTwoTriangles.h"
+#include "exercises/SceneMixedTexture.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
@@ -87,6 +88,7 @@ int main() {
 		menu->RegisterScene<scene::SceneTwoTriangles>(scene::SceneTwoTriangles::name);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
+		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))

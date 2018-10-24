@@ -15,6 +15,9 @@ static constexpr const char* FRAGMENT_COL_IN_SHADER_PATH = "res/shaders/col_in.f
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
 static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";
 
+static constexpr const char* VERTEX_POS_COL_UV_SHADER_PATH = "res/shaders/pos_col_uv.vert";
+static constexpr const char* FRAGMENT_POS_COL_UV_SHADER_PATH = "res/shaders/pos_col_uv.frag";
+
 typedef void (APIENTRYP GLGetObjectivHandler)(GLuint object, GLenum pname, GLint* params);
 typedef void (APIENTRYP GLGetObjectInfoLogHandler)(GLuint object, GLsizei maxLength, GLsizei* length, GLchar* infoLog);
 typedef void (APIENTRYP GLDeleteObjectHandler)(GLuint object);

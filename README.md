@@ -18,6 +18,8 @@ Embeds [stb_image.h](https://github.com/nothings/stb/) by Sean Barrett (public d
 
 Embeds [dice.png](https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png) original PNG file by Wikipedia user "Ed g2s" ([CC BY-SA 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/)).
 
+Embeds [Awesome Face Png Vector](https://www.freeiconspng.com/img/29290) by Ahkâm.
+
 License
 -------
 

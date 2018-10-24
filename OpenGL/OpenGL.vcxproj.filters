@@ -90,6 +90,9 @@
     <ClCompile Include="src\scenes\exercises\SceneTwoTriangles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\exercises\SceneMixedTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -489,6 +492,8 @@
     </None>
     <None Include="res\shaders\pos_col.vert" />
     <None Include="res\shaders\col_in.frag" />
+    <None Include="res\shaders\pos_col_uv.vert" />
+    <None Include="res\shaders\pos_col_uv.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1274,9 +1279,15 @@
     <ClInclude Include="src\scenes\exercises\SceneTwoTriangles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\exercises\SceneMixedTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\dice.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\awesome-face.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
