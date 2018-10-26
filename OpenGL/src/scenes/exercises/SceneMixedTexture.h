@@ -20,6 +20,7 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
+		float m_MixLambda;
 		std::unique_ptr<VertexArray> m_VAO;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;

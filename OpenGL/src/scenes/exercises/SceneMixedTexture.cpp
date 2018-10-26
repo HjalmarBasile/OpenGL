@@ -2,7 +2,7 @@
 
 namespace scene {
 
-	SceneMixedTexture::SceneMixedTexture()
+	SceneMixedTexture::SceneMixedTexture() : m_MixLambda(0.5f)
 	{
 		const GLint POSITION_SIZE = 3;
 		const GLint COLOR_SIZE = 3;
@@ -66,9 +66,19 @@ namespace scene {
 	void SceneMixedTexture::OnRender()
 	{
 		Renderer::Clear();
+		m_Shader->SetUniform1f("u_MixLambda", m_MixLambda);
 		Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 	}
 
-	void SceneMixedTexture::OnImGuiRender() {}
+	void SceneMixedTexture::OnImGuiRender()
+	{
+		ImGui::Begin("Mixed Texture");
+		ImGui::SliderFloat("Mixture Lambda", &m_MixLambda, 0.0f, 1.0f);
+		ImGui::Text("Notice the transparency difference: this is because\n"
+					"the face texture has white background with alpha equal to 0, while\n"
+					"the dice texture has white background with alpha equal to 1.");
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 
 }
