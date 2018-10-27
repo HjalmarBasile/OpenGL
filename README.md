@@ -1,4 +1,4 @@
-# OpenGL
+# OpenGL-Scenes
 A project I am working on to learn OpenGL.
 
 Credits
