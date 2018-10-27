@@ -6,7 +6,11 @@ Credits
 
 Developed by Hjalmar Basile.
 
-TODO credits: LearnOpenGL, Cherno, glfw
+Includes revised material from TheChernoProject [OpenGL playlist](https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2) by Yan Chernikov.
+
+Includes revised material from [LearnOpenGL](https://learnopengl.com/) by [Joey de Vries](https://twitter.com/JoeyDeVriez) ([CC BY-NC 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/)).
+
+Links statically [GLFW](https://www.glfw.org/) library by Marcus Geelnard and Camilla Berglund (zlib/libpng License).
 
 Embeds [glad](https://github.com/Dav1dde/glad) library by David Herberth (MIT License).
 
