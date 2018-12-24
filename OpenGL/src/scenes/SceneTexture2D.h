@@ -35,7 +35,10 @@ namespace scene {
 		glm::mat4 m_MVP;
 
 		glm::vec3 m_ModelTranslationA;
+
 		glm::vec3 m_ModelTranslationB;
+		float m_ModelRotationB;
+		float m_ModelScaleB;
 	};
 
 }

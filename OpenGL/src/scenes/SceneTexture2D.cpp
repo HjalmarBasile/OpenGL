@@ -4,7 +4,8 @@ namespace scene {
 
 	SceneTexture2D::SceneTexture2D(int windowWidth, int windowHeight) :
 		m_WINDOW_WIDTH(windowWidth), m_WINDOW_HEIGHT(windowHeight),
-		m_ModelTranslationA(glm::vec3(0.0f, 0.0f, 0.0f)), m_ModelTranslationB(glm::vec3(0.0f, 0.0f, 0.0f))
+		m_ModelTranslationA(glm::vec3(0.0f, 0.0f, 0.0f)), m_ModelTranslationB(glm::vec3(0.0f, 0.0f, 0.0f)),
+		m_ModelRotationB(0.0f), m_ModelScaleB(1.0f)
 	{
 		const unsigned int POSITIONS_SIZE = 4 * 4;
 		const GLint VERTEX_SIZE = 2;
@@ -100,6 +101,8 @@ namespace scene {
 
 		{
 			m_Model = glm::translate(glm::mat4(1.0f), m_ModelTranslationB);
+			m_Model = glm::rotate(m_Model, glm::radians(m_ModelRotationB), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_Model = glm::scale(m_Model, glm::vec3(m_ModelScaleB, m_ModelScaleB, 1.0f));
 			m_MVP = m_Proj * m_View * m_Model;
 			m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
 			Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
@@ -113,6 +116,8 @@ namespace scene {
 		ImGui::Text("Use the slider to move the model around.");
 		ImGui::SliderFloat3("Model A Translation", reinterpret_cast<float*>(&m_ModelTranslationA.x), 0.0f, (float)m_WINDOW_WIDTH);
 		ImGui::SliderFloat3("Model B Translation", reinterpret_cast<float*>(&m_ModelTranslationB.x), 0.0f, (float)m_WINDOW_WIDTH);
+		ImGui::SliderFloat("Model B Rotation", &m_ModelRotationB, 0.0f, 360.0f);
+		ImGui::SliderFloat("Model B Scale", &m_ModelScaleB, 0.5f, 4.0f);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
