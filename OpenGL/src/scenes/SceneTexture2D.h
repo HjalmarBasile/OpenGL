@@ -39,6 +39,8 @@ namespace scene {
 		glm::vec3 m_ModelTranslationB;
 		float m_ModelRotationB;
 		float m_ModelScaleB;
+
+		bool m_GoCrazy;
 	};
 
 }
