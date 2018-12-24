@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 static constexpr const char* VERTEX_BASIC_SHADER_PATH = "res/shaders/basic.vert";
 static constexpr const char* FRAGMENT_BASIC_SHADER_PATH = "res/shaders/basic.frag";
