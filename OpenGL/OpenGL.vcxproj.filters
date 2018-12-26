@@ -1296,6 +1296,9 @@
     <Image Include="res\textures\awesome-face.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\textures\crate.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\thirdparty\glm\CMakeLists.txt" />

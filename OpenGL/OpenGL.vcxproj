@@ -587,6 +587,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\awesome-face.png" />
+    <Image Include="res\textures\crate.png" />
     <Image Include="res\textures\dice.png" />
   </ItemGroup>
   <ItemGroup>

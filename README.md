@@ -24,6 +24,8 @@ Embeds [dice.png](https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transp
 
 Embeds [Awesome Face Png Vector](https://www.freeiconspng.com/img/29290) by Ahkâm.
 
+Embeds [crate1_diffuse.png](https://opengameart.org/node/8765) by Luke.RUSTLTD (public domain).
+
 License
 -------
 

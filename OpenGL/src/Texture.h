@@ -5,6 +5,7 @@
 #include "Renderer.h"
 
 static constexpr const char* AWESOME_FACE_TEXTURE_PATH = "res/textures/awesome-face.png";
+static constexpr const char* CRATE_TEXTURE_PATH = "res/textures/crate.png";
 static constexpr const char* DICE_TEXTURE_PATH = "res/textures/dice.png";
 
 class Texture

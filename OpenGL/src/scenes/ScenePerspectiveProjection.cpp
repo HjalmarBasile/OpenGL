@@ -12,10 +12,10 @@ namespace scene {
 		/* Texture vertices */
 		float positions[POSITIONS_SIZE] = {
 			/* vertices */		/* UV coordinates */
-			-180.0f, -135.0f,	0.0f, 0.0f, // 0
-			 180.0f, -135.0f,	1.0f, 0.0f, // 1
-			 180.0f,  135.0f,	1.0f, 1.0f, // 2
-			-180.0f,  135.0f,	0.0f, 1.0f  // 3
+			-10.0f, -10.0f,	0.0f, 0.0f, // 0
+			 10.0f, -10.0f,	1.0f, 0.0f, // 1
+			 10.0f,  10.0f,	1.0f, 1.0f, // 2
+			-10.0f,  10.0f,	0.0f, 1.0f  // 3
 		};
 
 		const unsigned int INDICES_SIZE = 6;
@@ -52,7 +52,7 @@ namespace scene {
 		m_Shader->Use();
 
 		/* Load texture to memory */
-		m_Texture2D = std::make_unique<Texture>(DICE_TEXTURE_PATH);
+		m_Texture2D = std::make_unique<Texture>(CRATE_TEXTURE_PATH);
 		const unsigned int slot = 0;
 		m_Texture2D->Bind(slot);
 		m_Shader->SetUniform1i("u_Texture", slot);
