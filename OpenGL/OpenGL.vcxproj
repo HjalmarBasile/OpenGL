@@ -163,6 +163,7 @@
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
     <ClCompile Include="src\scenes\SceneHelloImGui.cpp" />
     <ClCompile Include="src\scenes\SceneHelloTriangle.cpp" />
+    <ClCompile Include="src\scenes\ScenePerspectiveProjection.cpp" />
     <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -329,6 +330,7 @@
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneHelloImGui.h" />
     <ClInclude Include="src\scenes\SceneHelloTriangle.h" />
+    <ClInclude Include="src\scenes\ScenePerspectiveProjection.h" />
     <ClInclude Include="src\scenes\SceneTexture2D.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
