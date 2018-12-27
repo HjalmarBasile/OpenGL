@@ -1,5 +1,6 @@
 #include "ScenePerspectiveProjection.h"
 
+#include <random>
 #include <GLFW/glfw3.h>
 
 namespace scene {
@@ -58,6 +59,16 @@ namespace scene {
 			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 		};
 
+		std::random_device rd;
+		std::mt19937 rng(rd());
+		std::uniform_real_distribution<float> randTranslation(-15.0f, 15.0f);
+		std::uniform_real_distribution<float> randRotation(-1.0f, 1.0f);
+
+		for (int i = 0; i < TOTAL_CUBES; ++i) {
+			m_CubesPositions[i] = glm::vec3(randTranslation(rng), randTranslation(rng), -abs(randTranslation(rng)));
+			m_CubesRotations[i] = glm::vec3(randRotation(rng), randRotation(rng), randRotation(rng));
+		}
+
 		/* Enable blending */
 		GLCheckErrorCall(glEnable(GL_BLEND));
 		/* Transparency implementation */
@@ -107,17 +118,21 @@ namespace scene {
 		GLCheckErrorCall(glClearDepth(m_ZBufferClearValue));
 		GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-		m_Model = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.3f));
-		m_Model = glm::scale(m_Model, glm::vec3(m_ModelScale, m_ModelScale, m_ModelScale));
-
 		/* Moving the camera backwards is equivalent to moving the model forward */
 		m_View = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -m_CameraTranslateZ));
 
 		/* N.B. Depth testing does not work if zNear is set to 0.0f ! */
 		m_Proj = glm::perspective<float>(glm::radians(m_FOV), m_ASPECT_RATIO, 0.1f, 100.0f);
-		m_MVP = m_Proj * m_View * m_Model;
-		m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
-		GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICES));
+
+		for (int i = 0; i < TOTAL_CUBES; ++i) {
+			m_Model = glm::translate(glm::mat4(1.0f), m_CubesPositions[i]);
+			m_Model = glm::rotate(m_Model, (float)glfwGetTime() * glm::radians((i + 1) * 17.0f), m_CubesRotations[i]);
+			m_Model = glm::scale(m_Model, glm::vec3(m_ModelScale, m_ModelScale, m_ModelScale));
+
+			m_MVP = m_Proj * m_View * m_Model;
+			m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
+			GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICES));
+		}
 	}
 
 	void ScenePerspectiveProjection::OnImGuiRender()

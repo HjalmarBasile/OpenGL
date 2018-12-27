@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Texture.h"
 
+static constexpr int TOTAL_CUBES = 10;
 static constexpr int CUBE_VERTICES = 36;
 
 namespace scene {
@@ -30,6 +31,8 @@ namespace scene {
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture2D;
 
+		glm::vec3 m_CubesPositions[TOTAL_CUBES];
+		glm::vec3 m_CubesRotations[TOTAL_CUBES];
 		glm::mat4 m_Model;
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;
