@@ -14,6 +14,7 @@ static constexpr const char* VERTEX_POS_COL_SHADER_PATH = "res/shaders/pos_col.v
 static constexpr const char* FRAGMENT_COL_IN_SHADER_PATH = "res/shaders/col_in.frag";
 
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
+static constexpr const char* VERTEX_TEXTURE_2D_POS_3D_SHADER_PATH = "res/shaders/texture2D_pos3D.vert";
 static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";
 
 static constexpr const char* VERTEX_POS_COL_UV_SHADER_PATH = "res/shaders/pos_col_uv.vert";

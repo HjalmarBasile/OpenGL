@@ -190,6 +190,7 @@
     <None Include="res\shaders\pos_col_uv.vert" />
     <None Include="res\shaders\texture2D.frag" />
     <None Include="res\shaders\texture2D.vert" />
+    <None Include="res\shaders\texture2D_pos3D.vert" />
     <None Include="src\thirdparty\glm\detail\func_common.inl" />
     <None Include="src\thirdparty\glm\detail\func_common_simd.inl" />
     <None Include="src\thirdparty\glm\detail\func_exponential.inl" />
