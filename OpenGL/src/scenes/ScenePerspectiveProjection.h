@@ -14,6 +14,7 @@ namespace scene {
 		static constexpr const char* name = "Perspective Projection";
 
 		ScenePerspectiveProjection(int windowWidth, int windowHeight);
+		~ScenePerspectiveProjection();
 
 		std::string GetName() const override;
 
@@ -37,6 +38,7 @@ namespace scene {
 		float m_ModelScale;
 		float m_CameraTranslateZ;
 		float m_FOV;
+		float m_ZBufferClearValue;
 	};
 
 }
