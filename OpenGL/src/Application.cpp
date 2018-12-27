@@ -112,8 +112,8 @@ int main() {
 		menu->RegisterScene<scene::SceneTwoTriangles>(scene::SceneTwoTriangles::name);
 		menu->RegisterScene<scene::SceneBasicSquare>(scene::SceneBasicSquare::name);
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
-		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
+		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
