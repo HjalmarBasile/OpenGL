@@ -161,6 +161,7 @@
     <ClCompile Include="src\scenes\exercises\SceneTwoTriangles.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\SceneBasicSquare.cpp" />
+    <ClCompile Include="src\scenes\SceneCamera.cpp" />
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
     <ClCompile Include="src\scenes\SceneHelloImGui.cpp" />
     <ClCompile Include="src\scenes\SceneHelloTriangle.cpp" />
@@ -330,6 +331,7 @@
     <ClInclude Include="src\scenes\exercises\SceneTwoTriangles.h" />
     <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\SceneBasicSquare.h" />
+    <ClInclude Include="src\scenes\SceneCamera.h" />
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneHelloImGui.h" />
     <ClInclude Include="src\scenes\SceneHelloTriangle.h" />

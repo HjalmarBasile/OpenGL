@@ -31,6 +31,7 @@
 #include "SceneBasicSquare.h"
 #include "SceneTexture2D.h"
 #include "ScenePerspectiveProjection.h"
+#include "SceneCamera.h"
 #include "exercises/SceneTwoTriangles.h"
 #include "exercises/SceneMixedTexture.h"
 
@@ -114,6 +115,7 @@ int main() {
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
 		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
+		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
