@@ -1,5 +1,7 @@
 #include "SceneCamera.h"
 
+#include <GLFW/glfw3.h>
+
 namespace scene {
 
 	SceneCamera::SceneCamera(int windowWidth, int windowHeight) :
@@ -36,6 +38,12 @@ namespace scene {
 	void SceneCamera::OnRender()
 	{
 		GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+
+		/* We are moving the camera in a circle */
+		float radius = 10.0f;
+		float currentTime = (float)glfwGetTime();
+		m_Eye.x = radius * sin(currentTime);
+		m_Eye.z = radius * cos(currentTime);
 
 		/* See math folder for explanation */
 		m_View = glm::lookAt(m_Eye, m_Center, m_WorldUp);
