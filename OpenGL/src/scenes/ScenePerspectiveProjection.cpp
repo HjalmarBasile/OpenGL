@@ -59,7 +59,7 @@ namespace scene {
 
 			m_MVP = m_Proj * m_View * m_Model;
 			cube->SetMVP(m_MVP);
-			GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, Cube::CUBE_VERTICES));
+			cube->Draw();
 		}
 	}
 

@@ -47,6 +47,11 @@ void Cube::Unbind()
 	m_Texture2D->Unbind();
 }
 
+void Cube::Draw()
+{
+	GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICES));
+}
+
 void Cube::SetMVP(glm::mat4 MVP)
 {
 	m_Shader->SetUniformMatrix4fv("u_MVP", MVP);

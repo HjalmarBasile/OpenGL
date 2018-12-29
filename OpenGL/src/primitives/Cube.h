@@ -9,17 +9,17 @@
 class Cube
 {
 public:
-	static constexpr int CUBE_VERTICES = 36;
-
 	Cube(const char* texturePath);
 	~Cube();
 
 	void Bind();
 	void Unbind();
+	void Draw();
 
 	void SetMVP(glm::mat4 MVP);
 
 private:
+	static constexpr int CUBE_VERTICES = 36;
 	static constexpr int VERTEX_SIZE = 3;
 	static constexpr int UV_SIZE = 2;
 	static constexpr unsigned int POSITIONS_SIZE = CUBE_VERTICES * (VERTEX_SIZE + UV_SIZE);
