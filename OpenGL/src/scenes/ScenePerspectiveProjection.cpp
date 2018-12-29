@@ -9,55 +9,7 @@ namespace scene {
 		m_ASPECT_RATIO((float)windowWidth / (float)windowHeight),
 		m_ModelScale(1.0f), m_CameraTranslateZ(10.0f), m_FOV(45.0f), m_ZBufferClearValue(1.0f)
 	{
-		const GLint VERTEX_SIZE = 3;
-		const GLint UV_SIZE = 2;
-		const unsigned int POSITIONS_SIZE = CUBE_VERTICES * (VERTEX_SIZE + UV_SIZE);
-
-		/* Cube */
-		float positions[POSITIONS_SIZE] = {
-			/* vertices */		  /* UV coordinates */
-			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-		};
+		cube = std::make_unique<Cube>(CRATE_TEXTURE_PATH);
 
 		std::random_device rd;
 		std::mt19937 rng(rd());
@@ -78,30 +30,6 @@ namespace scene {
 		GLCheckErrorCall(glEnable(GL_DEPTH_TEST));
 
 		GLCheckErrorCall(glClearColor(0.20f, 0.35f, 0.50f, 1.00f));
-
-		/* Generate vertex array object */
-		m_VAO = std::make_unique<VertexArray>();
-
-		/* Create and bind vertex buffer */
-		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, POSITIONS_SIZE * sizeof(float));
-
-		/* Define a vertex buffer layout */
-		VertexBufferLayout layout;
-		layout.Push<float>(VERTEX_SIZE);
-		layout.Push<float>(UV_SIZE);
-
-		/* m_VAO is defined by the pair (m_VertexBuffer, layout) */
-		m_VAO->AddBuffer(*m_VertexBuffer, layout);
-
-		/* Create shader program */
-		m_Shader = std::make_unique<Shader>(VERTEX_TEXTURE_2D_POS_3D_SHADER_PATH, FRAGMENT_TEXTURE_2D_SHADER_PATH);
-		m_Shader->Use();
-
-		/* Load texture to memory */
-		m_Texture2D = std::make_unique<Texture>(CRATE_TEXTURE_PATH);
-		const unsigned int slot = 0;
-		m_Texture2D->Bind(slot);
-		m_Shader->SetUniform1i("u_Texture", slot);
 	}
 
 	ScenePerspectiveProjection::~ScenePerspectiveProjection()
@@ -130,8 +58,8 @@ namespace scene {
 			m_Model = glm::scale(m_Model, glm::vec3(m_ModelScale, m_ModelScale, m_ModelScale));
 
 			m_MVP = m_Proj * m_View * m_Model;
-			m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
-			GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICES));
+			cube->SetMVP(m_MVP);
+			GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, Cube::CUBE_VERTICES));
 		}
 	}
 

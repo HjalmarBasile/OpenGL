@@ -96,6 +96,9 @@
     <ClCompile Include="src\scenes\ScenePerspectiveProjection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\primitives\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -1287,6 +1290,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\ScenePerspectiveProjection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,10 +2,7 @@
 
 #include <memory>
 #include "Scene.h"
-#include "Texture.h"
-
-static constexpr int TOTAL_CUBES = 10;
-static constexpr int CUBE_VERTICES = 36;
+#include "primitives/Cube.h"
 
 namespace scene {
 
@@ -24,12 +21,10 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
+		static constexpr int TOTAL_CUBES = 10;
 		const float m_ASPECT_RATIO;
 
-		std::unique_ptr<VertexArray> m_VAO;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<Texture> m_Texture2D;
+		std::unique_ptr<Cube> cube;
 
 		glm::vec3 m_CubesPositions[TOTAL_CUBES];
 		glm::vec3 m_CubesRotations[TOTAL_CUBES];
