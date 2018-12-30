@@ -3,6 +3,7 @@
 #include <memory>
 #include "Scene.h"
 #include "primitives/Cube.h"
+#include <GLFW/glfw3.h>
 
 namespace scene {
 
@@ -10,7 +11,7 @@ namespace scene {
 	{
 	public:
 		static constexpr const char* name = "Camera";
-		SceneCamera(int windowWidth, int windowHeight);
+		SceneCamera(GLFWwindow* window, int windowWidth, int windowHeight);
 		~SceneCamera();
 
 		std::string GetName() const override;
@@ -20,8 +21,11 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
-		static constexpr int TOTAL_CUBES = 13;
+		void processUserInput(GLFWwindow* window);
+
+		GLFWwindow* m_Window;
 		const float m_ASPECT_RATIO;
+		static constexpr int TOTAL_CUBES = 13;
 
 		std::unique_ptr<Cube> cube;
 
@@ -50,8 +54,11 @@ namespace scene {
 		glm::mat4 m_MVP;
 
 		glm::vec3 m_Eye;
+		glm::vec3 m_CameraFront;
 		glm::vec3 m_Center;
 		glm::vec3 m_WorldUp;
+
+		bool m_ControlCamera;
 	};
 
 }
