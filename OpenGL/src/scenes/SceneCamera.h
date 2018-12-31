@@ -21,11 +21,12 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
-		void processUserInput(GLFWwindow* window);
+		void processUserInput(float deltaTime);
 
 		GLFWwindow* m_Window;
 		const float m_ASPECT_RATIO;
 		static constexpr int TOTAL_CUBES = 13;
+		float m_CurrentRotationTime;
 
 		std::unique_ptr<Cube> cube;
 
@@ -59,6 +60,7 @@ namespace scene {
 		glm::vec3 m_WorldUp;
 
 		bool m_ControlCamera;
+		float m_CameraSpeed;
 	};
 
 }

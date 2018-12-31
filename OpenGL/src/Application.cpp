@@ -117,9 +117,16 @@ int main() {
 		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+		float deltaTime = 0.0f;
+		float lastFrameTimestamp = (float)glfwGetTime();
+
 		/* Loop until the user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
+			float currentFrameTimestamp = (float)glfwGetTime();
+			deltaTime = currentFrameTimestamp - lastFrameTimestamp;
+			lastFrameTimestamp = currentFrameTimestamp;
+
 			/* React to user input */
 			processUserInput(window);
 
@@ -129,7 +136,7 @@ int main() {
 			ImGui::NewFrame();
 
 			if (currentScene) {
-				currentScene->OnUpdate();
+				currentScene->OnUpdate(deltaTime);
 				currentScene->OnRender();
 
 				ImGui::SetNextWindowPos(menuPosition);

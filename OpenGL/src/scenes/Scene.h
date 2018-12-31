@@ -19,8 +19,6 @@ namespace scene {
 
 		virtual std::string GetName() const = 0;
 
-		void OnUpdate() { OnUpdate(0.0f); }
-
 		virtual void OnUpdate(float deltaTime) = 0;
 		virtual void OnRender() = 0;
 		virtual void OnImGuiRender() = 0;
