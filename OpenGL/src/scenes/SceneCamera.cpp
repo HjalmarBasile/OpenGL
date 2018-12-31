@@ -6,10 +6,19 @@ namespace scene {
 
 	SceneCamera::SceneCamera(GLFWwindow* window, int windowWidth, int windowHeight) :
 		m_Window(window), m_ASPECT_RATIO((float)windowWidth / (float)windowHeight),
-		m_CameraSpeed(5.0f), m_Pitch(0.0f), m_Yaw(0.0f)
+		m_FOV(45.0f), m_CameraSpeed(5.0f), m_Pitch(0.0f), m_Yaw(0.0f)
 	{
+		/* Init camera context*/
+		static CameraContext context;
+		context.fov = m_FOV;
+		context.offset.pitch = 0.0f;
+		context.offset.yaw = 0.0f;
+		context.offset.roll = 0.0f;
+		glfwSetWindowUserPointer(m_Window, &context);
+
 		/* Take input from mouse */
 		glfwSetCursorPosCallback(m_Window, mouseCallback);
+		glfwSetScrollCallback(m_Window, scrollCallback);
 
 		cube = std::make_unique<Cube>(CRATE_TEXTURE_PATH);
 
@@ -35,6 +44,7 @@ namespace scene {
 	{
 		GLCheckErrorCall(glDisable(GL_DEPTH_TEST));
 		glfwSetCursorPosCallback(m_Window, NULL);
+		glfwSetScrollCallback(m_Window, NULL);
 	}
 
 	std::string SceneCamera::GetName() const { return name; }
@@ -43,21 +53,21 @@ namespace scene {
 	{
 		this->processUserInput(deltaTime);
 
-		EulerAngles* offset = (EulerAngles*)glfwGetWindowUserPointer(m_Window);
-		if (offset) {
-			m_Pitch = std::clamp(m_Pitch + offset->pitch, -80.0f, 80.0f);
-			m_Yaw += offset->yaw;
+		static CameraContext* context = (CameraContext*)glfwGetWindowUserPointer(m_Window);
+		m_Pitch = std::clamp(m_Pitch + context->offset.pitch, -80.0f, 80.0f);
+		m_Yaw += context->offset.yaw;
 
-			m_CameraFront.x = -cos(glm::radians(m_Pitch)) * sin(glm::radians(m_Yaw));
-			m_CameraFront.y =  sin(glm::radians(m_Pitch));
-			m_CameraFront.z = -cos(glm::radians(m_Pitch)) * cos(glm::radians(m_Yaw));
-			/* No need to normalize, since the magnitude is already 1 by construction */
+		m_CameraFront.x = -cos(glm::radians(m_Pitch)) * sin(glm::radians(m_Yaw));
+		m_CameraFront.y =  sin(glm::radians(m_Pitch));
+		m_CameraFront.z = -cos(glm::radians(m_Pitch)) * cos(glm::radians(m_Yaw));
+		/* No need to normalize, since the magnitude is already 1 by construction */
 
-			/* Reset offset to zero */
-			offset->pitch = 0.0f;
-			offset->yaw = 0.0f;
-			offset->roll = 0.0f;
-		}
+		m_FOV = context->fov;
+
+		/* Reset offset to zero */
+		context->offset.pitch = 0.0f;
+		context->offset.yaw = 0.0f;
+		context->offset.roll = 0.0f;
 
 		m_Center = m_Eye + m_CameraFront;
 	}
@@ -70,7 +80,7 @@ namespace scene {
 		m_View = glm::lookAt(m_Eye, m_Center, m_WorldUp);
 
 		/* N.B. Depth testing does not work if zNear is set to 0.0f ! */
-		m_Proj = glm::perspective<float>(glm::radians(60.0f), m_ASPECT_RATIO, 0.1f, 100.0f);
+		m_Proj = glm::perspective<float>(glm::radians(m_FOV), m_ASPECT_RATIO, 0.1f, 100.0f);
 
 		for (int i = 0; i < TOTAL_CUBES; ++i) {
 			m_Model = glm::translate(glm::mat4(1.0f), m_CubesPositions[i]);
@@ -106,11 +116,17 @@ namespace scene {
 		xoffset *= hSensitivity;
 		yoffset *= vSensitivity;
 
-		static EulerAngles offset;
-		offset.pitch = yoffset;
-		offset.yaw = -xoffset;
-		offset.roll = 0.0f;
-		glfwSetWindowUserPointer(window, &offset);
+		static CameraContext* context = (CameraContext*)glfwGetWindowUserPointer(window);
+		context->offset.pitch = yoffset;
+		context->offset.yaw = -xoffset;
+		context->offset.roll = 0.0f;
+	}
+
+	void SceneCamera::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+	{
+		static const float scroolSensitivity = 1.5f;
+		static CameraContext* context = (CameraContext*)glfwGetWindowUserPointer(window);
+		context->fov = std::clamp(context->fov - (float)yoffset * scroolSensitivity, 5.0f, 55.0f);
 	}
 
 	void SceneCamera::processUserInput(float deltaTime)

@@ -13,6 +13,11 @@ namespace scene {
 		float roll;
 	} EulerAngles;
 
+	typedef struct CameraContext {
+		float fov;
+		EulerAngles offset;
+	} CameraContext;
+
 	class SceneCamera : public AbstractScene
 	{
 	public:
@@ -28,6 +33,8 @@ namespace scene {
 
 	private:
 		static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+		static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+
 		void processUserInput(float deltaTime);
 
 		GLFWwindow* m_Window;
@@ -65,6 +72,7 @@ namespace scene {
 		glm::vec3 m_Center;
 		glm::vec3 m_WorldUp;
 
+		float m_FOV;
 		float m_CameraSpeed;
 		float m_Pitch;
 		float m_Yaw;
