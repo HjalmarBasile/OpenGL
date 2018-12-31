@@ -42,7 +42,6 @@ namespace scene {
 	void SceneCamera::OnUpdate(float deltaTime)
 	{
 		this->processUserInput(deltaTime);
-		m_Center = m_Eye + m_CameraFront;
 
 		EulerAngles* offset = (EulerAngles*)glfwGetWindowUserPointer(m_Window);
 		if (offset) {
@@ -59,6 +58,8 @@ namespace scene {
 			offset->yaw = 0.0f;
 			offset->roll = 0.0f;
 		}
+
+		m_Center = m_Eye + m_CameraFront;
 	}
 
 	void SceneCamera::OnRender()
