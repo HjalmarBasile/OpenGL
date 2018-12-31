@@ -1,13 +1,16 @@
 #include "SceneCamera.h"
 
+#include <algorithm>
+
 namespace scene {
 
 	SceneCamera::SceneCamera(GLFWwindow* window, int windowWidth, int windowHeight) :
-		m_Window(window),
-		m_ASPECT_RATIO((float)windowWidth / (float)windowHeight),
-		m_CurrentRotationTime(0.0f),
-		m_ControlCamera(false), m_CameraSpeed(5.0f)
+		m_Window(window), m_ASPECT_RATIO((float)windowWidth / (float)windowHeight),
+		m_CameraSpeed(5.0f), m_Pitch(0.0f), m_Yaw(0.0f)
 	{
+		/* Take input from mouse */
+		glfwSetCursorPosCallback(m_Window, mouseCallback);
+
 		cube = std::make_unique<Cube>(CRATE_TEXTURE_PATH);
 
 		/* Set the camera and target positions */
@@ -31,23 +34,30 @@ namespace scene {
 	SceneCamera::~SceneCamera()
 	{
 		GLCheckErrorCall(glDisable(GL_DEPTH_TEST));
+		glfwSetCursorPosCallback(m_Window, NULL);
 	}
 
 	std::string SceneCamera::GetName() const { return name; }
 
 	void SceneCamera::OnUpdate(float deltaTime)
 	{
-		if (m_ControlCamera) {
-			this->processUserInput(deltaTime);
-			m_Center = m_Eye + m_CameraFront;
-		} else {
-			/* We are moving the camera in a circle */
-			m_Center = glm::vec3(0.0f, 0.0f, 0.0f);
-			float radius = 10.0f;
-			m_CurrentRotationTime += deltaTime;
-			m_Eye.x = radius * sin(m_CurrentRotationTime);
-			m_Eye.z = radius * cos(m_CurrentRotationTime);
-			m_CameraFront = glm::normalize(m_Center - m_Eye);
+		this->processUserInput(deltaTime);
+		m_Center = m_Eye + m_CameraFront;
+
+		EulerAngles* offset = (EulerAngles*)glfwGetWindowUserPointer(m_Window);
+		if (offset) {
+			m_Pitch = std::clamp(m_Pitch + offset->pitch, -80.0f, 80.0f);
+			m_Yaw += offset->yaw;
+
+			m_CameraFront.x = -cos(glm::radians(m_Pitch)) * sin(glm::radians(m_Yaw));
+			m_CameraFront.y =  sin(glm::radians(m_Pitch));
+			m_CameraFront.z = -cos(glm::radians(m_Pitch)) * cos(glm::radians(m_Yaw));
+			/* No need to normalize, since the magnitude is already 1 by construction */
+
+			/* Reset offset to zero */
+			offset->pitch = 0.0f;
+			offset->yaw = 0.0f;
+			offset->roll = 0.0f;
 		}
 	}
 
@@ -73,10 +83,33 @@ namespace scene {
 	void SceneCamera::OnImGuiRender()
 	{
 		ImGui::Begin("Scene Camera");
-		ImGui::Checkbox("Control Camera (WASD)", &m_ControlCamera);
 		ImGui::SliderFloat("Camera Speed", &m_CameraSpeed, 2.5f, 10.0f);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
+	}
+
+	void SceneCamera::mouseCallback(GLFWwindow* window, double xpos, double ypos)
+	{
+		float fxpos = (float)xpos;
+		float fypos = (float)ypos;
+		static float lastMouseX = fxpos;
+		static float lastMouseY = fypos;
+
+		float xoffset =  fxpos - lastMouseX;
+		float yoffset = -fypos + lastMouseY; /* Y screen coordinates returned by glfw are reversed */
+		lastMouseX = fxpos;
+		lastMouseY = fypos;
+
+		static const float hSensitivity = 0.20f;
+		static const float vSensitivity = 0.15f;
+		xoffset *= hSensitivity;
+		yoffset *= vSensitivity;
+
+		static EulerAngles offset;
+		offset.pitch = yoffset;
+		offset.yaw = -xoffset;
+		offset.roll = 0.0f;
+		glfwSetWindowUserPointer(window, &offset);
 	}
 
 	void SceneCamera::processUserInput(float deltaTime)

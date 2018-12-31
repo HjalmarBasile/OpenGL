@@ -7,6 +7,12 @@
 
 namespace scene {
 
+	typedef struct EulerAngles {
+		float pitch;
+		float yaw;
+		float roll;
+	} EulerAngles;
+
 	class SceneCamera : public AbstractScene
 	{
 	public:
@@ -21,12 +27,12 @@ namespace scene {
 		void OnImGuiRender() override;
 
 	private:
+		static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 		void processUserInput(float deltaTime);
 
 		GLFWwindow* m_Window;
 		const float m_ASPECT_RATIO;
 		static constexpr int TOTAL_CUBES = 13;
-		float m_CurrentRotationTime;
 
 		std::unique_ptr<Cube> cube;
 
@@ -59,8 +65,9 @@ namespace scene {
 		glm::vec3 m_Center;
 		glm::vec3 m_WorldUp;
 
-		bool m_ControlCamera;
 		float m_CameraSpeed;
+		float m_Pitch;
+		float m_Yaw;
 	};
 
 }
