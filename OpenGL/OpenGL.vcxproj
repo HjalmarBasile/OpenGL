@@ -99,6 +99,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libs\$(Platform)\GLFW\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>rmdir /S /Q $(SolutionDir)bin\$(Platform)_$(Configuration)\res\ 2&gt;nul
+xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -114,6 +118,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libs\$(Platform)\GLFW\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>rmdir /S /Q $(SolutionDir)bin\$(Platform)_$(Configuration)\res\ 2&gt;nul
+xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -133,6 +141,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libs\$(Platform)\GLFW\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>rmdir /S /Q $(SolutionDir)bin\$(Platform)_$(Configuration)\res\ 2&gt;nul
+xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -151,6 +163,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libs\$(Platform)\GLFW\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>rmdir /S /Q $(SolutionDir)bin\$(Platform)_$(Configuration)\res\ 2&gt;nul
+xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
