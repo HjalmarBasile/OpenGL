@@ -65,6 +65,7 @@ namespace scene {
 	{
 		ImGui::Begin("Scene Camera");
 		ImGui::SliderFloat("Camera Speed", &m_CameraSpeed, 2.5f, 10.0f);
+		ImGui::Text("Use WASD and mouse to move and look around,\nUse scroll wheel to zoom");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
