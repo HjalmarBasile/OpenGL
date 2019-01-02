@@ -25,6 +25,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Camera.h"
 #include "SceneHelloImGui.h"
 #include "SceneClearColor.h"
 #include "SceneHelloTriangle.h"
@@ -39,11 +40,16 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-void processUserInput(GLFWwindow* window);
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processUserInput(GLFWwindow* window, float deltaTime);
+void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
 static constexpr int WINDOW_WIDTH = 720;
 static constexpr int WINDOW_HEIGHT = 540;
+
+Camera MainCamera(glm::vec3(0.0f, 0.0f, 10.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
+bool useMainCamera = false;
 
 int main() {
 	GLFWwindow* window;
@@ -70,7 +76,7 @@ int main() {
 	glfwMakeContextCurrent(window);
 
 	/* Set the callback to be invoked when the framebuffer of the specified window is resized */
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
 	/* Enable v-sync */
 	glfwSwapInterval(1);
@@ -115,7 +121,7 @@ int main() {
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
 		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
-		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, window, WINDOW_WIDTH, WINDOW_HEIGHT);
+		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, &MainCamera, &useMainCamera);
 
 		float deltaTime = 0.0f;
 		float lastFrameTimestamp = (float)glfwGetTime();
@@ -128,12 +134,16 @@ int main() {
 			lastFrameTimestamp = currentFrameTimestamp;
 
 			/* React to user input */
-			processUserInput(window);
+			processUserInput(window, deltaTime);
 
 			/* Start the Dear ImGui frame */
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
+
+			/* Take input from mouse */
+			glfwSetCursorPosCallback(window, CursorPosCallback);
+			glfwSetScrollCallback(window, ScrollCallback);
 
 			if (currentScene) {
 				currentScene->OnUpdate(deltaTime);
@@ -186,12 +196,53 @@ int main() {
 	return 0;
 }
 
-void processUserInput(GLFWwindow* window) {
+void processUserInput(GLFWwindow* window, float deltaTime) {
 	if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
 		glfwSetWindowShouldClose(window, true);
 	}
+
+	if (useMainCamera) {
+		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_W)) {
+			MainCamera.ProcessKeyboard(Camera::MovementDirection::FORWARD, deltaTime);
+		}
+		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_S)) {
+			MainCamera.ProcessKeyboard(Camera::MovementDirection::BACKWARD, deltaTime);
+		}
+		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_D)) {
+			MainCamera.ProcessKeyboard(Camera::MovementDirection::RIGHT, deltaTime);
+		}
+		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_A)) {
+			MainCamera.ProcessKeyboard(Camera::MovementDirection::LEFT, deltaTime);
+		}
+	}
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	GLCheckErrorCall(glViewport(0, 0, width, height));
+}
+
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (useMainCamera) {
+		float fxpos = (float)xpos;
+		float fypos = (float)ypos;
+		static float lastMouseX = fxpos;
+		static float lastMouseY = fypos;
+
+		float xoffset = fxpos - lastMouseX;
+		float yoffset = -fypos + lastMouseY; /* Y screen coordinates returned by glfw are reversed */
+		lastMouseX = fxpos;
+		lastMouseY = fypos;
+
+		MainCamera.ProcessMouseMovement(xoffset, yoffset);
+	}
+}
+
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+
+	if (useMainCamera) {
+		MainCamera.ProcessMouseScroll((float)yoffset);
+	}
 }
