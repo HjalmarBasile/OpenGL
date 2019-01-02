@@ -86,6 +86,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset)
 	xoffset *= MOUSE_HORIZONTAL_SENSITIVITY;
 	yoffset *= MOUSE_VERTICAL_SENSITIVITY;
 
+	/* See math notes about Euler angles for explanation */
 	float pitchOffset = yoffset;
 	float yawOffset = -xoffset;
 
@@ -102,6 +103,7 @@ void Camera::ProcessMouseScroll(float yoffset)
 
 void Camera::UpdateCameraVectors()
 {
+	/* See math notes about Euler angles for explanation */
 	m_CameraFront.x = -cos(glm::radians(m_Pitch)) * sin(glm::radians(m_Yaw));
 	m_CameraFront.y = sin(glm::radians(m_Pitch));
 	m_CameraFront.z = -cos(glm::radians(m_Pitch)) * cos(glm::radians(m_Yaw));
