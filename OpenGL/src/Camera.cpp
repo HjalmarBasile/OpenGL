@@ -2,13 +2,17 @@
 
 #include <algorithm>
 
-Camera::Camera(glm::vec3 position, float aspectRatio) :
-	m_AspectRatio(aspectRatio),
+Camera::Camera(glm::vec3 position, float aspectRatio, bool constrainToGround) :
+	m_AspectRatio(aspectRatio), m_ConstrainToGround(constrainToGround),
 	m_FOV(FOV_DEFAULT), m_CameraSpeed(CAMERA_SPEED_DEFAULT),
 	m_Pitch(PITCH_DEFAULT), m_Yaw(YAW_DEFAULT)
 {
 	/* Set the camera position */
 	m_Eye = position;
+	if (m_ConstrainToGround) {
+		m_Eye.y = 0.0f;
+	}
+
 	/* Set the up world vector */
 	m_WorldUp = WORLD_UP_DEFAULT;
 
@@ -45,6 +49,7 @@ void Camera::SetCameraSpeed(float speed)
 
 void Camera::ResetToDefaults()
 {
+	this->m_ConstrainToGround = CONSTRAIN_TO_GROUND_DEFAULT;
 	this->m_FOV = FOV_DEFAULT;
 	this->m_CameraSpeed = CAMERA_SPEED_DEFAULT;
 	this->m_Pitch = PITCH_DEFAULT;
@@ -69,6 +74,10 @@ void Camera::ProcessKeyboard(MovementDirection direction, float deltaTime)
 	}
 	if (LEFT == direction) {
 		m_Eye -= deltaSpace * m_CameraRight;
+	}
+
+	if (m_ConstrainToGround) {
+		m_Eye.y = 0.0f;
 	}
 }
 

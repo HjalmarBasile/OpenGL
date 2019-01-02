@@ -15,7 +15,7 @@ public:
 	};
 
 public:
-	Camera(glm::vec3 position, float aspectRatio);
+	Camera(glm::vec3 position, float aspectRatio, bool constrainToGround = CONSTRAIN_TO_GROUND_DEFAULT);
 
 	glm::mat4 GetViewMatrix();
 	glm::mat4 GetPerspectiveProjMatrix();
@@ -34,6 +34,7 @@ private:
 	static constexpr float MOUSE_VERTICAL_SENSITIVITY = 0.15f;
 	static constexpr float MOUSE_SCROLL_SENSITIVITY = 1.5f;
 
+	static constexpr float CONSTRAIN_TO_GROUND_DEFAULT = true;
 	static constexpr float FOV_DEFAULT = 45.0f;
 	static constexpr float CAMERA_SPEED_DEFAULT = 5.0f;
 	static constexpr float PITCH_DEFAULT = 0.0f;
@@ -43,6 +44,7 @@ private:
 	const glm::vec3 WORLD_UP_DEFAULT = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	float m_AspectRatio;
+	bool m_ConstrainToGround;
 	float m_FOV;
 	float m_CameraSpeed;
 
