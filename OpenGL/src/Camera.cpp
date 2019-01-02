@@ -3,13 +3,14 @@
 #include <algorithm>
 
 Camera::Camera(glm::vec3 position, float aspectRatio) :
-	m_AspectRatio(aspectRatio), m_FOV(45.0f), m_CameraSpeed(5.0f),
-	m_Pitch(0.0f), m_Yaw(0.0f)
+	m_AspectRatio(aspectRatio),
+	m_FOV(FOV_DEFAULT), m_CameraSpeed(CAMERA_SPEED_DEFAULT),
+	m_Pitch(PITCH_DEFAULT), m_Yaw(YAW_DEFAULT)
 {
 	/* Set the camera position */
 	m_Eye = position;
 	/* Set the up world vector */
-	m_WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	m_WorldUp = WORLD_UP_DEFAULT;
 
 	/* Update front and right versors */
 	UpdateCameraVectors();
@@ -42,6 +43,18 @@ void Camera::SetCameraSpeed(float speed)
 	this->m_CameraSpeed = speed;
 }
 
+void Camera::ResetToDefaults()
+{
+	this->m_FOV = FOV_DEFAULT;
+	this->m_CameraSpeed = CAMERA_SPEED_DEFAULT;
+	this->m_Pitch = PITCH_DEFAULT;
+	this->m_Yaw = YAW_DEFAULT;
+
+	this->m_Eye = EYE_DEFAULT;
+	this->m_WorldUp = WORLD_UP_DEFAULT;
+	UpdateCameraVectors();
+}
+
 void Camera::ProcessKeyboard(MovementDirection direction, float deltaTime)
 {
 	float deltaSpace = m_CameraSpeed * deltaTime;
@@ -61,8 +74,8 @@ void Camera::ProcessKeyboard(MovementDirection direction, float deltaTime)
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset)
 {
-	xoffset *= m_MouseHorizontalSensitivity;
-	yoffset *= m_MouseVerticalSensitivity;
+	xoffset *= MOUSE_HORIZONTAL_SENSITIVITY;
+	yoffset *= MOUSE_VERTICAL_SENSITIVITY;
 
 	float pitchOffset = yoffset;
 	float yawOffset = -xoffset;
@@ -75,7 +88,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset)
 
 void Camera::ProcessMouseScroll(float yoffset)
 {
-	m_FOV = std::clamp(m_FOV - (float)yoffset * m_MouseScrollSensitivity, 5.0f, 55.0f);
+	m_FOV = std::clamp(m_FOV - (float)yoffset * MOUSE_SCROLL_SENSITIVITY, 5.0f, 55.0f);
 }
 
 void Camera::UpdateCameraVectors()

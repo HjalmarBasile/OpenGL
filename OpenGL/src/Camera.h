@@ -23,15 +23,24 @@ public:
 	void SetAspectRatio(float aspectRatio);
 	void SetFOV(float fov);
 	void SetCameraSpeed(float speed);
+	void ResetToDefaults();
 
 	void ProcessKeyboard(MovementDirection direction, float deltaTime);
 	void ProcessMouseMovement(float xoffset, float yoffset);
 	void ProcessMouseScroll(float yoffset);
 
 private:
-	static constexpr float m_MouseHorizontalSensitivity = 0.20f;
-	static constexpr float m_MouseVerticalSensitivity = 0.15f;
-	static constexpr float m_MouseScrollSensitivity = 1.5f;
+	static constexpr float MOUSE_HORIZONTAL_SENSITIVITY = 0.20f;
+	static constexpr float MOUSE_VERTICAL_SENSITIVITY = 0.15f;
+	static constexpr float MOUSE_SCROLL_SENSITIVITY = 1.5f;
+
+	static constexpr float FOV_DEFAULT = 45.0f;
+	static constexpr float CAMERA_SPEED_DEFAULT = 5.0f;
+	static constexpr float PITCH_DEFAULT = 0.0f;
+	static constexpr float YAW_DEFAULT = 0.0f;
+
+	const glm::vec3 EYE_DEFAULT = glm::vec3(0.0f, 0.0f, 10.0f);
+	const glm::vec3 WORLD_UP_DEFAULT = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	float m_AspectRatio;
 	float m_FOV;

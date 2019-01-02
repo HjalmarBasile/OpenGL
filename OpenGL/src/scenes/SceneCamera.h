@@ -28,7 +28,7 @@ namespace scene {
 		static void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
 		static constexpr int TOTAL_CUBES = 13;
-		static std::unique_ptr<Camera> m_Camera;
+		static std::unique_ptr<Camera> s_Camera;
 		float m_CameraSpeed;
 
 		GLFWwindow* m_Window;

@@ -2,13 +2,13 @@
 
 namespace scene {
 
-	std::unique_ptr<Camera> SceneCamera::m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 10.0f), 720.0f / 540.0f);
+	std::unique_ptr<Camera> SceneCamera::s_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 10.0f), 720.0f / 540.0f);
 
 	SceneCamera::SceneCamera(GLFWwindow* window, int windowWidth, int windowHeight) :
 		m_CameraSpeed(5.0f), m_Window(window)
 	{
-		m_Camera->SetAspectRatio((float)windowWidth / (float)windowHeight);
-		m_Camera->SetCameraSpeed(m_CameraSpeed);
+		s_Camera->SetAspectRatio((float)windowWidth / (float)windowHeight);
+		s_Camera->SetCameraSpeed(m_CameraSpeed);
 
 		m_Cube = std::make_unique<Cube>(CRATE_TEXTURE_PATH);
 
@@ -29,6 +29,8 @@ namespace scene {
 
 	SceneCamera::~SceneCamera()
 	{
+		s_Camera->ResetToDefaults();
+
 		glfwSetCursorPosCallback(m_Window, NULL);
 		glfwSetScrollCallback(m_Window, NULL);
 
@@ -39,7 +41,7 @@ namespace scene {
 
 	void SceneCamera::OnUpdate(float deltaTime)
 	{
-		m_Camera->SetCameraSpeed(m_CameraSpeed);
+		s_Camera->SetCameraSpeed(m_CameraSpeed);
 		processUserInput(deltaTime);
 	}
 
@@ -47,8 +49,8 @@ namespace scene {
 	{
 		GLCheckErrorCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-		m_View = m_Camera->GetViewMatrix();
-		m_Proj = m_Camera->GetPerspectiveProjMatrix();
+		m_View = s_Camera->GetViewMatrix();
+		m_Proj = s_Camera->GetPerspectiveProjMatrix();
 
 		for (int i = 0; i < TOTAL_CUBES; ++i) {
 			m_Model = glm::translate(glm::mat4(1.0f), m_CubesPositions[i]);
@@ -70,16 +72,16 @@ namespace scene {
 	void SceneCamera::processUserInput(float deltaTime)
 	{
 		if (GLFW_PRESS == glfwGetKey(m_Window, GLFW_KEY_W)) {
-			m_Camera->ProcessKeyboard(Camera::MovementDirection::FORWARD, deltaTime);
+			s_Camera->ProcessKeyboard(Camera::MovementDirection::FORWARD, deltaTime);
 		}
 		if (GLFW_PRESS == glfwGetKey(m_Window, GLFW_KEY_S)) {
-			m_Camera->ProcessKeyboard(Camera::MovementDirection::BACKWARD, deltaTime);
+			s_Camera->ProcessKeyboard(Camera::MovementDirection::BACKWARD, deltaTime);
 		}
 		if (GLFW_PRESS == glfwGetKey(m_Window, GLFW_KEY_D)) {
-			m_Camera->ProcessKeyboard(Camera::MovementDirection::RIGHT, deltaTime);
+			s_Camera->ProcessKeyboard(Camera::MovementDirection::RIGHT, deltaTime);
 		}
 		if (GLFW_PRESS == glfwGetKey(m_Window, GLFW_KEY_A)) {
-			m_Camera->ProcessKeyboard(Camera::MovementDirection::LEFT, deltaTime);
+			s_Camera->ProcessKeyboard(Camera::MovementDirection::LEFT, deltaTime);
 		}
 	}
 
@@ -95,12 +97,12 @@ namespace scene {
 		lastMouseX = fxpos;
 		lastMouseY = fypos;
 
-		m_Camera->ProcessMouseMovement(xoffset, yoffset);
+		s_Camera->ProcessMouseMovement(xoffset, yoffset);
 	}
 
 	void SceneCamera::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		m_Camera->ProcessMouseScroll((float)yoffset);
+		s_Camera->ProcessMouseScroll((float)yoffset);
 	}
 
 }
