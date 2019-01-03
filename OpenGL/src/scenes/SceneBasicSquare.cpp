@@ -51,6 +51,8 @@ namespace scene {
 		m_VertexBuffer->Unbind();
 		m_IndexBuffer->Unbind();
 		m_Shader->Unuse();
+
+		Renderer::ClearColorSetBlack();
 	}
 
 	std::string SceneBasicSquare::GetName() const { return name; }

@@ -9,7 +9,7 @@ namespace scene {
 	void SceneMenu::OnUpdate(float deltaTime) {}
 
 	void SceneMenu::OnRender() {
-		Renderer::ClearColorSetBlack();
+		Renderer::ClearColorSetDefault();
 		Renderer::Clear();
 	}
 

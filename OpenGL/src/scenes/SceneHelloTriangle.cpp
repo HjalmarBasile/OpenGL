@@ -38,9 +38,6 @@ namespace scene {
 		m_VAO->Unbind();
 		m_VertexBuffer->Unbind();
 		m_Shader->Unuse();
-
-		/* Choose a background color */
-		GLCheckErrorCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	}
 
 	SceneHelloTriangle::~SceneHelloTriangle()

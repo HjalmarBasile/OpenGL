@@ -44,8 +44,6 @@ namespace scene {
 		VertexArray::Unbind();
 		VertexBuffer::Unbind();
 		Shader::Unuse();
-
-		GLCheckErrorCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	}
 
 	SceneTwoTriangles::~SceneTwoTriangles()

@@ -23,6 +23,7 @@ bool GLLogCall(const char* function, const char* file, int line);
 class Renderer
 {
 public:
+	static void ClearColorSetDefault();
 	static void ClearColorSetBlack();
 	static void Clear();
 	static void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
