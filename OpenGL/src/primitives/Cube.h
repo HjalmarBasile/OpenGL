@@ -9,7 +9,13 @@
 class Cube
 {
 public:
-	Cube(const char* texturePath);
+	enum ShadingType {
+		TEXTURE,
+		LIGHT
+	};
+
+public:
+	Cube(ShadingType shadingType, const char* texturePath);
 	~Cube();
 
 	void Bind();
@@ -17,6 +23,9 @@ public:
 	void Draw();
 
 	void SetMVP(glm::mat4 MVP);
+	// TODO create specific subclass
+	void SetObjectColor(glm::vec3 objectColor);
+	void SetLightColor(glm::vec3 lightColor);
 
 private:
 	static constexpr int CUBE_VERTICES = 36;
@@ -24,6 +33,7 @@ private:
 	static constexpr int UV_SIZE = 2;
 	static constexpr unsigned int POSITIONS_SIZE = CUBE_VERTICES * (VERTEX_SIZE + UV_SIZE);
 
+	// TODO make static
 	const float m_Positions[POSITIONS_SIZE] = {
 		/* vertices */		  /* UV coordinates */
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,

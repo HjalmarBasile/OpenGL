@@ -182,6 +182,7 @@ xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I 
     <ClCompile Include="src\scenes\SceneClearColor.cpp" />
     <ClCompile Include="src\scenes\SceneHelloImGui.cpp" />
     <ClCompile Include="src\scenes\SceneHelloTriangle.cpp" />
+    <ClCompile Include="src\scenes\SceneLight.cpp" />
     <ClCompile Include="src\scenes\ScenePerspectiveProjection.cpp" />
     <ClCompile Include="src\scenes\SceneTexture2D.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -203,6 +204,9 @@ xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I 
   <ItemGroup>
     <None Include="res\shaders\basic.frag" />
     <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\basic_lamp.frag" />
+    <None Include="res\shaders\basic_lighted.frag" />
+    <None Include="res\shaders\basic_mvp.vert" />
     <None Include="res\shaders\col_in.frag" />
     <None Include="res\shaders\pos_col.vert" />
     <None Include="res\shaders\pos_col_uv.frag" />
@@ -353,6 +357,7 @@ xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I 
     <ClInclude Include="src\scenes\SceneClearColor.h" />
     <ClInclude Include="src\scenes\SceneHelloImGui.h" />
     <ClInclude Include="src\scenes\SceneHelloTriangle.h" />
+    <ClInclude Include="src\scenes\SceneLight.h" />
     <ClInclude Include="src\scenes\ScenePerspectiveProjection.h" />
     <ClInclude Include="src\scenes\SceneTexture2D.h" />
     <ClInclude Include="src\Shader.h" />

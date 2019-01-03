@@ -13,6 +13,10 @@ static constexpr const char* FRAGMENT_BASIC_SHADER_PATH = "res/shaders/basic.fra
 static constexpr const char* VERTEX_POS_COL_SHADER_PATH = "res/shaders/pos_col.vert";
 static constexpr const char* FRAGMENT_COL_IN_SHADER_PATH = "res/shaders/col_in.frag";
 
+static constexpr const char* VERTEX_BASIC_MVP_SHADER_PATH = "res/shaders/basic_mvp.vert";
+static constexpr const char* FRAGMENT_BASIC_LIGHTED_SHADER_PATH = "res/shaders/basic_lighted.frag";
+static constexpr const char* FRAGMENT_BASIC_LAMP_SHADER_PATH = "res/shaders/basic_lamp.frag";
+
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
 static constexpr const char* VERTEX_TEXTURE_2D_POS_3D_SHADER_PATH = "res/shaders/texture2D_pos3D.vert";
 static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";
@@ -38,6 +42,7 @@ public:
 
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniform1f(const std::string& name, float value);
+	void SetUniform3f(const std::string& name, float v0, float v1, float v2);
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
 	void SetUniformMatrix4fv(const std::string& name, const glm::mat4& matrix);
 private:

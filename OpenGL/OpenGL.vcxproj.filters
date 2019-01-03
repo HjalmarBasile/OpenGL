@@ -105,6 +105,9 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\SceneLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic.vert">
@@ -507,6 +510,9 @@
     <None Include="res\shaders\pos_col_uv.vert" />
     <None Include="res\shaders\pos_col_uv.frag" />
     <None Include="res\shaders\texture2D_pos3D.vert" />
+    <None Include="res\shaders\basic_mvp.vert" />
+    <None Include="res\shaders\basic_lighted.frag" />
+    <None Include="res\shaders\basic_lamp.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1305,6 +1311,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\SceneLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

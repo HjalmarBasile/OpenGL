@@ -33,6 +33,7 @@
 #include "SceneTexture2D.h"
 #include "ScenePerspectiveProjection.h"
 #include "SceneCamera.h"
+#include "SceneLight.h"
 #include "exercises/SceneTwoTriangles.h"
 #include "exercises/SceneMixedTexture.h"
 
@@ -122,6 +123,7 @@ int main() {
 		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
 		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, &MainCamera, &useMainCamera);
+		menu->RegisterScene<scene::SceneLight>(scene::SceneLight::name, &MainCamera, &useMainCamera);
 
 		float deltaTime = 0.0f;
 		float lastFrameTimestamp = (float)glfwGetTime();
