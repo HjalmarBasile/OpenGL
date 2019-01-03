@@ -114,6 +114,8 @@ int main() {
 		currentScene = menu;
 
 		const float r = 0.2f, g = 0.3f, b = 0.8f, a = 1.0f;
+		Camera* const pMainCamera = &MainCamera;
+		bool* const pUseMainCamera = &useMainCamera;
 		menu->RegisterScene<scene::SceneHelloImGui>(scene::SceneHelloImGui::name);
 		menu->RegisterScene<scene::SceneClearColor>(scene::SceneClearColor::name, r, g, b, a);
 		menu->RegisterScene<scene::SceneHelloTriangle>(scene::SceneHelloTriangle::name);
@@ -122,8 +124,8 @@ int main() {
 		menu->RegisterScene<scene::SceneTexture2D>(scene::SceneTexture2D::name, WINDOW_WIDTH, WINDOW_HEIGHT);
 		menu->RegisterScene<scene::SceneMixedTexture>(scene::SceneMixedTexture::name);
 		menu->RegisterScene<scene::ScenePerspectiveProjection>(scene::ScenePerspectiveProjection::name, WINDOW_WIDTH, WINDOW_HEIGHT);
-		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, &MainCamera, &useMainCamera);
-		menu->RegisterScene<scene::SceneLight>(scene::SceneLight::name, &MainCamera, &useMainCamera);
+		menu->RegisterScene<scene::SceneCamera>(scene::SceneCamera::name, pMainCamera, pUseMainCamera);
+		menu->RegisterScene<scene::SceneLight>(scene::SceneLight::name, pMainCamera, pUseMainCamera);
 
 		float deltaTime = 0.0f;
 		float lastFrameTimestamp = (float)glfwGetTime();
