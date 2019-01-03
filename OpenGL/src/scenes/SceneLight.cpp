@@ -7,7 +7,7 @@ namespace scene {
 	{
 		*p_UseMainCamera = true;
 
-		m_LightedCube = std::make_unique<Cube>(Cube::ShadingType::LIGHT, nullptr);
+		m_LightedCube = std::make_unique<LightedCube>();
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
 		m_LightedCube->SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
 

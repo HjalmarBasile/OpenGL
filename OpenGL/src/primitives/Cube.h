@@ -9,25 +9,16 @@
 class Cube
 {
 public:
-	enum ShadingType {
-		TEXTURE,
-		LIGHT
-	};
+	Cube();
+	virtual ~Cube();
 
-public:
-	Cube(ShadingType shadingType, const char* texturePath);
-	~Cube();
-
-	void Bind();
-	void Unbind();
 	void Draw();
+	virtual void Bind() = 0;
+	virtual void Unbind() = 0;
 
 	void SetMVP(glm::mat4 MVP);
-	// TODO create specific subclass
-	void SetObjectColor(glm::vec3 objectColor);
-	void SetLightColor(glm::vec3 lightColor);
 
-private:
+protected:
 	static constexpr int CUBE_VERTICES = 36;
 	static constexpr int VERTEX_SIZE = 3;
 	static constexpr int UV_SIZE = 2;
@@ -38,5 +29,30 @@ private:
 	std::unique_ptr<VertexArray> m_VAO;
 	std::unique_ptr<VertexBuffer> m_VertexBuffer;
 	std::unique_ptr<Shader> m_Shader;
+};
+
+class TexturedCube : public Cube
+{
+public:
+	TexturedCube(const char* texturePath);
+	~TexturedCube();
+
+	void Bind() override;
+	void Unbind() override;
+
+private:
 	std::unique_ptr<Texture> m_Texture2D;
+};
+
+class LightedCube : public Cube
+{
+public:
+	LightedCube();
+	~LightedCube();
+
+	void Bind() override;
+	void Unbind() override;
+
+	void SetObjectColor(glm::vec3 objectColor);
+	void SetLightColor(glm::vec3 lightColor);
 };

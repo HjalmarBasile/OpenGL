@@ -23,7 +23,7 @@ namespace scene {
 		Camera* p_MainCamera;
 		bool* p_UseMainCamera;
 
-		std::unique_ptr<Cube> m_LightedCube;
+		std::unique_ptr<LightedCube> m_LightedCube;
 
 		glm::mat4 m_Model;
 		glm::mat4 m_View;

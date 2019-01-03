@@ -9,7 +9,7 @@ namespace scene {
 		m_ASPECT_RATIO((float)windowWidth / (float)windowHeight),
 		m_ModelScale(1.0f), m_CameraTranslateZ(10.0f), m_FOV(45.0f), m_ZBufferClearValue(1.0f)
 	{
-		cube = std::make_unique<Cube>(Cube::ShadingType::TEXTURE, CRATE_TEXTURE_PATH);
+		cube = std::make_unique<TexturedCube>(CRATE_TEXTURE_PATH);
 
 		std::random_device rd;
 		std::mt19937 rng(rd());

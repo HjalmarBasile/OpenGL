@@ -9,7 +9,7 @@ namespace scene {
 		*p_UseMainCamera = true;
 		p_MainCamera->SetCameraSpeed(m_CameraSpeed);
 
-		m_Cube = std::make_unique<Cube>(Cube::ShadingType::TEXTURE, CRATE_TEXTURE_PATH);
+		m_Cube = std::make_unique<TexturedCube>(CRATE_TEXTURE_PATH);
 
 		/* Enable blending */
 		GLCheckErrorCall(glEnable(GL_BLEND));
