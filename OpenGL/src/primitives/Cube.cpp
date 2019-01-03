@@ -6,7 +6,7 @@ Cube::Cube(ShadingType shadingType, const char* texturePath)
 	m_VAO = std::make_unique<VertexArray>();
 
 	/* Create and bind vertex buffer */
-	m_VertexBuffer = std::make_unique<VertexBuffer>(m_Positions, POSITIONS_SIZE * sizeof(float));
+	m_VertexBuffer = std::make_unique<VertexBuffer>(s_Positions, POSITIONS_SIZE * sizeof(float));
 
 	/* Define a vertex buffer layout */
 	VertexBufferLayout layout;
@@ -84,3 +84,48 @@ void Cube::SetLightColor(glm::vec3 lightColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
+
+const float Cube::s_Positions[] = {
+	/* vertices */			/* UV coordinates */
+	-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	1.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,	0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,	0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f
+};
