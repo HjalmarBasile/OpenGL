@@ -107,6 +107,35 @@ void TexturedCube::Unbind()
 	m_Texture2D->Unbind();
 }
 
+LampCube::LampCube()
+{
+	m_Shader = std::make_unique<Shader>(VERTEX_BASIC_MVP_SHADER_PATH, FRAGMENT_BASIC_LAMP_SHADER_PATH);
+	m_Shader->Use();
+}
+
+LampCube::~LampCube()
+{
+	this->Unbind();
+}
+
+void LampCube::Bind()
+{
+	m_VAO->Bind();
+	m_Shader->Use();
+}
+
+void LampCube::Unbind()
+{
+	m_VAO->Unbind();
+	m_VertexBuffer->Unbind();
+	m_Shader->Unuse();
+}
+
+void LampCube::SetLightColor(glm::vec3 lightColor)
+{
+	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
+}
+
 LightedCube::LightedCube()
 {
 	m_Shader = std::make_unique<Shader>(VERTEX_BASIC_MVP_SHADER_PATH, FRAGMENT_BASIC_LIGHTED_SHADER_PATH);

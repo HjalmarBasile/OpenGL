@@ -44,6 +44,18 @@ private:
 	std::unique_ptr<Texture> m_Texture2D;
 };
 
+class LampCube : public Cube
+{
+public:
+	LampCube();
+	~LampCube();
+
+	void Bind() override;
+	void Unbind() override;
+
+	void SetLightColor(glm::vec3 lightColor);
+};
+
 class LightedCube : public Cube
 {
 public:

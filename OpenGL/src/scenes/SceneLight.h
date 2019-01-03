@@ -23,6 +23,10 @@ namespace scene {
 		Camera* p_MainCamera;
 		bool* p_UseMainCamera;
 
+		glm::vec3 m_LightColor;
+		glm::vec3 m_LightSourcePosition;
+
+		std::unique_ptr<LampCube> m_LampCube;
 		std::unique_ptr<LightedCube> m_LightedCube;
 
 		glm::mat4 m_Model;

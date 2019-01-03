@@ -3,13 +3,19 @@
 namespace scene {
 
 	SceneLight::SceneLight(Camera* camera, bool* useMainCamera) :
-		p_MainCamera(camera), p_UseMainCamera(useMainCamera)
+		p_MainCamera(camera), p_UseMainCamera(useMainCamera),
+		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)), m_LightSourcePosition(glm::vec3(3.0f, 3.0f, 0.0f))
 	{
 		*p_UseMainCamera = true;
 
+		m_LampCube = std::make_unique<LampCube>();
+		m_LampCube->SetLightColor(m_LightColor);
+		m_LampCube->Unbind();
+
 		m_LightedCube = std::make_unique<LightedCube>();
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
-		m_LightedCube->SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+		m_LightedCube->SetLightColor(m_LightColor);
+		m_LightedCube->Unbind();
 
 		/* Enable blending */
 		GLCheckErrorCall(glEnable(GL_BLEND));
@@ -19,12 +25,13 @@ namespace scene {
 		/* Enable depth testing */
 		GLCheckErrorCall(glEnable(GL_DEPTH_TEST));
 		/* Choose background color */
-		GLCheckErrorCall(glClearColor(0.6f, 1.0f, 1.0f, 1.0f));
+		GLCheckErrorCall(glClearColor(0.1f, 0.2f, 0.2f, 1.0f));
 	}
 
 	SceneLight::~SceneLight()
 	{
 		*p_UseMainCamera = false;
+		p_MainCamera->ResetToDefaults();
 
 		GLCheckErrorCall(glDisable(GL_DEPTH_TEST));
 	}
@@ -39,10 +46,23 @@ namespace scene {
 
 		m_View = p_MainCamera->GetViewMatrix();
 		m_Proj = p_MainCamera->GetPerspectiveProjMatrix();
-		m_MVP = m_Proj * m_View;
-		m_LightedCube->SetMVP(m_MVP);
+		{
+			m_MVP = m_Proj * m_View;
+			m_LightedCube->Bind();
+			m_LightedCube->SetMVP(m_MVP);
+			m_LightedCube->Draw();
+			m_LightedCube->Unbind();
+		}
 
-		m_LightedCube->Draw();
+		{
+			m_Model = glm::translate(glm::mat4(1.0f), m_LightSourcePosition);
+			m_Model = glm::scale(m_Model, glm::vec3(0.2f));
+			m_MVP = m_Proj * m_View * m_Model;
+			m_LampCube->Bind();
+			m_LampCube->SetMVP(m_MVP);
+			m_LampCube->Draw();
+			m_LampCube->Unbind();
+		}
 	}
 
 	void SceneLight::OnImGuiRender() {}
