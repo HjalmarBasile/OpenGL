@@ -48,8 +48,8 @@ namespace scene {
 		m_Texture2D_1 = std::make_unique<Texture>(AWESOME_FACE_TEXTURE_PATH);
 		m_Texture2D_2 = std::make_unique<Texture>(DICE_TEXTURE_PATH);
 
-		m_Shader->SetUniform1i("u_Texture1", slot0);
-		m_Shader->SetUniform1i("u_Texture2", slot1);
+		m_Shader->SetUniform1i(UNIFORM_TEXTURE1, slot0);
+		m_Shader->SetUniform1i(UNIFORM_TEXTURE2, slot1);
 
 		m_Texture2D_1->Bind(slot0);
 		m_Texture2D_2->Bind(slot1);
@@ -66,7 +66,7 @@ namespace scene {
 	void SceneMixedTexture::OnRender()
 	{
 		Renderer::Clear();
-		m_Shader->SetUniform1f("u_MixLambda", m_MixLambda);
+		m_Shader->SetUniform1f(UNIFORM_MIX_LAMBDA, m_MixLambda);
 		Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 	}
 

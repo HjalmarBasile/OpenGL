@@ -24,6 +24,15 @@ static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/text
 static constexpr const char* VERTEX_POS_COL_UV_SHADER_PATH = "res/shaders/pos_col_uv.vert";
 static constexpr const char* FRAGMENT_POS_COL_UV_SHADER_PATH = "res/shaders/pos_col_uv.frag";
 
+static constexpr const char* UNIFORM_COLOR = "u_Color";
+static constexpr const char* UNIFORM_MVP = "u_MVP";
+static constexpr const char* UNIFORM_OBJECT_COLOR = "u_ObjectColor";
+static constexpr const char* UNIFORM_LIGHT_COLOR = "u_LightColor";
+static constexpr const char* UNIFORM_TEXTURE = "u_Texture";
+static constexpr const char* UNIFORM_TEXTURE1 = "u_Texture1";
+static constexpr const char* UNIFORM_TEXTURE2 = "u_Texture2";
+static constexpr const char* UNIFORM_MIX_LAMBDA = "u_MixLambda";
+
 typedef void (APIENTRYP GLGetObjectivHandler)(GLuint object, GLenum pname, GLint* params);
 typedef void (APIENTRYP GLGetObjectInfoLogHandler)(GLuint object, GLsizei maxLength, GLsizei* length, GLchar* infoLog);
 typedef void (APIENTRYP GLDeleteObjectHandler)(GLuint object);

@@ -60,11 +60,11 @@ namespace scene {
 		m_Shader->Use();
 
 		if (m_fixed_color) {
-			m_Shader->SetUniform4f("u_Color", 1.0f, 0.5f, 0.2f, 1.0f);
+			m_Shader->SetUniform4f(UNIFORM_COLOR, 1.0f, 0.5f, 0.2f, 1.0f);
 		} else {
 			float currentTime = (float)glfwGetTime();
 			float green = 0.5f * sin(currentTime) + 0.5f;
-			m_Shader->SetUniform4f("u_Color", 1.0f, green, 0.2f, 1.0f);
+			m_Shader->SetUniform4f(UNIFORM_COLOR, 1.0f, green, 0.2f, 1.0f);
 		}
 
 		if (m_show_wireframe) {

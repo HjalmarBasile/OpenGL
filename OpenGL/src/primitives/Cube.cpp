@@ -35,7 +35,7 @@ Cube::Cube(ShadingType shadingType, const char* texturePath)
 		m_Texture2D = std::make_unique<Texture>(texturePath);
 		const unsigned int slot = 0;
 		m_Texture2D->Bind(slot);
-		m_Shader->SetUniform1i("u_Texture", slot);
+		m_Shader->SetUniform1i(UNIFORM_TEXTURE, slot);
 	} else {
 		m_Texture2D = nullptr;
 	}
@@ -72,15 +72,15 @@ void Cube::Draw()
 
 void Cube::SetMVP(glm::mat4 MVP)
 {
-	m_Shader->SetUniformMatrix4fv("u_MVP", MVP);
+	m_Shader->SetUniformMatrix4fv(UNIFORM_MVP, MVP);
 }
 
 void Cube::SetObjectColor(glm::vec3 objectColor)
 {
-	m_Shader->SetUniform3f("u_ObjectColor", objectColor.r, objectColor.g, objectColor.b);
+	m_Shader->SetUniform3f(UNIFORM_OBJECT_COLOR, objectColor.r, objectColor.g, objectColor.b);
 }
 
 void Cube::SetLightColor(glm::vec3 lightColor)
 {
-	m_Shader->SetUniform3f("u_LightColor", lightColor.r, lightColor.g, lightColor.b);
+	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }

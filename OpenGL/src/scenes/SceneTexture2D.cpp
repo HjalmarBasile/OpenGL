@@ -59,7 +59,7 @@ namespace scene {
 		m_Texture2D = std::make_unique<Texture>(DICE_TEXTURE_PATH);
 		const unsigned int slot = 0;
 		m_Texture2D->Bind(slot);
-		m_Shader->SetUniform1i("u_Texture", slot);
+		m_Shader->SetUniform1i(UNIFORM_TEXTURE, slot);
 
 		/* Let's define the model matrix */
 		m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
@@ -105,7 +105,7 @@ namespace scene {
 			}
 
 			m_MVP = m_Proj * m_View * m_Model;
-			m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
+			m_Shader->SetUniformMatrix4fv(UNIFORM_MVP, m_MVP);
 			Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
 
@@ -119,7 +119,7 @@ namespace scene {
 			m_Model = glm::rotate(m_Model, m_GoCrazy ? currentTime : glm::radians(m_ModelRotationB), glm::vec3(0.0f, 0.0f, 1.0f));
 			m_Model = glm::scale(m_Model, glm::vec3(m_ModelScaleB, m_ModelScaleB, 1.0f));
 			m_MVP = m_Proj * m_View * m_Model;
-			m_Shader->SetUniformMatrix4fv("u_MVP", m_MVP);
+			m_Shader->SetUniformMatrix4fv(UNIFORM_MVP, m_MVP);
 			Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
 	}

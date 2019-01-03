@@ -39,7 +39,7 @@ namespace scene {
 
 		m_Shader2 = std::make_unique<Shader>(VERTEX_BASIC_SHADER_PATH, FRAGMENT_BASIC_SHADER_PATH);
 		m_Shader2->Use();
-		m_Shader2->SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
+		m_Shader2->SetUniform4f(UNIFORM_COLOR, 1.0f, 1.0f, 0.0f, 1.0f);
 
 		VertexArray::Unbind();
 		VertexBuffer::Unbind();

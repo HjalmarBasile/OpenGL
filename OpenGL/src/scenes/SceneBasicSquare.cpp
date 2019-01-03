@@ -71,7 +71,7 @@ namespace scene {
 
 		m_Shader->Use();
 		/* Set uniform variable */
-		m_Shader->SetUniform4f("u_Color", m_Red, 0.3f, 0.8f, 1.0f);
+		m_Shader->SetUniform4f(UNIFORM_COLOR, m_Red, 0.3f, 0.8f, 1.0f);
 
 		Renderer::Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 
