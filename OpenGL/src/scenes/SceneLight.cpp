@@ -1,12 +1,13 @@
 #include "SceneLight.h"
 
+#include <GLFW/glfw3.h>
+
 namespace scene {
 
 	SceneLight::SceneLight(Camera* camera, bool* useMainCamera) :
 		p_MainCamera(camera), p_UseMainCamera(useMainCamera),
 		m_BackgroundColor(glm::vec3(0.1f, 0.2f, 0.2f)),
-		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)),
-		m_LightSourcePosition(glm::vec3(3.0f, 3.0f, 0.0f))
+		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f))
 	{
 		*p_UseMainCamera = true;
 		p_MainCamera->SetConstrainToGround(false);
@@ -19,7 +20,6 @@ namespace scene {
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
 		m_LightedCube->SetAmbientColor(m_BackgroundColor);
 		m_LightedCube->SetLightColor(m_LightColor);
-		m_LightedCube->SetLightPosition(m_LightSourcePosition);
 		m_LightedCube->Unbind();
 
 		/* Enable blending */
@@ -51,17 +51,15 @@ namespace scene {
 
 		m_View = p_MainCamera->GetViewMatrix();
 		m_Proj = p_MainCamera->GetPerspectiveProjMatrix();
-		{
-			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-			m_MVP = m_Proj * m_View * m_Model;
-			m_LightedCube->Bind();
-			m_LightedCube->SetModelMatrix(m_Model);
-			m_LightedCube->SetMVP(m_MVP);
-			m_LightedCube->Draw();
-			m_LightedCube->Unbind();
-		}
 
 		{
+			/* We are moving the lamp in a circle */
+			float radius = 3.0f;
+			float currentTime = (float)glfwGetTime();
+			m_LightSourcePosition.x = radius * sin(currentTime);
+			m_LightSourcePosition.y = 2.0f;
+			m_LightSourcePosition.z = radius * cos(currentTime);
+
 			m_Model = glm::translate(glm::mat4(1.0f), m_LightSourcePosition);
 			m_Model = glm::scale(m_Model, glm::vec3(0.2f));
 			m_MVP = m_Proj * m_View * m_Model;
@@ -69,6 +67,17 @@ namespace scene {
 			m_LampCube->SetMVP(m_MVP);
 			m_LampCube->Draw();
 			m_LampCube->Unbind();
+		}
+
+		{
+			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			m_MVP = m_Proj * m_View * m_Model;
+			m_LightedCube->Bind();
+			m_LightedCube->SetModelMatrix(m_Model);
+			m_LightedCube->SetMVP(m_MVP);
+			m_LightedCube->SetLightPosition(m_LightSourcePosition);
+			m_LightedCube->Draw();
+			m_LightedCube->Unbind();
 		}
 	}
 
