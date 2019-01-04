@@ -11,6 +11,7 @@ Cube::Cube()
 	/* Define a vertex buffer layout */
 	VertexBufferLayout layout;
 	layout.Push<float>(VERTEX_SIZE);
+	layout.Push<float>(NORMAL_SIZE);
 	layout.Push<float>(UV_SIZE);
 
 	/* m_VAO is defined by the pair (m_VertexBuffer, layout) */
@@ -30,48 +31,48 @@ void Cube::SetMVP(glm::mat4 MVP)
 }
 
 const float Cube::s_Positions[] = {
-	/* vertices */			/* UV coordinates */
-	-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,	1.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,
+	/* Vertices */			/* Normals */			/* UV coordinates */
+	-0.5f, -0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	1.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,	 0.0f,  0.0f, -1.0f,	0.0f, 0.0f,
 
-	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,	0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,	 0.0f,  0.0f,  1.0f,	0.0f, 0.0f,
 
-	-0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,	-1.0f,  0.0f,  0.0f,	1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,	-1.0f,  0.0f,  0.0f,	1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	-1.0f,  0.0f,  0.0f,	0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	-1.0f,  0.0f,  0.0f,	0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,	-1.0f,  0.0f,  0.0f,	0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,	-1.0f,  0.0f,  0.0f,	1.0f, 0.0f,
 
-	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	 1.0f,  0.0f,  0.0f,	1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	 1.0f,  0.0f,  0.0f,	0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,	 1.0f,  0.0f,  0.0f,	0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	 1.0f,  0.0f,  0.0f,	0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	 1.0f,  0.0f,  0.0f,	1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	 1.0f,  0.0f,  0.0f,	1.0f, 0.0f,
 
-	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,	1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	 0.0f, -1.0f,  0.0f,	0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	 0.0f, -1.0f,  0.0f,	1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,	 0.0f, -1.0f,  0.0f,	1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	 0.0f, -1.0f,  0.0f,	1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,	 0.0f, -1.0f,  0.0f,	0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,	 0.0f, -1.0f,  0.0f,	0.0f, 1.0f,
 
-	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,	0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,	1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,	0.0f, 1.0f
+	-0.5f,  0.5f, -0.5f,	 0.0f,  1.0f,  0.0f,	0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,	 0.0f,  1.0f,  0.0f,	0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	 0.0f,  1.0f,  0.0f,	1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	 0.0f,  1.0f,  0.0f,	1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,	 0.0f,  1.0f,  0.0f,	1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,	 0.0f,  1.0f,  0.0f,	0.0f, 1.0f
 };
 
 TexturedCube::TexturedCube(const char * texturePath)
@@ -138,7 +139,7 @@ void LampCube::SetLightColor(glm::vec3 lightColor)
 
 LightedCube::LightedCube()
 {
-	m_Shader = std::make_unique<Shader>(VERTEX_BASIC_MVP_SHADER_PATH, FRAGMENT_BASIC_LIGHTED_SHADER_PATH);
+	m_Shader = std::make_unique<Shader>(VERTEX_POS_NORM_UMVP_SHADER_PATH, FRAGMENT_BASIC_LIGHTED_SHADER_PATH);
 	m_Shader->Use();
 }
 

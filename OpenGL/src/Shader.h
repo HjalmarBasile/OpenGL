@@ -14,8 +14,10 @@ static constexpr const char* VERTEX_POS_COL_SHADER_PATH = "res/shaders/pos_col.v
 static constexpr const char* FRAGMENT_COL_IN_SHADER_PATH = "res/shaders/col_in.frag";
 
 static constexpr const char* VERTEX_BASIC_MVP_SHADER_PATH = "res/shaders/basic_mvp.vert";
-static constexpr const char* FRAGMENT_BASIC_LIGHTED_SHADER_PATH = "res/shaders/basic_lighted.frag";
 static constexpr const char* FRAGMENT_BASIC_LAMP_SHADER_PATH = "res/shaders/basic_lamp.frag";
+
+static constexpr const char* VERTEX_POS_NORM_UMVP_SHADER_PATH = "res/shaders/pos_norm_umvp.vert";
+static constexpr const char* FRAGMENT_BASIC_LIGHTED_SHADER_PATH = "res/shaders/basic_lighted.frag";
 
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
 static constexpr const char* VERTEX_TEXTURE_2D_POS_3D_SHADER_PATH = "res/shaders/texture2D_pos3D.vert";
@@ -26,9 +28,9 @@ static constexpr const char* FRAGMENT_POS_COL_UV_SHADER_PATH = "res/shaders/pos_
 
 static constexpr const char* UNIFORM_COLOR = "u_Color";
 static constexpr const char* UNIFORM_MVP = "u_MVP";
+static constexpr const char* UNIFORM_LIGHT_COLOR = "u_LightColor";
 static constexpr const char* UNIFORM_OBJECT_COLOR = "u_ObjectColor";
 static constexpr const char* UNIFORM_AMBIENT_COLOR = "u_AmbientColor";
-static constexpr const char* UNIFORM_LIGHT_COLOR = "u_LightColor";
 static constexpr const char* UNIFORM_TEXTURE = "u_Texture";
 static constexpr const char* UNIFORM_TEXTURE1 = "u_Texture1";
 static constexpr const char* UNIFORM_TEXTURE2 = "u_Texture2";

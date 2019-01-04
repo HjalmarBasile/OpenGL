@@ -211,6 +211,7 @@ xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I 
     <None Include="res\shaders\pos_col.vert" />
     <None Include="res\shaders\pos_col_uv.frag" />
     <None Include="res\shaders\pos_col_uv.vert" />
+    <None Include="res\shaders\pos_norm_umvp.vert" />
     <None Include="res\shaders\texture2D.frag" />
     <None Include="res\shaders\texture2D.vert" />
     <None Include="res\shaders\texture2D_pos3D.vert" />

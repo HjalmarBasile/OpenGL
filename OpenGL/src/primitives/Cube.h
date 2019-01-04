@@ -21,8 +21,9 @@ public:
 protected:
 	static constexpr int CUBE_VERTICES = 36;
 	static constexpr int VERTEX_SIZE = 3;
+	static constexpr int NORMAL_SIZE = 3;
 	static constexpr int UV_SIZE = 2;
-	static constexpr unsigned int POSITIONS_SIZE = CUBE_VERTICES * (VERTEX_SIZE + UV_SIZE);
+	static constexpr unsigned int POSITIONS_SIZE = CUBE_VERTICES * (VERTEX_SIZE + NORMAL_SIZE + UV_SIZE);
 
 	static const float s_Positions[POSITIONS_SIZE];
 
