@@ -12,9 +12,15 @@ uniform vec3 u_LightPosition;
 
 void main()
 {
-	float ambientStrenght = 0.25f;
+	/* Compute ambient light component */
+	float ambientStrenght = 0.8f;
 	vec3 ambientColor = ambientStrenght * (0.8f * u_AmbientColor + 0.2f * u_LightColor);
 
-	// TODO use u_LightColor, u_LightPosition, passFragWorldSpacePos and passNormal for diffuse
-	color = vec4(u_ObjectColor * ambientColor, 1.0f);
+	/* Compute diffuse light component */
+	vec3 nPassNormal = normalize(passNormal);
+	vec3 nLightDir = normalize(u_LightPosition - passFragWorldSpacePos);
+	float diffuseIntensity = max(0.0f, dot(nPassNormal, nLightDir));
+	vec3 diffuseColor = diffuseIntensity * u_LightColor;
+
+	color = vec4(u_ObjectColor * (ambientColor + diffuseColor), 1.0f);
 }
