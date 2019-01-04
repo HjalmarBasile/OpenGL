@@ -9,6 +9,7 @@ namespace scene {
 		m_LightSourcePosition(glm::vec3(3.0f, 3.0f, 0.0f))
 	{
 		*p_UseMainCamera = true;
+		p_MainCamera->SetConstrainToGround(false);
 
 		m_LampCube = std::make_unique<LampCube>();
 		m_LampCube->SetLightColor(m_LightColor);

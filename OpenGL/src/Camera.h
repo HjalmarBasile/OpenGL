@@ -21,6 +21,7 @@ public:
 	glm::mat4 GetPerspectiveProjMatrix();
 
 	void SetAspectRatio(float aspectRatio);
+	void SetConstrainToGround(bool constrainToGround);
 	void SetFOV(float fov);
 	void SetCameraSpeed(float speed);
 	void ResetToDefaults();

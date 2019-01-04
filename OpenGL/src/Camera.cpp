@@ -37,6 +37,11 @@ void Camera::SetAspectRatio(float aspectRatio)
 	this->m_AspectRatio = aspectRatio;
 }
 
+void Camera::SetConstrainToGround(bool constrainToGround)
+{
+	this->m_ConstrainToGround = constrainToGround;
+}
+
 void Camera::SetFOV(float fov)
 {
 	this->m_FOV = fov;
