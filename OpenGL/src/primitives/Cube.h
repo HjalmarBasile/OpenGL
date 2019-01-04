@@ -66,6 +66,7 @@ public:
 	void Bind() override;
 	void Unbind() override;
 
+	void SetModelMatrix(glm::mat4 Model);
 	void SetObjectColor(glm::vec3 objectColor);
 	void SetAmbientColor(glm::vec3 ambientColor);
 	void SetLightColor(glm::vec3 lightColor);

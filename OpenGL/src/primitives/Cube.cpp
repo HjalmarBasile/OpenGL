@@ -161,6 +161,11 @@ void LightedCube::Unbind()
 	m_Shader->Unuse();
 }
 
+void LightedCube::SetModelMatrix(glm::mat4 Model)
+{
+	m_Shader->SetUniformMatrix4fv(UNIFORM_MODEL, Model);
+}
+
 void LightedCube::SetObjectColor(glm::vec3 objectColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_OBJECT_COLOR, objectColor.r, objectColor.g, objectColor.b);

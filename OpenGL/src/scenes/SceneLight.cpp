@@ -51,8 +51,10 @@ namespace scene {
 		m_View = p_MainCamera->GetViewMatrix();
 		m_Proj = p_MainCamera->GetPerspectiveProjMatrix();
 		{
-			m_MVP = m_Proj * m_View;
+			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			m_MVP = m_Proj * m_View * m_Model;
 			m_LightedCube->Bind();
+			m_LightedCube->SetModelMatrix(m_Model);
 			m_LightedCube->SetMVP(m_MVP);
 			m_LightedCube->Draw();
 			m_LightedCube->Unbind();
