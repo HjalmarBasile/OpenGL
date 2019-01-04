@@ -175,3 +175,8 @@ void LightedCube::SetLightColor(glm::vec3 lightColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
+
+void LightedCube::SetLightPosition(glm::vec3 lightPosition)
+{
+	m_Shader->SetUniform3f(UNIFORM_LIGHT_POSITION, lightPosition.x, lightPosition.y, lightPosition.z);
+}

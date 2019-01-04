@@ -69,4 +69,5 @@ public:
 	void SetObjectColor(glm::vec3 objectColor);
 	void SetAmbientColor(glm::vec3 ambientColor);
 	void SetLightColor(glm::vec3 lightColor);
+	void SetLightPosition(glm::vec3 lightPosition);
 };
