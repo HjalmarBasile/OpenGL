@@ -27,6 +27,7 @@ static constexpr const char* FRAGMENT_POS_COL_UV_SHADER_PATH = "res/shaders/pos_
 static constexpr const char* UNIFORM_COLOR = "u_Color";
 static constexpr const char* UNIFORM_MVP = "u_MVP";
 static constexpr const char* UNIFORM_OBJECT_COLOR = "u_ObjectColor";
+static constexpr const char* UNIFORM_AMBIENT_COLOR = "u_AmbientColor";
 static constexpr const char* UNIFORM_LIGHT_COLOR = "u_LightColor";
 static constexpr const char* UNIFORM_TEXTURE = "u_Texture";
 static constexpr const char* UNIFORM_TEXTURE1 = "u_Texture1";

@@ -23,6 +23,7 @@ namespace scene {
 		Camera* p_MainCamera;
 		bool* p_UseMainCamera;
 
+		glm::vec3 m_BackgroundColor;
 		glm::vec3 m_LightColor;
 		glm::vec3 m_LightSourcePosition;
 

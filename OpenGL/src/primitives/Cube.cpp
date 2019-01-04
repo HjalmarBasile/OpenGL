@@ -165,6 +165,11 @@ void LightedCube::SetObjectColor(glm::vec3 objectColor)
 	m_Shader->SetUniform3f(UNIFORM_OBJECT_COLOR, objectColor.r, objectColor.g, objectColor.b);
 }
 
+void LightedCube::SetAmbientColor(glm::vec3 ambientColor)
+{
+	m_Shader->SetUniform3f(UNIFORM_AMBIENT_COLOR, ambientColor.r, ambientColor.g, ambientColor.b);
+}
+
 void LightedCube::SetLightColor(glm::vec3 lightColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);

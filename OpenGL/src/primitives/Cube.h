@@ -66,5 +66,6 @@ public:
 	void Unbind() override;
 
 	void SetObjectColor(glm::vec3 objectColor);
+	void SetAmbientColor(glm::vec3 ambientColor);
 	void SetLightColor(glm::vec3 lightColor);
 };

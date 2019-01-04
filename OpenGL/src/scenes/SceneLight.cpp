@@ -4,7 +4,9 @@ namespace scene {
 
 	SceneLight::SceneLight(Camera* camera, bool* useMainCamera) :
 		p_MainCamera(camera), p_UseMainCamera(useMainCamera),
-		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)), m_LightSourcePosition(glm::vec3(3.0f, 3.0f, 0.0f))
+		m_BackgroundColor(glm::vec3(0.1f, 0.2f, 0.2f)),
+		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)),
+		m_LightSourcePosition(glm::vec3(3.0f, 3.0f, 0.0f))
 	{
 		*p_UseMainCamera = true;
 
@@ -14,6 +16,7 @@ namespace scene {
 
 		m_LightedCube = std::make_unique<LightedCube>();
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
+		m_LightedCube->SetAmbientColor(m_BackgroundColor);
 		m_LightedCube->SetLightColor(m_LightColor);
 		m_LightedCube->Unbind();
 
@@ -25,7 +28,7 @@ namespace scene {
 		/* Enable depth testing */
 		GLCheckErrorCall(glEnable(GL_DEPTH_TEST));
 		/* Choose background color */
-		GLCheckErrorCall(glClearColor(0.1f, 0.2f, 0.2f, 1.0f));
+		GLCheckErrorCall(glClearColor(m_BackgroundColor.r, m_BackgroundColor.g, m_BackgroundColor.b, 1.0f));
 	}
 
 	SceneLight::~SceneLight()
