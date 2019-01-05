@@ -22,6 +22,7 @@
 	SOFTWARE.
 */
 #include <iostream>
+#include <mutex>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -50,6 +51,7 @@ static constexpr int WINDOW_WIDTH = 720;
 static constexpr int WINDOW_HEIGHT = 540;
 
 Camera MainCamera(glm::vec3(0.0f, 0.0f, 10.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT);
+std::mutex cameraMutex;
 bool useMainCamera = false;
 
 int main() {
@@ -206,6 +208,7 @@ void processUserInput(GLFWwindow* window, float deltaTime) {
 	}
 
 	if (useMainCamera) {
+		cameraMutex.lock();
 		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_W)) {
 			MainCamera.ProcessKeyboard(Camera::MovementDirection::FORWARD, deltaTime);
 		}
@@ -218,6 +221,7 @@ void processUserInput(GLFWwindow* window, float deltaTime) {
 		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_A)) {
 			MainCamera.ProcessKeyboard(Camera::MovementDirection::LEFT, deltaTime);
 		}
+		cameraMutex.unlock();
 	}
 }
 
@@ -238,7 +242,9 @@ void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 		lastMouseX = fxpos;
 		lastMouseY = fypos;
 
+		cameraMutex.lock();
 		MainCamera.ProcessMouseMovement(xoffset, yoffset);
+		cameraMutex.unlock();
 	}
 }
 
@@ -247,6 +253,8 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 
 	if (useMainCamera) {
+		cameraMutex.lock();
 		MainCamera.ProcessMouseScroll((float)yoffset);
+		cameraMutex.unlock();
 	}
 }
