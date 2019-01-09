@@ -19,5 +19,7 @@ void main()
 	/* N.B. fragWorldSpacePos.w is 1 by construction */
 	passFragWorldSpacePos = fragWorldSpacePos.xyz;
 
-	passNormal = normal;
+	/* Transform normal so that it is still ortogonal to the surface */
+	/* N.B. Beware of ill-conditioned matrices */
+	passNormal = mat3(transpose(inverse(u_Model))) * normal;
 }
