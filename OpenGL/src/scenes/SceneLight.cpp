@@ -50,10 +50,13 @@ namespace scene {
 		m_View = p_MainCamera->GetViewMatrix();
 		m_Proj = p_MainCamera->GetPerspectiveProjMatrix();
 
+		float currentTime = (float)glfwGetTime();
+		float red = 0.5f * sin(currentTime) + 0.5f;
+		m_LightColor = glm::vec3(red, 1.0f, 0.4f);
+
 		{
 			/* We are moving the lamp in a circle */
 			float radius = 3.0f;
-			float currentTime = (float)glfwGetTime();
 			m_LightSourcePosition.x = radius * sin(currentTime);
 			m_LightSourcePosition.y = 1.0f;
 			m_LightSourcePosition.z = radius * cos(currentTime);
@@ -63,6 +66,7 @@ namespace scene {
 			m_MVP = m_Proj * m_View * m_Model;
 			m_LampCube->Bind();
 			m_LampCube->SetMVP(m_MVP);
+			m_LampCube->SetLightColor(m_LightColor);
 			m_LampCube->Draw();
 			m_LampCube->Unbind();
 		}
@@ -75,6 +79,7 @@ namespace scene {
 			m_LightedCube->Bind();
 			m_LightedCube->SetModelMatrix(m_Model);
 			m_LightedCube->SetMVP(m_MVP);
+			m_LightedCube->SetLightColor(m_LightColor);
 			m_LightedCube->SetLightPosition(m_LightSourcePosition);
 			m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
 			m_LightedCube->SetAmbientStrenght(m_AmbientStrenght);
