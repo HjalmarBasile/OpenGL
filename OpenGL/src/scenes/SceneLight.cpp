@@ -20,7 +20,6 @@ namespace scene {
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
 		m_LightedCube->SetAmbientColor(m_BackgroundColor);
 		m_LightedCube->SetLightColor(m_LightColor);
-		m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
 		m_LightedCube->Unbind();
 
 		/* Enable blending */
@@ -58,7 +57,7 @@ namespace scene {
 			float radius = 3.0f;
 			float currentTime = (float)glfwGetTime();
 			m_LightSourcePosition.x = radius * sin(currentTime);
-			m_LightSourcePosition.y = 2.0f;
+			m_LightSourcePosition.y = 1.0f;
 			m_LightSourcePosition.z = radius * cos(currentTime);
 
 			m_Model = glm::translate(glm::mat4(1.0f), m_LightSourcePosition);
@@ -72,11 +71,13 @@ namespace scene {
 
 		{
 			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			m_Model = glm::scale(m_Model, glm::vec3(3.0f));
 			m_MVP = m_Proj * m_View * m_Model;
 			m_LightedCube->Bind();
 			m_LightedCube->SetModelMatrix(m_Model);
 			m_LightedCube->SetMVP(m_MVP);
 			m_LightedCube->SetLightPosition(m_LightSourcePosition);
+			m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
 			m_LightedCube->Draw();
 			m_LightedCube->Unbind();
 		}

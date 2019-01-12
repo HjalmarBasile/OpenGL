@@ -23,5 +23,13 @@ void main()
 	float diffuseIntensity = max(0.0f, dot(nPassNormal, nLightDir));
 	vec3 diffuseColor = diffuseIntensity * u_LightColor;
 
-	color = vec4(u_ObjectColor * (ambientColor + diffuseColor), 1.0f);
+	/* Compute specular light component */
+	float specularStrenght = 0.5f;
+	float specularShininess = 32.0f;
+	vec3 nViewDir = normalize(u_ViewPosition - passFragWorldSpacePos);
+	vec3 nReflectDir = reflect(-nLightDir, nPassNormal);
+	float specularIntensity = pow(max(0.0f, dot(nViewDir, nReflectDir)), specularShininess);
+	vec3 specularColor = specularStrenght * specularIntensity * u_LightColor;
+
+	color = vec4(u_ObjectColor * (ambientColor + diffuseColor + specularColor), 1.0f);
 }
