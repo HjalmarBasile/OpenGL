@@ -28,12 +28,15 @@ namespace scene {
 		glm::vec3 m_LightSourcePosition;
 
 		std::unique_ptr<LampCube> m_LampCube;
-		std::unique_ptr<LightedCube> m_LightedCube;
+		std::shared_ptr<LightedCube> m_LightedCube;
+		std::shared_ptr<LightedCube> m_GouraudLightedCube;
+		LightedCube* p_CurrentLightedCube;
 
 		float m_AmbientStrenght;
 		float m_DiffuseStrenght;
 		float m_SpecularStrenght;
 		float m_SpecularShininess;
+		bool m_UseGouraudShading;
 
 		glm::mat4 m_Model;
 		glm::mat4 m_View;

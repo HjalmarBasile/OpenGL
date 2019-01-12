@@ -137,9 +137,12 @@ void LampCube::SetLightColor(const glm::vec3& lightColor)
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
 
-LightedCube::LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor)
+LightedCube::LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor,
+	const char* vertShader, const char* fragShader)
 {
-	m_Shader = std::make_unique<Shader>(VERTEX_POS_NORM_UMVP_SHADER_PATH, FRAGMENT_BASIC_LIGHTED_SHADER_PATH);
+	/* Beware of passing shaders different from the defaults without the expected uniforms */
+	m_Shader = std::make_unique<Shader>(vertShader, fragShader);
+
 	m_Shader->Use();
 
 	this->SetAmbientColor(ambientColor);

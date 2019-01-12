@@ -8,7 +8,8 @@ namespace scene {
 		p_MainCamera(camera), p_UseMainCamera(useMainCamera),
 		m_BackgroundColor(glm::vec3(0.1f, 0.2f, 0.2f)),
 		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)),
-		m_AmbientStrenght(0.8f), m_DiffuseStrenght(1.0f), m_SpecularStrenght(0.5f), m_SpecularShininess(32.0f)
+		m_AmbientStrenght(0.8f), m_DiffuseStrenght(1.0f), m_SpecularStrenght(0.5f), m_SpecularShininess(32.0f),
+		m_UseGouraudShading(false)
 	{
 		*p_UseMainCamera = true;
 		p_MainCamera->SetConstrainToGround(false);
@@ -17,8 +18,13 @@ namespace scene {
 		m_LampCube->SetLightColor(m_LightColor);
 		m_LampCube->Unbind();
 
-		m_LightedCube = std::make_unique<LightedCube>(m_BackgroundColor, glm::vec3(1.0f, 0.5f, 0.31f), m_LightColor);
+		glm::vec3 objectColor(1.0f, 0.5f, 0.31f);
+		m_LightedCube = std::make_shared<LightedCube>(m_BackgroundColor, objectColor, m_LightColor);
 		m_LightedCube->Unbind();
+
+		m_GouraudLightedCube = std::make_shared<LightedCube>(m_BackgroundColor, objectColor, m_LightColor,
+			VERTEX_GOURAUD_SHADER_PATH, FRAGMENT_GOURAUD_SHADER_PATH);
+		m_GouraudLightedCube->Unbind();
 
 		/* Enable blending */
 		GLCheckErrorCall(glEnable(GL_BLEND));
@@ -35,6 +41,8 @@ namespace scene {
 	{
 		*p_UseMainCamera = false;
 		p_MainCamera->ResetToDefaults();
+
+		p_CurrentLightedCube = nullptr;
 
 		GLCheckErrorCall(glDisable(GL_DEPTH_TEST));
 	}
@@ -77,19 +85,21 @@ namespace scene {
 			m_Model = glm::scale(m_Model, glm::vec3(3.0f));
 			m_ModelView = m_View * m_Model;
 			m_MVP = m_Proj * m_ModelView;
-			m_LightedCube->Bind();
-			m_LightedCube->SetViewMatrix(m_View);
-			m_LightedCube->SetModelViewMatrix(m_ModelView);
-			m_LightedCube->SetMVP(m_MVP);
-			m_LightedCube->SetLightColor(m_LightColor);
-			m_LightedCube->SetLightPosition(m_LightSourcePosition);
-			m_LightedCube->SetAmbientStrenght(m_AmbientStrenght);
-			m_LightedCube->SetDiffuseStrenght(m_DiffuseStrenght);
-			m_LightedCube->SetSpecularStrenght(m_SpecularStrenght);
-			m_LightedCube->SetSpecularShininess(m_SpecularShininess);
 
-			m_LightedCube->Draw();
-			m_LightedCube->Unbind();
+			p_CurrentLightedCube = m_UseGouraudShading ? m_GouraudLightedCube.get() : m_LightedCube.get();
+			p_CurrentLightedCube->Bind();
+			p_CurrentLightedCube->SetViewMatrix(m_View);
+			p_CurrentLightedCube->SetModelViewMatrix(m_ModelView);
+			p_CurrentLightedCube->SetMVP(m_MVP);
+			p_CurrentLightedCube->SetLightColor(m_LightColor);
+			p_CurrentLightedCube->SetLightPosition(m_LightSourcePosition);
+			p_CurrentLightedCube->SetAmbientStrenght(m_AmbientStrenght);
+			p_CurrentLightedCube->SetDiffuseStrenght(m_DiffuseStrenght);
+			p_CurrentLightedCube->SetSpecularStrenght(m_SpecularStrenght);
+			p_CurrentLightedCube->SetSpecularShininess(m_SpecularShininess);
+
+			p_CurrentLightedCube->Draw();
+			p_CurrentLightedCube->Unbind();
 		}
 	}
 
@@ -100,6 +110,7 @@ namespace scene {
 		ImGui::SliderFloat("Diffuse Strenght", &m_DiffuseStrenght, 0.0f, 1.0f);
 		ImGui::SliderFloat("Specular Strenght", &m_SpecularStrenght, 0.0f, 1.0f);
 		ImGui::SliderFloat("Specular Shininess", &m_SpecularShininess, 1.0f, 256.0f);
+		ImGui::Checkbox("Use Gouraud shading", &m_UseGouraudShading);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}

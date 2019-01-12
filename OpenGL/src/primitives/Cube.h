@@ -60,7 +60,8 @@ public:
 class LightedCube : public Cube
 {
 public:
-	LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor);
+	LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor,
+		const char* vertShader = VERTEX_POS_NORM_UMVP_SHADER_PATH, const char* fragShader = FRAGMENT_BASIC_LIGHTED_SHADER_PATH);
 	~LightedCube();
 
 	void Bind() override;
