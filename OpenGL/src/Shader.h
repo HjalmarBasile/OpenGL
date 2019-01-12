@@ -19,6 +19,9 @@ static constexpr const char* FRAGMENT_BASIC_LAMP_SHADER_PATH = "res/shaders/basi
 static constexpr const char* VERTEX_POS_NORM_UMVP_SHADER_PATH = "res/shaders/pos_norm_umvp.vert";
 static constexpr const char* FRAGMENT_BASIC_LIGHTED_SHADER_PATH = "res/shaders/basic_lighted.frag";
 
+static constexpr const char* VERTEX_GOURAUD_SHADER_PATH = "res/shaders/gouraud.vert";
+static constexpr const char* FRAGMENT_GOURAUD_SHADER_PATH = "res/shaders/gouraud.frag";
+
 static constexpr const char* VERTEX_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.vert";
 static constexpr const char* VERTEX_TEXTURE_2D_POS_3D_SHADER_PATH = "res/shaders/texture2D_pos3D.vert";
 static constexpr const char* FRAGMENT_TEXTURE_2D_SHADER_PATH = "res/shaders/texture2D.frag";

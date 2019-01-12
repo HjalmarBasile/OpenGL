@@ -208,6 +208,8 @@ xcopy $(ProjectDir)res $(SolutionDir)bin\$(Platform)_$(Configuration)\res /E /I 
     <None Include="res\shaders\basic_lighted.frag" />
     <None Include="res\shaders\basic_mvp.vert" />
     <None Include="res\shaders\col_in.frag" />
+    <None Include="res\shaders\gouraud.frag" />
+    <None Include="res\shaders\gouraud.vert" />
     <None Include="res\shaders\pos_col.vert" />
     <None Include="res\shaders\pos_col_uv.frag" />
     <None Include="res\shaders\pos_col_uv.vert" />

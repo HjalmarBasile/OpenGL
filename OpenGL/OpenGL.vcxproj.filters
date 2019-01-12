@@ -514,6 +514,8 @@
     <None Include="res\shaders\basic_lighted.frag" />
     <None Include="res\shaders\basic_lamp.frag" />
     <None Include="res\shaders\pos_norm_umvp.vert" />
+    <None Include="res\shaders\gouraud.vert" />
+    <None Include="res\shaders\gouraud.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
