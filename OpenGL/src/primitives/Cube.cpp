@@ -25,7 +25,7 @@ void Cube::Draw()
 	GLCheckErrorCall(glDrawArrays(GL_TRIANGLES, 0, CUBE_VERTICES));
 }
 
-void Cube::SetMVP(glm::mat4 MVP)
+void Cube::SetMVP(const glm::mat4& MVP)
 {
 	m_Shader->SetUniformMatrix4fv(UNIFORM_MVP, MVP);
 }
@@ -132,7 +132,7 @@ void LampCube::Unbind()
 	m_Shader->Unuse();
 }
 
-void LampCube::SetLightColor(glm::vec3 lightColor)
+void LampCube::SetLightColor(const glm::vec3& lightColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
@@ -170,32 +170,32 @@ void LightedCube::Unbind()
 	m_Shader->Unuse();
 }
 
-void LightedCube::SetViewMatrix(glm::mat4 view)
+void LightedCube::SetViewMatrix(const glm::mat4& view)
 {
 	m_Shader->SetUniformMatrix4fv(UNIFORM_VIEW, view);
 }
 
-void LightedCube::SetModelViewMatrix(glm::mat4 modelView)
+void LightedCube::SetModelViewMatrix(const glm::mat4& modelView)
 {
 	m_Shader->SetUniformMatrix4fv(UNIFORM_MODEL_VIEW, modelView);
 }
 
-void LightedCube::SetObjectColor(glm::vec3 objectColor)
+void LightedCube::SetObjectColor(const glm::vec3& objectColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_OBJECT_COLOR, objectColor.r, objectColor.g, objectColor.b);
 }
 
-void LightedCube::SetAmbientColor(glm::vec3 ambientColor)
+void LightedCube::SetAmbientColor(const glm::vec3& ambientColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_AMBIENT_COLOR, ambientColor.r, ambientColor.g, ambientColor.b);
 }
 
-void LightedCube::SetLightColor(glm::vec3 lightColor)
+void LightedCube::SetLightColor(const glm::vec3& lightColor)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
 
-void LightedCube::SetLightPosition(glm::vec3 lightPosition)
+void LightedCube::SetLightPosition(const glm::vec3& lightPosition)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_POSITION, lightPosition.x, lightPosition.y, lightPosition.z);
 }

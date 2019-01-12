@@ -16,7 +16,7 @@ public:
 	virtual void Bind() = 0;
 	virtual void Unbind() = 0;
 
-	void SetMVP(glm::mat4 MVP);
+	void SetMVP(const glm::mat4& MVP);
 
 protected:
 	static constexpr int CUBE_VERTICES = 36;
@@ -54,7 +54,7 @@ public:
 	void Bind() override;
 	void Unbind() override;
 
-	void SetLightColor(glm::vec3 lightColor);
+	void SetLightColor(const glm::vec3& lightColor);
 };
 
 class LightedCube : public Cube
@@ -66,12 +66,12 @@ public:
 	void Bind() override;
 	void Unbind() override;
 
-	void SetViewMatrix(glm::mat4 view);
-	void SetModelViewMatrix(glm::mat4 modelView);
-	void SetObjectColor(glm::vec3 objectColor);
-	void SetAmbientColor(glm::vec3 ambientColor);
-	void SetLightColor(glm::vec3 lightColor);
-	void SetLightPosition(glm::vec3 lightPosition);
+	void SetViewMatrix(const glm::mat4& view);
+	void SetModelViewMatrix(const glm::mat4& modelView);
+	void SetObjectColor(const glm::vec3& objectColor);
+	void SetAmbientColor(const glm::vec3& ambientColor);
+	void SetLightColor(const glm::vec3& lightColor);
+	void SetLightPosition(const glm::vec3& lightPosition);
 	void SetAmbientStrenght(float ambientStrenght);
 	void SetDiffuseStrenght(float diffuseStrenght);
 	void SetSpecularStrenght(float specularStrenght);
