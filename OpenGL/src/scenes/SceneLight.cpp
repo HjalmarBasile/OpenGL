@@ -7,7 +7,8 @@ namespace scene {
 	SceneLight::SceneLight(Camera* camera, bool* useMainCamera) :
 		p_MainCamera(camera), p_UseMainCamera(useMainCamera),
 		m_BackgroundColor(glm::vec3(0.1f, 0.2f, 0.2f)),
-		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f))
+		m_LightColor(glm::vec3(1.0f, 1.0f, 1.0f)),
+		m_AmbientStrenght(0.8f), m_DiffuseStrenght(1.0f), m_SpecularStrenght(0.5f), m_SpecularShininess(32.0f)
 	{
 		*p_UseMainCamera = true;
 		p_MainCamera->SetConstrainToGround(false);
@@ -16,10 +17,7 @@ namespace scene {
 		m_LampCube->SetLightColor(m_LightColor);
 		m_LampCube->Unbind();
 
-		m_LightedCube = std::make_unique<LightedCube>();
-		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
-		m_LightedCube->SetAmbientColor(m_BackgroundColor);
-		m_LightedCube->SetLightColor(m_LightColor);
+		m_LightedCube = std::make_unique<LightedCube>(m_BackgroundColor, glm::vec3(1.0f, 0.5f, 0.31f), m_LightColor);
 		m_LightedCube->Unbind();
 
 		/* Enable blending */
@@ -79,11 +77,25 @@ namespace scene {
 			m_LightedCube->SetMVP(m_MVP);
 			m_LightedCube->SetLightPosition(m_LightSourcePosition);
 			m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
+			m_LightedCube->SetAmbientStrenght(m_AmbientStrenght);
+			m_LightedCube->SetDiffuseStrenght(m_DiffuseStrenght);
+			m_LightedCube->SetSpecularStrenght(m_SpecularStrenght);
+			m_LightedCube->SetSpecularShininess(m_SpecularShininess);
+
 			m_LightedCube->Draw();
 			m_LightedCube->Unbind();
 		}
 	}
 
-	void SceneLight::OnImGuiRender() {}
+	void SceneLight::OnImGuiRender()
+	{
+		ImGui::Begin("Scene Light");
+		ImGui::SliderFloat("Ambient Strenght", &m_AmbientStrenght, 0.0f, 1.0f);
+		ImGui::SliderFloat("Diffuse Strenght", &m_DiffuseStrenght, 0.0f, 1.0f);
+		ImGui::SliderFloat("Specular Strenght", &m_SpecularStrenght, 0.0f, 1.0f);
+		ImGui::SliderFloat("Specular Shininess", &m_SpecularShininess, 1.0f, 256.0f);
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 
 }

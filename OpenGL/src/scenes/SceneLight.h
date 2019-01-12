@@ -30,6 +30,11 @@ namespace scene {
 		std::unique_ptr<LampCube> m_LampCube;
 		std::unique_ptr<LightedCube> m_LightedCube;
 
+		float m_AmbientStrenght;
+		float m_DiffuseStrenght;
+		float m_SpecularStrenght;
+		float m_SpecularShininess;
+
 		glm::mat4 m_Model;
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;

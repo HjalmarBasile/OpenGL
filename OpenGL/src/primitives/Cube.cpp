@@ -137,10 +137,19 @@ void LampCube::SetLightColor(glm::vec3 lightColor)
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_COLOR, lightColor.r, lightColor.g, lightColor.b);
 }
 
-LightedCube::LightedCube()
+LightedCube::LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor)
 {
 	m_Shader = std::make_unique<Shader>(VERTEX_POS_NORM_UMVP_SHADER_PATH, FRAGMENT_BASIC_LIGHTED_SHADER_PATH);
 	m_Shader->Use();
+
+	this->SetAmbientColor(ambientColor);
+	this->SetObjectColor(objectColor);
+	this->SetLightColor(lightColor);
+
+	this->SetAmbientStrenght(AMBIENT_STRENGHT_DEFAULT);
+	this->SetDiffuseStrenght(DIFFUSE_STRENGHT_DEFAULT);
+	this->SetSpecularStrenght(SPECULAR_STRENGHT_DEFAULT);
+	this->SetSpecularShininess(SPECULAR_SHININESS_DEFAULT);
 }
 
 LightedCube::~LightedCube()
@@ -189,4 +198,24 @@ void LightedCube::SetLightPosition(glm::vec3 lightPosition)
 void LightedCube::SetViewPosition(glm::vec3 viewPosition)
 {
 	m_Shader->SetUniform3f(UNIFORM_VIEW_POSITION, viewPosition.x, viewPosition.y, viewPosition.z);
+}
+
+void LightedCube::SetAmbientStrenght(float ambientStrenght)
+{
+	m_Shader->SetUniform1f(UNIFORM_AMBIENT_STRENGHT, ambientStrenght);
+}
+
+void LightedCube::SetDiffuseStrenght(float diffuseStrenght)
+{
+	m_Shader->SetUniform1f(UNIFORM_DIFFUSE_STRENGHT, diffuseStrenght);
+}
+
+void LightedCube::SetSpecularStrenght(float specularStrenght)
+{
+	m_Shader->SetUniform1f(UNIFORM_SPECULAR_STRENGHT, specularStrenght);
+}
+
+void LightedCube::SetSpecularShininess(float specularShininess)
+{
+	m_Shader->SetUniform1f(UNIFORM_SPECULAR_SHININESS, specularShininess);
 }

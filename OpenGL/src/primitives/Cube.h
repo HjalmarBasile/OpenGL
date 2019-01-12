@@ -60,7 +60,7 @@ public:
 class LightedCube : public Cube
 {
 public:
-	LightedCube();
+	LightedCube(glm::vec3 ambientColor, glm::vec3 objectColor, glm::vec3 lightColor);
 	~LightedCube();
 
 	void Bind() override;
@@ -72,4 +72,14 @@ public:
 	void SetLightColor(glm::vec3 lightColor);
 	void SetLightPosition(glm::vec3 lightPosition);
 	void SetViewPosition(glm::vec3 viewPosition);
+	void SetAmbientStrenght(float ambientStrenght);
+	void SetDiffuseStrenght(float diffuseStrenght);
+	void SetSpecularStrenght(float specularStrenght);
+	void SetSpecularShininess(float specularShininess);
+
+private:
+	static constexpr float AMBIENT_STRENGHT_DEFAULT = 0.8f;
+	static constexpr float DIFFUSE_STRENGHT_DEFAULT = 1.0f;
+	static constexpr float SPECULAR_STRENGHT_DEFAULT = 0.5f;
+	static constexpr float SPECULAR_SHININESS_DEFAULT = 32.0f;
 };
