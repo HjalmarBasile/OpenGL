@@ -71,6 +71,7 @@ namespace scene {
 
 		{
 			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			m_Model = glm::rotate(m_Model, (float)glfwGetTime() * glm::radians(30.0f), glm::vec3(30.0f, -45.0f, 80.0f));
 			m_Model = glm::scale(m_Model, glm::vec3(3.0f));
 			m_MVP = m_Proj * m_View * m_Model;
 			m_LightedCube->Bind();
