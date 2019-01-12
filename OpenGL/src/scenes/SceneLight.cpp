@@ -20,6 +20,7 @@ namespace scene {
 		m_LightedCube->SetObjectColor(glm::vec3(1.0f, 0.5f, 0.31f));
 		m_LightedCube->SetAmbientColor(m_BackgroundColor);
 		m_LightedCube->SetLightColor(m_LightColor);
+		m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
 		m_LightedCube->Unbind();
 
 		/* Enable blending */

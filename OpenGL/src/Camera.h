@@ -17,6 +17,7 @@ public:
 public:
 	Camera(glm::vec3 position, float aspectRatio, bool constrainToGround = CONSTRAIN_TO_GROUND_DEFAULT);
 
+	glm::vec3 GetPosition();
 	glm::mat4 GetViewMatrix();
 	glm::mat4 GetPerspectiveProjMatrix();
 

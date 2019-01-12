@@ -9,6 +9,7 @@ uniform vec3 u_ObjectColor;
 uniform vec3 u_AmbientColor;
 uniform vec3 u_LightColor;
 uniform vec3 u_LightPosition;
+uniform vec3 u_ViewPosition;
 
 void main()
 {

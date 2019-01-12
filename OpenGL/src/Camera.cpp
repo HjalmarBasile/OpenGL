@@ -20,6 +20,11 @@ Camera::Camera(glm::vec3 position, float aspectRatio, bool constrainToGround) :
 	UpdateCameraVectors();
 }
 
+glm::vec3 Camera::GetPosition()
+{
+	return m_Eye;
+}
+
 glm::mat4 Camera::GetViewMatrix()
 {
 	/* See math folder for explanation */

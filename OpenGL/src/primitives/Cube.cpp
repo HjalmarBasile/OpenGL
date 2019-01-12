@@ -185,3 +185,8 @@ void LightedCube::SetLightPosition(glm::vec3 lightPosition)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_POSITION, lightPosition.x, lightPosition.y, lightPosition.z);
 }
+
+void LightedCube::SetViewPosition(glm::vec3 viewPosition)
+{
+	m_Shader->SetUniform3f(UNIFORM_VIEW_POSITION, viewPosition.x, viewPosition.y, viewPosition.z);
+}
