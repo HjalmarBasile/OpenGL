@@ -75,13 +75,14 @@ namespace scene {
 			m_Model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 			m_Model = glm::rotate(m_Model, (float)glfwGetTime() * glm::radians(30.0f), glm::vec3(30.0f, -45.0f, 80.0f));
 			m_Model = glm::scale(m_Model, glm::vec3(3.0f));
-			m_MVP = m_Proj * m_View * m_Model;
+			m_ModelView = m_View * m_Model;
+			m_MVP = m_Proj * m_ModelView;
 			m_LightedCube->Bind();
-			m_LightedCube->SetModelMatrix(m_Model);
+			m_LightedCube->SetViewMatrix(m_View);
+			m_LightedCube->SetModelViewMatrix(m_ModelView);
 			m_LightedCube->SetMVP(m_MVP);
 			m_LightedCube->SetLightColor(m_LightColor);
 			m_LightedCube->SetLightPosition(m_LightSourcePosition);
-			m_LightedCube->SetViewPosition(p_MainCamera->GetPosition());
 			m_LightedCube->SetAmbientStrenght(m_AmbientStrenght);
 			m_LightedCube->SetDiffuseStrenght(m_DiffuseStrenght);
 			m_LightedCube->SetSpecularStrenght(m_SpecularStrenght);

@@ -170,9 +170,14 @@ void LightedCube::Unbind()
 	m_Shader->Unuse();
 }
 
-void LightedCube::SetModelMatrix(glm::mat4 Model)
+void LightedCube::SetViewMatrix(glm::mat4 view)
 {
-	m_Shader->SetUniformMatrix4fv(UNIFORM_MODEL, Model);
+	m_Shader->SetUniformMatrix4fv(UNIFORM_VIEW, view);
+}
+
+void LightedCube::SetModelViewMatrix(glm::mat4 modelView)
+{
+	m_Shader->SetUniformMatrix4fv(UNIFORM_MODEL_VIEW, modelView);
 }
 
 void LightedCube::SetObjectColor(glm::vec3 objectColor)
@@ -193,11 +198,6 @@ void LightedCube::SetLightColor(glm::vec3 lightColor)
 void LightedCube::SetLightPosition(glm::vec3 lightPosition)
 {
 	m_Shader->SetUniform3f(UNIFORM_LIGHT_POSITION, lightPosition.x, lightPosition.y, lightPosition.z);
-}
-
-void LightedCube::SetViewPosition(glm::vec3 viewPosition)
-{
-	m_Shader->SetUniform3f(UNIFORM_VIEW_POSITION, viewPosition.x, viewPosition.y, viewPosition.z);
 }
 
 void LightedCube::SetAmbientStrenght(float ambientStrenght)

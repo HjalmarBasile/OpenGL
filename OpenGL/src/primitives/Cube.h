@@ -66,12 +66,12 @@ public:
 	void Bind() override;
 	void Unbind() override;
 
-	void SetModelMatrix(glm::mat4 Model);
+	void SetViewMatrix(glm::mat4 view);
+	void SetModelViewMatrix(glm::mat4 modelView);
 	void SetObjectColor(glm::vec3 objectColor);
 	void SetAmbientColor(glm::vec3 ambientColor);
 	void SetLightColor(glm::vec3 lightColor);
 	void SetLightPosition(glm::vec3 lightPosition);
-	void SetViewPosition(glm::vec3 viewPosition);
 	void SetAmbientStrenght(float ambientStrenght);
 	void SetDiffuseStrenght(float diffuseStrenght);
 	void SetSpecularStrenght(float specularStrenght);

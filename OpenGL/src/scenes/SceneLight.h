@@ -38,6 +38,7 @@ namespace scene {
 		glm::mat4 m_Model;
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;
+		glm::mat4 m_ModelView;
 		glm::mat4 m_MVP;
 	};
 
